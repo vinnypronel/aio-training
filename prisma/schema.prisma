@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Event {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  flyer     String
+  tag       String
+  badge     String
+  title     String
+  date      String
+  location  String
+  sessions  String    // JSON string: [{ label, time }]
+  price     String
+  sortOrder Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+}
+
+model Customer {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  phone     String    @default("")
+  ageGroup  String    @default("")
+  sport     String    @default("")
+  notes     String    @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+}
+
+model TimeSlot {
+  id        String    @id @default(cuid())
+  date      String    // YYYY-MM-DD
+  startTime String    // HH:mm
+  endTime   String    // HH:mm
+  type      String    // private, small-group, large-group, event
+  title     String    @default("")
+  maxCapacity Int     @default(1)
+  bookedCount Int     @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+}
+
+model Booking {
+  id         String    @id @default(cuid())
+  status     String    @default("new") // new, contacted, confirmed, completed, cancelled
+  type       String    // private, small-group, large-group, event
+  notes      String    @default("")
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  customerId String
+  timeSlot   TimeSlot? @relation(fields: [timeSlotId], references: [id])
+  timeSlotId String?
+  event      Event?    @relation(fields: [eventId], references: [id])
+  eventId    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}

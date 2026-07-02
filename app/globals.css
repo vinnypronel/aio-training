@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --aio-red: #d80000;
+  --aio-red-hover: #b30000;
+  --aio-red-on-dark: #ff4d4d;
+  --aio-white: #ffffff;
+  --aio-black: #0a0a0a;
+  --aio-panel: #1a1a1a;
+  --aio-line: #262626;
+  --aio-line-strong: #3a3a3a;
+  --aio-body: #ffffff;
+  --aio-muted: #a0a0a0;
+  --aio-nav-bg: rgba(10, 10, 10, 0.92);
+  --aio-nav-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+  --aio-footer-bg: #0a0a0a;
+  --aio-shadow-hard: 0 18px 40px rgba(0, 0, 0, 0.65);
+  --aio-shadow-red: 0 18px 36px rgba(216, 0, 0, 0.28);
+  --aio-paper: #f4f1ea;
+  --aio-paper-muted: #d8d3c8;
+  --aio-ink: #111111;
+  --aio-field: #efe9dc;
+  --aio-hero-gradient: linear-gradient(120deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.62) 50%, rgba(10, 10, 10, 0.88) 100%);
+  --aio-grid: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-aio-red: var(--aio-red);
+  --color-aio-red-hover: var(--aio-red-hover);
+  --color-aio-red-on-dark: var(--aio-red-on-dark);
+  --color-aio-white: var(--aio-white);
+  --color-aio-black: var(--aio-black);
+  --color-aio-panel: var(--aio-panel);
+  --color-aio-line: var(--aio-line);
+  --color-aio-line-strong: var(--aio-line-strong);
+  --color-aio-body: var(--aio-body);
+  --color-aio-muted: var(--aio-muted);
+  --color-aio-paper: var(--aio-paper);
+  --color-aio-paper-muted: var(--aio-paper-muted);
+  --color-aio-ink: var(--aio-ink);
+  --color-aio-field: var(--aio-field);
+  --color-aio-panel: var(--aio-panel);
+  --font-brand-display: "Barlow Condensed", "Inter", system-ui, sans-serif;
+  --font-brand-body: "Inter", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/barlow-condensed-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/barlow-condensed-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/barlow-condensed-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/barlow-condensed-800.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/assets/fonts/barlow-condensed-900.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--aio-black);
+  color: var(--aio-white);
+  font-family: var(--font-brand-body);
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--aio-red) var(--aio-black);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--aio-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--aio-red);
+  border: 2px solid var(--aio-black);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--aio-red-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--aio-black);
+}
+
+.footer-link {
+  background-image: linear-gradient(
+    to right,
+    var(--aio-red) 50%,
+    var(--aio-muted) 50%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.35s ease;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible,
+a:hover > .footer-link,
+a:focus-visible > .footer-link {
+  background-position: 0 0;
+}
+
+.fill-red-on-hover {
+  background-image: linear-gradient(
+    to right,
+    var(--aio-red) 50%,
+    var(--aio-white) 50%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.35s ease;
+}
+
+.group:hover .fill-red-on-hover,
+.fill-red-on-hover:hover,
+.fill-red-on-hover:focus-visible {
+  background-position: 0 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-brand-display);
+  letter-spacing: 0.01em;
+}
+
+.cta-watermark {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+  .cta-watermark {
+    transform: translate(calc(-50% + 450px), calc(-50% - 60px));
+  }
 }
