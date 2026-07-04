@@ -11,14 +11,19 @@ export default function Home() {
   return (
     <>
       <section className="relative -mt-20 flex h-[calc(100svh-0px)] min-h-[560px] items-center justify-center overflow-hidden bg-aio-black text-white lg:-mt-24">
-        <Image
-          src="/assets/images/home-hero-team-photo.jpg"
-          alt="AIO Training coaches and youth athletes on the field after a session"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+        {/* Background hero video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/images/home-hero-poster.webp"
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        >
+          <source src="/assets/videos/home-hero.mp4" type="video/mp4" />
+        </video>
         <div
           aria-hidden
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
@@ -98,8 +103,8 @@ export default function Home() {
               Where We Train
             </p>
             <h2 className="mt-4 font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[0.95]">
-              <span className="block whitespace-nowrap">Scheduled Sessions.</span>
-              <span className="block whitespace-nowrap">Game Transfer.</span>
+              <span className="block md:whitespace-nowrap">Scheduled Sessions.</span>
+              <span className="block md:whitespace-nowrap">Game Transfer.</span>
             </h2>
           </div>
 

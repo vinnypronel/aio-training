@@ -41,7 +41,6 @@ export default function NavLinks() {
       <div className="group relative">
         <Link
           href="/training-services"
-          aria-haspopup="true"
           className={`${linkClass("/training-services", trainingPaths)} gap-1.5`}
         >
           Training &amp; Services

@@ -81,7 +81,7 @@ export default function TrainingServicesPage() {
       <title>Training &amp; Services | AIO Training</title>
       <section className="relative -mt-20 flex h-[100svh] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
-          src="/assets/images/training-services-hero.jpg"
+          src="/assets/images/training-services-hero.webp"
           alt="AIO Training athlete sprinting on the field"
           fill
           priority

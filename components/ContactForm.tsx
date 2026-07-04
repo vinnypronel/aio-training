@@ -68,6 +68,7 @@ export default function ContactForm() {
         id="contact-full-name"
         value={form.fullName}
         onChange={(v) => update("fullName", v)}
+        autoComplete="name"
         required
       />
       <Field
@@ -76,6 +77,7 @@ export default function ContactForm() {
         type="email"
         value={form.email}
         onChange={(v) => update("email", v)}
+        autoComplete="email"
         required
       />
       <Field
@@ -84,6 +86,7 @@ export default function ContactForm() {
         type="tel"
         value={form.phone}
         onChange={(v) => update("phone", v)}
+        autoComplete="tel"
       />
 
       <div className="grid gap-5 md:grid-cols-2">
@@ -158,6 +161,7 @@ function Field({
   onChange,
   type = "text",
   required = false,
+  autoComplete,
 }: {
   label: string;
   id: string;
@@ -165,6 +169,7 @@ function Field({
   onChange: (v: string) => void;
   type?: string;
   required?: boolean;
+  autoComplete?: string;
 }) {
   return (
     <div>
@@ -180,6 +185,7 @@ function Field({
         name={id}
         type={type}
         required={required}
+        autoComplete={autoComplete}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="mt-2 w-full border border-aio-line bg-aio-black p-3 text-sm font-semibold text-white placeholder:text-aio-muted focus:border-aio-red focus:outline-none focus:ring-2 focus:ring-aio-red/40"

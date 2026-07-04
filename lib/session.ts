@@ -10,7 +10,7 @@ type SessionPayload = {
   expiresAt: Date;
 };
 
-export async function encrypt(payload: SessionPayload) {
+async function encrypt(payload: SessionPayload) {
   return new SignJWT({ email: payload.email })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -18,7 +18,7 @@ export async function encrypt(payload: SessionPayload) {
     .sign(encodedKey);
 }
 
-export async function decrypt(
+async function decrypt(
   session: string | undefined
 ): Promise<{ email: string } | null> {
   if (!session) return null;

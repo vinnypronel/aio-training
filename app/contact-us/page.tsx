@@ -105,7 +105,7 @@ export default function ContactUsPage() {
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="font-black text-aio-ink transition hover:text-aio-red"
+                        className="font-black text-aio-ink transition hover:text-aio-red [overflow-wrap:anywhere]"
                       >
                         {item.value}
                       </a>

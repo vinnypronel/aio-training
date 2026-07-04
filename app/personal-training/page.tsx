@@ -8,7 +8,7 @@ export default function PersonalTrainingPage() {
   return (
     <SportPage
       sport="Personal Training"
-      heroImage="/assets/images/personal-training-hero.png"
+      heroImage="/assets/images/personal-training-hero.webp"
       heroImageAlt="Coach working one on one with a youth athlete"
       heroLineOne="Built One Rep"
       heroLineTwo="At A Time."

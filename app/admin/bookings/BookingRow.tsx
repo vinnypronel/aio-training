@@ -63,11 +63,22 @@ export default function BookingRow({ booking }: BookingProps) {
             {booking.customer.phone && ` · ${booking.customer.phone}`}
           </p>
           <p className="mt-1 text-xs font-semibold text-aio-body">{dateLabel}</p>
-          {booking.notes && (
-            <p className="mt-2 text-xs font-semibold text-aio-muted italic">
-              {booking.notes}
-            </p>
-          )}
+          {booking.notes && (() => {
+            const athleteMatch = booking.notes.match(/^Athletes:\s*(\d+)/m);
+            const count = athleteMatch ? parseInt(athleteMatch[1]) : 1;
+            return (
+              <div className="mt-2">
+                {count > 1 && (
+                  <span className="mb-1.5 inline-flex items-center gap-1 bg-aio-red px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-wider text-white">
+                    {count} Athletes
+                  </span>
+                )}
+                <p className="whitespace-pre-line text-xs font-semibold text-aio-muted italic">
+                  {booking.notes}
+                </p>
+              </div>
+            );
+          })()}
           <p className="mt-2 text-[0.6rem] text-aio-muted">
             {new Date(booking.createdAt).toLocaleDateString("en-US", {
               month: "short",

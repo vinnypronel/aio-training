@@ -71,7 +71,7 @@ export default function Footer() {
                 </span>
                 <span className="footer-link text-base font-semibold">Trainingallin1@gmail.com</span>
               </a>
-              <p className="flex items-center gap-3 text-base font-semibold text-aio-muted whitespace-nowrap">
+              <p className="flex items-center gap-3 text-base font-semibold text-aio-muted">
                 <span
                   aria-hidden
                   className="grid h-8 w-8 shrink-0 place-items-center text-sm font-black text-aio-red-on-dark"
@@ -92,7 +92,7 @@ export default function Footer() {
       <div className="border-t border-aio-line">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-6 py-3 text-xs font-semibold text-aio-muted md:flex-row md:items-center md:justify-between md:py-4">
           <p className="text-left">© 2026 All In One Training. All rights reserved.</p>
-          <div className="flex items-center gap-4" aria-label="Social links">
+          <nav className="flex items-center gap-4" aria-label="Social links">
             <div className="relative h-11 w-11 md:w-11">
               <a
                 href="https://www.instagram.com/aio_training"
@@ -132,8 +132,8 @@ export default function Footer() {
                 </span>
               </a>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Legal links">
+          </nav>
+          <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Legal links">
             {legalLinks.map((link) => (
               <Link
                 key={link.href}
@@ -143,7 +143,7 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
       </div>
     </footer>

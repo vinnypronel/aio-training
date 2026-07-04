@@ -14,6 +14,12 @@ type Slot = {
   spotsLeft: number;
 };
 
+type AthleteEntry = {
+  name: string;
+  ageGroup: string;
+  sport: string;
+};
+
 const sessionTypes = [
   { value: "private", label: "Private Training" },
   { value: "small-group", label: "Small Group" },
@@ -58,6 +64,10 @@ function formatTime12(time24: string) {
   return `${h12}:${m} ${ampm}`;
 }
 
+function emptyAthlete(): AthleteEntry {
+  return { name: "", ageGroup: "", sport: "" };
+}
+
 export default function BookingForm({ slots }: { slots: Slot[] }) {
   const [state, formAction, pending] = useActionState(submitBooking, {
     status: "idle" as const,
@@ -67,6 +77,9 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   const [selectedType, setSelectedType] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+
+  // Multi-athlete state
+  const [athletes, setAthletes] = useState<AthleteEntry[]>([emptyAthlete()]);
 
   const now = new Date();
   const [calMonth, setCalMonth] = useState(now.getMonth());
@@ -91,22 +104,39 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   const calendarDays = getCalendarDays(calYear, calMonth);
 
   function prevMonth() {
-    if (calMonth === 0) {
-      setCalMonth(11);
-      setCalYear(calYear - 1);
-    } else {
-      setCalMonth(calMonth - 1);
-    }
+    if (calMonth === 0) { setCalMonth(11); setCalYear(calYear - 1); }
+    else setCalMonth(calMonth - 1);
   }
 
   function nextMonth() {
-    if (calMonth === 11) {
-      setCalMonth(0);
-      setCalYear(calYear + 1);
-    } else {
-      setCalMonth(calMonth + 1);
-    }
+    if (calMonth === 11) { setCalMonth(0); setCalYear(calYear + 1); }
+    else setCalMonth(calMonth + 1);
   }
+
+  // Athlete helpers
+  function updateAthlete(idx: number, field: keyof AthleteEntry, value: string) {
+    setAthletes((prev) =>
+      prev.map((a, i) => (i === idx ? { ...a, [field]: value } : a))
+    );
+  }
+
+  function addAthlete() {
+    setAthletes((prev) => [...prev, emptyAthlete()]);
+  }
+
+  function removeAthlete(idx: number) {
+    setAthletes((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  const athleteCount = athletes.length;
+
+  // Find selected slot info for summary
+  const selectedSlotInfo = slots.find((s) => s.id === selectedSlot);
+  const selectedDateFormatted = selectedDate
+    ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
+        weekday: "long", month: "long", day: "numeric", year: "numeric",
+      })
+    : "";
 
   const inputClass =
     "w-full border border-aio-line bg-transparent px-4 py-2.5 text-sm font-semibold text-white placeholder:text-aio-muted/50 transition focus:border-aio-red focus:outline-none";
@@ -135,15 +165,6 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
       </div>
     );
   }
-
-  const selectedDateFormatted = selectedDate
-    ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "";
 
   return (
     <form action={formAction}>
@@ -243,14 +264,14 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 <button
                   type="button"
                   onClick={prevMonth}
-                  className="flex h-9 w-9 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
                 >
                   ←
                 </button>
                 <button
                   type="button"
                   onClick={nextMonth}
-                  className="flex h-9 w-9 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
                 >
                   →
                 </button>
@@ -282,7 +303,6 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 const isSelected = dateStr === selectedDate;
                 const isToday = dateStr === todayStr;
                 const isSunday = new Date(calYear, calMonth, day).getDay() === 0;
-
                 const isDisabled = isPast || isSunday;
 
                 return (
@@ -300,8 +320,8 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         : hasSlots && !isPast
                           ? "bg-aio-red/20 text-white ring-1 ring-aio-red/40 hover:bg-aio-red/35"
                           : isDisabled
-                            ? "text-aio-muted/30 cursor-not-allowed"
-                            : "text-white/60 hover:bg-white/10 cursor-pointer"
+                            ? "cursor-not-allowed text-aio-muted/30"
+                            : "cursor-pointer text-white/60 hover:bg-white/10"
                     } ${isToday && !isSelected ? "ring-1 ring-aio-red" : ""}`}
                   >
                     {day}
@@ -326,11 +346,13 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
         </div>
       </div>
 
-      {/* Your Information — only show after slot is picked */}
+      {/* Your Information + Athletes — only show after slot is picked */}
       {selectedSlot && (
         <div className="mt-12 border-t border-aio-line pt-10">
+
+          {/* ── Parent / Guardian ─────────────────────────── */}
           <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red">
-            Your Information
+            Parent / Guardian Info
           </h3>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -342,7 +364,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 id="booking-name"
                 name="name"
                 required
-                placeholder="John Smith"
+                placeholder="Jane Smith"
                 className={`mt-2 ${inputClass}`}
               />
             </div>
@@ -355,69 +377,224 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 name="email"
                 type="email"
                 required
-                placeholder="john@example.com"
+                placeholder="jane@example.com"
                 className={`mt-2 ${inputClass}`}
               />
             </div>
           </div>
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-3">
-            <div>
-              <label htmlFor="booking-phone" className={labelClass}>
-                Phone
-              </label>
-              <input
-                id="booking-phone"
-                name="phone"
-                type="tel"
-                placeholder="(555) 123-4567"
-                className={`mt-2 ${inputClass}`}
-              />
-            </div>
-            <div>
-              <label htmlFor="booking-age" className={labelClass}>
-                Age Group
-              </label>
-              <select
-                id="booking-age"
-                name="ageGroup"
-                className={`mt-2 ${inputClass}`}
-              >
-                <option value="">Select</option>
-                {ageGroups.map((a) => (
-                  <option key={a} value={a}>
-                    {a}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="booking-sport" className={labelClass}>
-                Sport
-              </label>
-              <select
-                id="booking-sport"
-                name="sport"
-                className={`mt-2 ${inputClass}`}
-              >
-                <option value="">Select</option>
-                {sports.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="mt-4">
+            <label htmlFor="booking-phone" className={labelClass}>
+              Phone
+            </label>
+            <input
+              id="booking-phone"
+              name="phone"
+              type="tel"
+              placeholder="(555) 123-4567"
+              className={`mt-2 ${inputClass} sm:max-w-[320px]`}
+            />
           </div>
 
+          {/* ── Athletes ──────────────────────────────────── */}
+          <div className="mt-10">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red">
+                Athletes{" "}
+                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center bg-aio-red text-[0.6rem] font-black text-white">
+                  {athleteCount}
+                </span>
+              </h3>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              {athletes.map((athlete, idx) => (
+                <div
+                  key={idx}
+                  className="border border-aio-line p-5 transition hover:border-aio-red/40"
+                >
+                  {/* Card header */}
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="text-[0.65rem] font-black uppercase tracking-[0.18em] text-aio-muted">
+                      Athlete {idx + 1}
+                    </span>
+                    {athletes.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeAthlete(idx)}
+                        className="-my-2 flex min-h-11 items-center gap-1 px-2 text-[0.6rem] font-black uppercase tracking-[0.14em] text-aio-muted/60 transition hover:text-aio-red"
+                        aria-label={`Remove athlete ${idx + 1}`}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                          className="h-3 w-3"
+                        >
+                          <line x1={18} y1={6} x2={6} y2={18} />
+                          <line x1={6} y1={6} x2={18} y2={18} />
+                        </svg>
+                        Remove
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    {/* Athlete name */}
+                    <div>
+                      <label
+                        htmlFor={`athlete-name-${idx}`}
+                        className={labelClass}
+                      >
+                        Athlete Name
+                      </label>
+                      <input
+                        id={`athlete-name-${idx}`}
+                        type="text"
+                        placeholder="Athlete's name"
+                        value={athlete.name}
+                        onChange={(e) => updateAthlete(idx, "name", e.target.value)}
+                        className={`mt-2 ${inputClass}`}
+                      />
+                    </div>
+                    {/* Age group */}
+                    <div>
+                      <label
+                        htmlFor={`athlete-age-${idx}`}
+                        className={labelClass}
+                      >
+                        Age Group
+                      </label>
+                      <select
+                        id={`athlete-age-${idx}`}
+                        value={athlete.ageGroup}
+                        onChange={(e) => updateAthlete(idx, "ageGroup", e.target.value)}
+                        className={`mt-2 ${inputClass}`}
+                      >
+                        <option value="" className="text-black bg-white">Select</option>
+                        {ageGroups.map((a) => (
+                          <option key={a} value={a} className="text-black bg-white">
+                            {a}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {/* Sport */}
+                    <div>
+                      <label
+                        htmlFor={`athlete-sport-${idx}`}
+                        className={labelClass}
+                      >
+                        Sport
+                      </label>
+                      <select
+                        id={`athlete-sport-${idx}`}
+                        value={athlete.sport}
+                        onChange={(e) => updateAthlete(idx, "sport", e.target.value)}
+                        className={`mt-2 ${inputClass}`}
+                      >
+                        <option value="" className="text-black bg-white">Select</option>
+                        {sports.map((s) => (
+                          <option key={s} value={s} className="text-black bg-white">
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Add Athlete button */}
+            <button
+              type="button"
+              onClick={addAthlete}
+              className="mt-4 flex items-center gap-2 border border-dashed border-aio-line px-5 py-3 text-[0.65rem] font-black uppercase tracking-[0.18em] text-aio-muted transition hover:border-aio-red hover:text-white"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                className="h-3.5 w-3.5"
+              >
+                <line x1={12} y1={5} x2={12} y2={19} />
+                <line x1={5} y1={12} x2={19} y2={12} />
+              </svg>
+              Add Another Athlete
+            </button>
+          </div>
+
+          {/* Hidden field — serialized athlete data */}
+          <input
+            type="hidden"
+            name="athletes"
+            value={JSON.stringify(athletes)}
+          />
+
+          {/* ── Order Summary ─────────────────────────────── */}
+          <div className="mt-10 border border-aio-line bg-aio-panel/40 p-5">
+            <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-muted">
+              Order Summary
+            </p>
+            <div className="mt-4 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-aio-body">Session Type</span>
+                <span className="text-sm font-black uppercase text-white">
+                  {sessionTypes.find((t) => t.value === selectedType)?.label ?? "—"}
+                </span>
+              </div>
+              {selectedSlotInfo && (
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-aio-body">Time</span>
+                  <span className="text-sm font-black text-white">
+                    {selectedDateFormatted
+                      ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })
+                      : ""}{" "}
+                    · {formatTime12(selectedSlotInfo.startTime)} –{" "}
+                    {formatTime12(selectedSlotInfo.endTime)}
+                  </span>
+                </div>
+              )}
+              <div className="flex items-center justify-between border-t border-aio-line pt-2.5">
+                <span className="text-sm font-semibold text-aio-body">Athletes</span>
+                <span className="flex items-center gap-2 text-sm font-black text-white">
+                  <span className="flex h-5 w-5 items-center justify-center bg-aio-red text-[0.6rem] font-black text-white">
+                    {athleteCount}
+                  </span>
+                  {athleteCount === 1 ? "1 Athlete" : `${athleteCount} Athletes`}
+                </span>
+              </div>
+            </div>
+            <p className="mt-4 text-[0.6rem] font-semibold leading-relaxed text-aio-muted/70">
+              AIO will contact you to confirm your spot and collect payment. Pricing varies by session type and athlete count.
+            </p>
+          </div>
+
+          {/* Error */}
           {state.status === "error" && (
             <div className="mt-4 flex items-center gap-2 border border-red-500/30 px-4 py-2.5">
               <p className="text-xs font-bold text-red-400">{state.message}</p>
             </div>
           )}
 
-          <HoverButton type="submit" disabled={pending || !selectedSlot} className="mt-6 w-full py-3.5 sm:w-auto sm:px-12">
-            {pending ? "Submitting…" : "Book Session"}
+          <HoverButton
+            type="submit"
+            disabled={pending || !selectedSlot}
+            className="mt-6 w-full py-3.5 sm:w-auto sm:px-12"
+          >
+            {pending
+              ? "Submitting…"
+              : athleteCount === 1
+                ? "Book Session"
+                : `Book for ${athleteCount} Athletes`}
           </HoverButton>
         </div>
       )}

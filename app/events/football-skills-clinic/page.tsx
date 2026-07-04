@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
 import HoverButton from "@/components/HoverButton";
 import FlyerDropdown from "./FlyerDropdown";
+import ClinicRegisterForm from "./ClinicRegisterForm";
 
 export const metadata = {
   title: "Football Skills Clinic | AIO Training",
@@ -145,20 +144,28 @@ export default function FootballSkillsClinicPage() {
               </div>
 
               {/* Reserve A Spot */}
-              <div id="register" className="border border-aio-line p-6 sm:p-8 bg-transparent">
-                <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">
-                  Registration Details
+              <div id="register" className="relative border border-aio-line p-6 sm:p-8 bg-transparent">
+                {/* Early rate badge (scaled down for compactness) */}
+                <div className="absolute top-4 right-4 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
+                  <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Early Rate Active</span>
+                  <span className="font-brand-display text-sm font-black text-white leading-none">
+                    $125<span className="ml-0.5 text-[9px] font-semibold text-white">/athlete</span>
+                  </span>
+                  <span className="text-[7.5px] font-semibold text-white leading-none">Through July 15</span>
+                </div>
+                <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                  Registration
                 </span>
-                <h3 className="mt-3 font-brand-display text-3xl font-black uppercase text-white leading-none">
+                <h3 className="mt-3 font-brand-display text-4xl sm:text-5xl font-black uppercase text-white leading-none">
                   Reserve A Spot.
                 </h3>
                 <p className="mt-4 text-xs font-semibold leading-relaxed text-aio-body">
-                  $125 early through July 15, 2026, then $150. Complete the athlete details, pick the age group, then continue to secure checkout. Your current price is locked in at checkout.
+                  $125 early through July 15, 2026, then $150. Fill in parent info and add each athlete below. AIO will confirm and collect payment.
                 </p>
-                <HoverButton href="/booking" className="mt-6 text-xs tracking-[0.14em]">
-                  Start Registration
-                </HoverButton>
-                <p className="mt-4 text-[10px] font-bold text-aio-muted">
+                <div className="mt-8">
+                  <ClinicRegisterForm />
+                </div>
+                <p className="mt-6 text-[10px] font-bold text-aio-muted">
                   Prefer to reserve by phone?{" "}
                   <a
                     href="tel:+17144408053"
@@ -171,45 +178,44 @@ export default function FootballSkillsClinicPage() {
             </div>
 
             {/* Right Column */}
-            <div className="space-y-6 lg:sticky lg:top-28">
-              {/* Flyer Dropdown */}
+            <div className="space-y-6 lg:sticky lg:top-[120px]">
               <FlyerDropdown />
 
-              {/* Good To Know List */}
-              <div className="border border-aio-line p-6 bg-transparent">
-                <h3 className="text-xs font-black uppercase tracking-[0.24em] text-aio-red">
+              {/* Good To Know List (Wider Horizontally, Shorter Vertically) */}
+              <div className="border border-aio-line p-5 bg-transparent">
+                <h3 className="text-xs font-black uppercase tracking-[0.24em] text-aio-red-on-dark">
                   Good To Know
                 </h3>
-                <div className="mt-5 space-y-4">
+                <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4">
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[9px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
                       Format
                     </span>
-                    <span className="mt-2 block text-xs font-semibold text-white leading-relaxed">
+                    <span className="mt-1.5 block text-xs font-semibold text-white leading-normal">
                       2-day summer clinic, both evenings.
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[9px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
                       Age Groups
                     </span>
-                    <span className="mt-2 block text-xs font-semibold text-white leading-relaxed">
-                      Ages 8-12 and Ages 13-18. Groups separated by age.
+                    <span className="mt-1.5 block text-xs font-semibold text-white leading-normal">
+                      Ages 8-12 and Ages 13-18.
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[9px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
                       Gear Needed
                     </span>
-                    <span className="mt-2 block text-xs font-semibold text-white leading-relaxed">
+                    <span className="mt-1.5 block text-xs font-semibold text-white leading-normal">
                       Cleats, athletic wear, and a hydration bottle.
                     </span>
                   </div>
                   <div>
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[9px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
                       Check-In
                     </span>
-                    <span className="mt-2 block text-xs font-semibold text-white leading-relaxed">
+                    <span className="mt-1.5 block text-xs font-semibold text-white leading-normal">
                       15 minutes prior to the start time each day.
                     </span>
                   </div>
@@ -217,6 +223,7 @@ export default function FootballSkillsClinicPage() {
               </div>
             </div>
           </div>
+
         </div>
       </section>
     </>

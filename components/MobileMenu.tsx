@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import HoverButton from "@/components/HoverButton";
 
 const primaryLinks = [
@@ -22,18 +23,27 @@ const sportsLinks = [
   { href: "/personal-training", label: "Personal Training" },
 ];
 
+const CURTAIN_EASE = "ease-[cubic-bezier(0.77,0,0.18,1)]";
+
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
@@ -46,52 +56,194 @@ export default function MobileMenu() {
 
   const close = () => setOpen(false);
 
+  const reveal = () =>
+    `transition-all duration-500 ease-out motion-reduce:transition-none ${
+      open ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+    }`;
+
+  const revealDelay = (index: number) => ({
+    transitionDelay: open ? `${220 + index * 55}ms` : "0ms",
+  });
+
   const overlay = (
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      aria-hidden={!open}
-      className={`fixed inset-x-0 top-20 bottom-0 z-[40] flex flex-col bg-aio-black text-white transition-transform duration-500 ease-out lg:top-24 xl:hidden ${
-        open ? "translate-y-0" : "pointer-events-none -translate-y-[calc(100%+5rem)] lg:-translate-y-[calc(100%+6rem)]"
-      }`}
+      inert={!open}
+      className={`fixed inset-0 z-[60] xl:hidden ${open ? "" : "pointer-events-none"}`}
     >
-      <div className="flex flex-1 flex-col overflow-y-auto px-6 py-8">
-        <nav className="flex flex-col gap-4">
-          {primaryLinks.map((link) => (
-            <div key={link.href} className="w-full">
-              <Link
-                href={link.href}
-                onClick={close}
-                className="block py-4 font-brand-display text-3xl font-black uppercase tracking-tight text-white transition-colors hover:text-aio-red-on-dark sm:text-4xl"
-              >
-                {link.label}
-              </Link>
-              {link.href === "/training-services" && (
-                <div className="flex flex-col gap-1 pb-2 pl-6">
-                  {sportsLinks.map((sport) => (
-                    <Link
-                      key={sport.href}
-                      href={sport.href}
-                      onClick={close}
-                      className="py-1.5 text-left text-sm font-black uppercase tracking-[0.1em] text-aio-muted transition hover:text-aio-red-on-dark"
-                    >
-                      – {sport.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
+      {/* Red flash curtain — leads the reveal, trails the exit */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 bg-aio-red transition-[clip-path] ${CURTAIN_EASE} motion-reduce:transition-none ${
+          open
+            ? "duration-500 [clip-path:inset(0_0_0%_0)]"
+            : "delay-100 duration-500 [clip-path:inset(0_0_100%_0)]"
+        }`}
+      />
 
-        <div className="mt-auto w-full max-w-xs space-y-3 pt-8">
-          <HoverButton href="tel:+17144408053" variant="outline" className="w-full">
-            Call (714) 440-8053
-          </HoverButton>
-          <HoverButton href="/booking" className="w-full">
-            Get Started
-          </HoverButton>
+      {/* Main panel */}
+      <div
+        className={`absolute inset-0 flex flex-col overflow-hidden bg-aio-black text-white transition-[clip-path] ${CURTAIN_EASE} motion-reduce:transition-none ${
+          open
+            ? "delay-100 duration-[600ms] [clip-path:inset(0_0_0%_0)]"
+            : "duration-500 [clip-path:inset(0_0_100%_0)]"
+        }`}
+      >
+        {/* Atmosphere: red glow */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-40 -top-40 h-[26rem] w-[26rem] rounded-full bg-aio-red/20 blur-[130px]"
+        />
+
+        {/* Header row — mirrors the site nav so the logo doesn't jump */}
+        <div className="mx-auto flex h-20 w-full max-w-[1280px] shrink-0 items-center justify-between border-b border-aio-line px-5 md:px-6 lg:h-24">
+          <Link
+            href="/"
+            onClick={close}
+            aria-label="All In One Training, home"
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+          >
+            <Image
+              src="/assets/images/aio-logo-reverse.png"
+              alt="All In One Training"
+              width={600}
+              height={270}
+              className="h-auto w-[132px] sm:w-[150px]"
+            />
+          </Link>
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={close}
+            aria-label="Close menu"
+            className="grid h-11 w-11 place-items-center border border-aio-line-strong text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+          >
+            <MenuIcon isOpen />
+          </button>
+        </div>
+
+        {/* Scrollable body */}
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-2 [-ms-overflow-style:none] [scrollbar-width:none] md:px-6 [&::-webkit-scrollbar]:hidden">
+          <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col">
+            <nav aria-label="Primary" className="flex flex-col">
+              {primaryLinks.map((link, i) => {
+                const active = pathname === link.href;
+                const hasSubs = link.href === "/training-services";
+                return (
+                  <div
+                    key={link.href}
+                    className={`border-b border-aio-line ${reveal()}`}
+                    style={revealDelay(i)}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={close}
+                      aria-current={active ? "page" : undefined}
+                      className="group flex items-baseline gap-4 py-2.5 focus-visible:outline-none sm:gap-6"
+                    >
+                      <span
+                        className={`w-7 shrink-0 font-brand-display text-sm font-bold tracking-[0.15em] transition-colors ${
+                          active ? "text-aio-red-on-dark" : "text-aio-muted group-hover:text-aio-red-on-dark"
+                        }`}
+                      >
+                        0{i + 1}
+                      </span>
+                      <span
+                        className={`whitespace-nowrap font-brand-display text-[clamp(1.9rem,7.5vw,4rem)] font-black uppercase leading-[0.95] tracking-tight transition-colors group-focus-visible:text-aio-red-on-dark ${
+                          active ? "text-aio-red-on-dark" : "text-white group-hover:text-aio-red-on-dark"
+                        }`}
+                      >
+                        {link.label}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="ml-auto -translate-x-3 self-center font-brand-display text-2xl font-black text-aio-red-on-dark opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                      >
+                        →
+                      </span>
+                    </Link>
+                    {hasSubs && (
+                      <div className="flex flex-col pb-5 pl-11 sm:pl-[3.25rem]">
+                        {sportsLinks.map((sport) => {
+                          const sportActive = pathname === sport.href;
+                          return (
+                            <Link
+                              key={sport.href}
+                              href={sport.href}
+                              onClick={close}
+                              aria-current={sportActive ? "page" : undefined}
+                              className={`group/sub flex items-center gap-3.5 py-2 font-brand-display text-[clamp(1.2rem,5.2vw,1.85rem)] font-black uppercase leading-tight tracking-[0.06em] transition-colors focus-visible:outline-none focus-visible:text-aio-red-on-dark ${
+                                sportActive
+                                  ? "text-aio-red-on-dark"
+                                  : "text-aio-muted hover:text-aio-red-on-dark"
+                              }`}
+                            >
+                              <span
+                                aria-hidden
+                                className={`h-2.5 w-2.5 shrink-0 rotate-45 transition-colors ${
+                                  sportActive ? "bg-aio-red-on-dark" : "bg-aio-red group-hover/sub:bg-aio-red-on-dark"
+                                }`}
+                              />
+                              {sport.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+
+            <div
+              className={`mt-auto pt-8 ${reveal()}`}
+              style={revealDelay(primaryLinks.length)}
+            >
+              <div className="grid gap-3 sm:grid-cols-2">
+                <HoverButton href="tel:+17144408053" variant="outline" className="w-full">
+                  Call (714) 440-8053
+                </HoverButton>
+                <HoverButton href="/booking" className="w-full">
+                  Get Started
+                </HoverButton>
+              </div>
+
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <a
+                  href="https://www.instagram.com/aio_training"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={close}
+                  aria-label="Follow AIO Training on Instagram"
+                  className="grid h-12 w-12 place-items-center border border-aio-line text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+                <a
+                  href="https://www.facebook.com/people/AIO-training/61589139513684/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={close}
+                  aria-label="Follow AIO Training on Facebook"
+                  className="grid h-12 w-12 place-items-center border border-aio-line text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
+                    <path d="M13.5 21.5v-8h2.7l.4-3.1h-3.1V8.4c0-.9.2-1.5 1.5-1.5h1.7V4.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.2H7.5v3.1h2.8v8h3.2z" />
+                  </svg>
+                </a>
+              </div>
+
+              <p className="mt-5 whitespace-nowrap text-center text-[min(0.7rem,2.5vw)] font-bold uppercase tracking-[0.1em] text-aio-muted">
+                All In One Training · Build Your Athlete&apos;s Next Level
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

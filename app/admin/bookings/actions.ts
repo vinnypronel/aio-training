@@ -24,23 +24,6 @@ export async function updateBookingStatus(formData: FormData) {
   revalidatePath("/admin/bookings");
 }
 
-export async function updateBookingNotes(formData: FormData) {
-  const session = await getSession();
-  if (!session) redirect("/admin");
-
-  const id = formData.get("id") as string;
-  const notes = (formData.get("notes") as string) || "";
-
-  if (!id) return;
-
-  await prisma.booking.update({
-    where: { id },
-    data: { notes },
-  });
-
-  revalidatePath("/admin/bookings");
-}
-
 export async function deleteBooking(formData: FormData) {
   const session = await getSession();
   if (!session) redirect("/admin");

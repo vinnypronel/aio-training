@@ -96,6 +96,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--aio-red) var(--aio-black);
+  /* Keep the gutter reserved so locking body scroll (mobile menu) doesn't shift the layout */
+  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar {

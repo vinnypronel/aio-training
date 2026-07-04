@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import HoverButton from "@/components/HoverButton";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -26,11 +25,11 @@ export default async function EventsPage() {
     <>
       <section className="relative flex h-[90svh] items-center overflow-hidden bg-aio-black pt-24 text-white">
         <Image
-          src="/assets/images/home-field-drills-v2.png"
+          src="/assets/images/home-field-drills.webp"
           alt="Athletes doing cone drills on turf"
           fill
           priority
-          unoptimized
+          sizes="100vw"
           className="object-cover object-center"
         />
         <div
@@ -66,14 +65,6 @@ export default async function EventsPage() {
             </p>
           )}
 
-          {isAdmin && (
-            <div className="mt-6 inline-flex items-center gap-2 border border-aio-red/40 bg-aio-red/10 px-4 py-2">
-              <span className="h-2 w-2 rounded-full bg-aio-red" />
-              <span className="text-xs font-black uppercase tracking-[0.1em] text-aio-red">
-                Admin Mode
-              </span>
-            </div>
-          )}
         </div>
       </section>
 

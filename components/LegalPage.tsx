@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-export type LegalClause = {
+type LegalClause = {
   heading: string;
   paragraphs: string[];
 };

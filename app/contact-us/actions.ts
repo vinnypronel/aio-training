@@ -1,5 +1,7 @@
 "use server";
 
+import { prisma } from "@/lib/db";
+
 export type ContactFormState = {
   status: "idle" | "success" | "error";
   message: string;
@@ -18,10 +20,33 @@ export async function submitContactForm(
   _prev: ContactFormState,
   payload: ContactPayload,
 ): Promise<ContactFormState> {
-  console.log("[contact-form] submission received:", {
-    ...payload,
-    receivedAt: new Date().toISOString(),
-  });
+  const fullName = payload.fullName?.trim();
+  const email = payload.email?.trim();
+
+  if (!fullName || !email || !email.includes("@")) {
+    return {
+      status: "error",
+      message: "Please provide your name and a valid email address.",
+    };
+  }
+
+  try {
+    await prisma.contactMessage.create({
+      data: {
+        fullName,
+        email,
+        phone: payload.phone?.trim() || "",
+        athleteAge: payload.athleteAge || "",
+        interestedIn: payload.interestedIn || "",
+        message: payload.message?.trim().slice(0, 5000) || "",
+      },
+    });
+  } catch {
+    return {
+      status: "error",
+      message: "Something went wrong sending your message. Please call (714) 440-8053.",
+    };
+  }
 
   return {
     status: "success",

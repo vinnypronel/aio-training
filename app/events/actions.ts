@@ -7,6 +7,9 @@ import { redirect } from "next/navigation";
 import { writeFile, mkdir, unlink } from "node:fs/promises";
 import path from "node:path";
 
+const ALLOWED_FLYER_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+const MAX_FLYER_BYTES = 5 * 1024 * 1024;
+
 function slugify(text: string) {
   return text
     .toLowerCase()
@@ -40,6 +43,14 @@ export async function createEvent(
     return { error: "A flyer image is required." };
   }
 
+  const flyerExt = path.extname(flyer.name).toLowerCase();
+  if (!ALLOWED_FLYER_EXT.has(flyerExt)) {
+    return { error: "Flyer must be a JPG, PNG, or WebP image." };
+  }
+  if (flyer.size > MAX_FLYER_BYTES) {
+    return { error: "Flyer image must be under 5MB." };
+  }
+
   const validSessions = sessionLabels
     .map((label, i) => ({
       label: label.trim(),
@@ -51,9 +62,8 @@ export async function createEvent(
     return { error: "At least one session (label + time) is required." };
   }
 
-  const ext = path.extname(flyer.name) || ".webp";
   const slug = slugify(title);
-  const filename = `${slug}-${Date.now()}${ext}`;
+  const filename = `${slug}-${Date.now()}${flyerExt}`;
 
   const uploadsDir = path.join(process.cwd(), "public", "assets", "uploads");
   await mkdir(uploadsDir, { recursive: true });

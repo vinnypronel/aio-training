@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import HoverButton from "@/components/HoverButton";
 import DeleteEventButton from "./DeleteEventButton";
 
 export interface EventSession {
@@ -64,16 +63,45 @@ function parsePrice(price: string) {
 
 export default function EventCard({ event, isAdmin }: EventCardProps) {
   const [isFlyerOpen, setIsFlyerOpen] = useState(false);
-  const sessions: EventSession[] = JSON.parse(event.sessions);
+
+  let sessions: EventSession[] = [];
+  try {
+    const parsed = JSON.parse(event.sessions);
+    if (Array.isArray(parsed)) sessions = parsed;
+  } catch {
+    // malformed session data — render the card without the session grid
+  }
+
   const priceInfo = parsePrice(event.price);
+
+  useEffect(() => {
+    if (!isFlyerOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFlyerOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isFlyerOpen]);
 
   return (
     <>
-      <Link
-        href={`/events/${event.slug}`}
-        className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden border border-aio-line bg-transparent transition hover:border-aio-red"
-      >
-        {isAdmin && <DeleteEventButton eventId={event.id} />}
+      <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden border border-aio-line bg-transparent transition hover:border-aio-red">
+        {/* Full-card link overlay — keeps sibling buttons out of an anchor */}
+        <Link
+          href={`/events/${event.slug}`}
+          aria-label={`${event.title} — view event details`}
+          className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red"
+        />
+        {isAdmin && (
+          <div className="relative z-20">
+            <DeleteEventButton eventId={event.id} />
+          </div>
+        )}
         <div className="relative h-[260px] sm:h-[300px] w-full overflow-hidden bg-aio-black">
           <Image
             src={event.flyer}
@@ -154,24 +182,32 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 </div>
               )}
             </div>
-            <div className="flex gap-2">
+            <div className="relative z-20 flex gap-2">
               <button
                 type="button"
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsFlyerOpen(true); }}
-                className="inline-flex min-h-9 items-center justify-center border border-aio-line px-4 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:text-white"
+                onClick={() => setIsFlyerOpen(true)}
+                className="inline-flex min-h-11 items-center justify-center border border-aio-line px-4 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red"
               >
                 View Flyer
               </button>
-              <span className="inline-flex min-h-9 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover">
+              <Link
+                href={`/events/${event.slug}`}
+                className="inline-flex min-h-11 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
                 Open
-              </span>
+              </Link>
             </div>
           </div>
         </div>
-      </Link>
+      </div>
 
       {isFlyerOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm transition-all duration-300">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${event.title} flyer`}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm transition-all duration-300"
+        >
           {/* Backdrop Click */}
           <div
             className="absolute inset-0 cursor-zoom-out"

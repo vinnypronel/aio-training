@@ -5,7 +5,11 @@ export const metadata = { title: "Book A Session | AIO Training" };
 export const dynamic = "force-dynamic";
 
 export default async function BookingPage() {
-  const today = new Date().toISOString().split("T")[0];
+  // Use the venue's local calendar date (Eastern) so evening slots don't vanish
+  // when the server's UTC clock has already rolled over to tomorrow.
+  const today = new Date().toLocaleDateString("en-CA", {
+    timeZone: "America/New_York",
+  });
 
   const slots = await prisma.timeSlot.findMany({
     where: {

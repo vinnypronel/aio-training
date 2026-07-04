@@ -1,13 +1,13 @@
 import Image from "next/image";
 import HoverButton from "@/components/HoverButton";
 
-export type SportPillar = {
+type SportPillar = {
   number: string;
   title: string;
   body: string;
 };
 
-export type SportTier = {
+type SportTier = {
   number: string;
   ageLabel: string;
   title: string;
@@ -15,7 +15,7 @@ export type SportTier = {
   callout?: string;
 };
 
-export type SportProgram = {
+type SportProgram = {
   programLabel: string;
   programTitle: string;
   description: string;
