@@ -112,7 +112,7 @@ export default function SportPage({
         >
           AIO
         </span>
-        <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6 min-[1760px]:-translate-x-[90px]">
+        <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
           <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             {introLabel}
@@ -292,7 +292,7 @@ export default function SportPage({
           {ctaWordmark}
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div data-reveal-group className="max-w-[800px] min-[1760px]:-translate-x-[175px]">
+          <div data-reveal-group className="max-w-[800px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?
             </p>

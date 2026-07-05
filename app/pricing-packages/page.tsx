@@ -105,7 +105,7 @@ export default function PricingPackagesPage() {
           aria-hidden
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
-        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 min-[1760px]:-translate-x-[25px] lg:pt-32">
+        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
           <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Pricing And Packages
@@ -238,7 +238,7 @@ export default function PricingPackagesPage() {
         >
           Plans
         </p>
-        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between min-[1760px]:-translate-x-[165px]">
+        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
           <div data-reveal-group className="max-w-[760px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Still Have Questions?

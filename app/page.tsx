@@ -71,7 +71,7 @@ export default function Home() {
 
       <section className="bg-aio-paper py-20 text-aio-ink md:py-24">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="min-[1760px]:-translate-x-[75px]">
+          <div>
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Train with the best, All In One place
             </p>
@@ -99,7 +99,7 @@ export default function Home() {
               </HoverButton>
             </div>
           </div>
-          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)] min-[1760px]:translate-x-[75px] min-[1760px]:scale-[1.15]">
+          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)]">
             <Image
               src="/assets/images/services-football-card.webp"
               alt="Youth football athlete driving a sled on outdoor turf"

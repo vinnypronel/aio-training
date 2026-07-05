@@ -207,7 +207,7 @@ export default function TrainingServicesPage() {
 
       <section className="relative bg-aio-black py-20 text-white md:py-24 overflow-hidden">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          <div className="relative p-6 xl:-translate-x-10 xl:scale-[1.1] xl:origin-left 2xl:-translate-x-20 2xl:scale-[1.2] min-[1760px]:-translate-x-[245px] min-[1760px]:scale-[1.6] transition-transform duration-500">
+          <div className="relative p-6 xl:-translate-x-10 xl:scale-[1.1] xl:origin-left 2xl:-translate-x-20 2xl:scale-[1.2] transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
             <div data-reveal="fade" className="relative aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
@@ -220,7 +220,7 @@ export default function TrainingServicesPage() {
               />
             </div>
           </div>
-          <div className="xl:translate-x-6 2xl:translate-x-12 min-[1760px]:translate-x-[205px] transition-transform duration-500">
+          <div className="xl:translate-x-6 2xl:translate-x-12 transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Middlesex And Monmouth County
             </p>
@@ -257,7 +257,7 @@ export default function TrainingServicesPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
-          <div data-reveal-group className="max-w-[760px] min-[1760px]:-translate-x-[170px]">
+          <div data-reveal-group className="max-w-[760px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Not Sure Which Path?
             </p>
@@ -270,8 +270,8 @@ export default function TrainingServicesPage() {
               Tell us the athlete&apos;s sport, age, season timing, and goal. AIO will point you toward the right training path.
             </p>
           </div>
-          <div className="relative flex flex-col items-center md:items-end min-[1760px]:translate-x-[35px]">
-            <span aria-hidden className="min-[1760px]:translate-x-[105px] -translate-y-[60px] font-brand-display text-[clamp(8rem,18vw,16rem)] font-black uppercase leading-none text-white/10">
+          <div className="relative flex flex-col items-center md:items-end">
+            <span aria-hidden className="-translate-y-[60px] font-brand-display text-[clamp(8rem,18vw,16rem)] font-black uppercase leading-none text-white/10">
               AIO
             </span>
             <Link
