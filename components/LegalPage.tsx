@@ -26,7 +26,7 @@ export default function LegalPage({
   return (
     <section className="bg-aio-paper py-16 text-aio-ink md:py-24">
       <article className="mx-auto max-w-3xl px-6">
-        <header className="border-b border-aio-ink/15 pb-8">
+        <header data-reveal className="border-b border-aio-ink/15 pb-8">
           <p className="text-sm font-black uppercase tracking-[0.22em] text-aio-red">
             Legal
           </p>
@@ -46,13 +46,13 @@ export default function LegalPage({
           </dl>
         </header>
 
-        <div className="mt-8 space-y-4 text-lg font-medium leading-relaxed">
+        <div data-reveal className="mt-8 space-y-4 text-lg font-medium leading-relaxed">
           <p>{intro}</p>
         </div>
 
         <div className="mt-12 space-y-10">
           {clauses.map((clause) => (
-            <section key={clause.heading}>
+            <section key={clause.heading} data-reveal>
               <h2 className="font-brand-display text-2xl font-black uppercase leading-tight">
                 {clause.heading}
               </h2>

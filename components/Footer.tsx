@@ -26,8 +26,8 @@ export default function Footer() {
   return (
     <footer className="border-t border-aio-line bg-aio-black text-white">
       <div className="mx-auto max-w-[1280px] px-6 py-10 md:py-16">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 lg:translate-x-[160px]">
-          <div className="col-span-2 space-y-5 md:col-span-1 lg:-translate-x-[190px]">
+        <div data-reveal-group className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 md:justify-items-center min-[1760px]:translate-x-[160px]">
+          <div data-reveal="fade" className="col-span-2 space-y-5 md:col-span-1 min-[1760px]:-translate-x-[190px]">
             <Link
               href="/"
               aria-label="All In One Training, home"
@@ -71,7 +71,7 @@ export default function Footer() {
                 </span>
                 <span className="footer-link text-base font-semibold">Trainingallin1@gmail.com</span>
               </a>
-              <p className="flex items-center gap-3 text-base font-semibold text-aio-muted">
+              <p className="flex items-center gap-3 text-base font-semibold text-aio-muted md:whitespace-nowrap">
                 <span
                   aria-hidden
                   className="grid h-8 w-8 shrink-0 place-items-center text-sm font-black text-aio-red-on-dark"
@@ -158,7 +158,7 @@ function FooterColumn({
   links: { href: string; label: string }[];
 }) {
   return (
-    <div className="space-y-4">
+    <div data-reveal className="space-y-4">
       <h2 className="text-base font-black uppercase tracking-[0.18em] text-aio-red-on-dark">
         {title}
       </h2>

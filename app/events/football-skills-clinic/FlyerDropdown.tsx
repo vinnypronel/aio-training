@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function FlyerDropdown() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="border border-aio-line">

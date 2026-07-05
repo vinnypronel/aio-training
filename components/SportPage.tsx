@@ -85,19 +85,19 @@ export default function SportPage({
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p className="mb-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p className="hero-item mb-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             {sport}
           </p>
-          <h1 className="max-w-[920px] font-brand-display text-balance text-[clamp(3rem,9vw,7.5rem)] font-black uppercase leading-[0.88] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]">
+          <h1 className="hero-item max-w-[920px] font-brand-display text-balance text-[clamp(3rem,9vw,7.5rem)] font-black uppercase leading-[0.88] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]" style={{ animationDelay: "120ms" }}>
             <span>{heroLineOne}</span>{" "}
             <span className="mt-2 block text-aio-red drop-shadow-[0_10px_28px_rgba(255,0,0,0.22)]">
               {heroLineTwo}
             </span>
           </h1>
-          <p className="mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg">
+          <p className="hero-item mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg" style={{ animationDelay: "260ms" }}>
             {heroBlurb}
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="hero-item mt-9 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "400ms" }}>
             <HoverButton href="/booking">
               Book Your Session
             </HoverButton>
@@ -112,15 +112,15 @@ export default function SportPage({
         >
           AIO
         </span>
-        <div className="relative mx-auto max-w-[1280px] px-6 lg:-translate-x-[90px]">
+        <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6 min-[1760px]:-translate-x-[90px]">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             {introLabel}
           </p>
-          <h2 className="mt-4 max-w-[1000px] font-brand-display text-[clamp(2.5rem,6vw,5.25rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="mt-4 max-w-[1000px] font-brand-display text-[clamp(2.5rem,6vw,5.25rem)] font-black uppercase leading-none">
             {introTitle}
           </h2>
-          <p className="mt-5 max-w-[760px] text-base font-semibold leading-8 text-aio-ink">
+          <p data-reveal className="mt-5 max-w-[760px] text-base font-semibold leading-8 text-aio-ink">
             {introBody}
           </p>
         </div>
@@ -128,10 +128,11 @@ export default function SportPage({
 
       <section className="bg-aio-black py-16 text-white md:py-24">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div data-reveal-group className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {pillars.map((p) => (
               <article
                 key={p.number}
+                data-reveal
                 className="relative min-h-[220px] overflow-hidden bg-white p-6 text-aio-ink shadow-[var(--aio-shadow-hard)]"
               >
                 <span
@@ -157,16 +158,16 @@ export default function SportPage({
       </section>
 
       <section className={`relative overflow-hidden py-20 md:py-24 ${tiersLight ? "bg-aio-paper text-aio-ink" : "bg-aio-black text-white"}`}>
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+        <div data-reveal-group className="relative z-10 mx-auto max-w-[1280px] px-6">
           <div className="max-w-[760px]">
             <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               {tiersLabel ?? `${sport} Path`}
             </p>
-            <h2 className="mt-4 font-brand-display text-[clamp(2.25rem,5vw,4.75rem)] font-black uppercase leading-none">
+            <h2 data-reveal className="mt-4 font-brand-display text-[clamp(2.25rem,5vw,4.75rem)] font-black uppercase leading-none">
               {tiersTitle ?? "Athlete Tiers"}
             </h2>
-            <p className={`mt-5 text-base font-semibold leading-8 ${tiersLight ? "text-aio-ink/70" : "text-aio-body"}`}>
+            <p data-reveal className={`mt-5 text-base font-semibold leading-8 ${tiersLight ? "text-aio-ink/70" : "text-aio-body"}`}>
               {tiersIntro}
             </p>
           </div>
@@ -174,6 +175,7 @@ export default function SportPage({
             {tiers.map((t) => (
               <li
                 key={t.number}
+                data-reveal
                 className={`flex flex-col p-8 py-4 ${tiersLight ? "bg-white shadow-[0_4px_24px_rgba(0,0,0,0.08)]" : "border border-aio-line bg-transparent"}`}
               >
                 <div className="flex items-start justify-end gap-4">
@@ -203,9 +205,9 @@ export default function SportPage({
 
       <section className="bg-aio-black py-20 text-white md:py-24">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid gap-0 border border-aio-line lg:grid-cols-[0.9fr_1.1fr]">
+          <div data-reveal-group className="grid gap-0 border border-aio-line lg:grid-cols-[0.9fr_1.1fr]">
             {/* Mobile-only label above image */}
-            <div className="border-l-4 border-aio-red p-6 lg:hidden">
+            <div data-reveal className="border-l-4 border-aio-red p-6 lg:hidden">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                 {program.programLabel}
               </p>
@@ -213,13 +215,13 @@ export default function SportPage({
                 {program.programName || "AIO Training"}
               </h3>
             </div>
-            <div className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px]">
+            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px]">
               <Image
                 src={heroImage}
                 alt=""
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover object-center grayscale"
+                className="object-cover object-center"
               />
               <div
                 aria-hidden
@@ -234,7 +236,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
+            <div data-reveal className="p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
               <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
                 {program.tagLabel || "Program Coaching"}
               </p>
@@ -290,14 +292,14 @@ export default function SportPage({
           {ctaWordmark}
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div className="max-w-[800px] lg:-translate-x-[175px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-white">
+          <div data-reveal-group className="max-w-[800px] min-[1760px]:-translate-x-[175px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?
             </p>
-            <h2 className="mt-3 font-brand-display text-balance text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.9]">
+            <h2 data-reveal className="mt-3 font-brand-display text-balance text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.9]">
               {ctaTitle}
             </h2>
-            <p className="mt-5 max-w-[660px] text-base font-bold leading-8 text-white">
+            <p data-reveal className="mt-5 max-w-[660px] text-base font-bold leading-8 text-white">
               {ctaBlurb}
             </p>
           </div>

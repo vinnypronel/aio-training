@@ -226,11 +226,11 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
         </div>
 
         {/* Right: Session types + Calendar */}
-        <div>
+        <div className="lg:max-w-[480px] lg:justify-self-end w-full">
           {/* Session Type Buttons */}
           <div>
             <label className={labelClass}>Session Type *</label>
-            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="mt-2 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
               {sessionTypes.map((t) => (
                 <button
                   key={t.value}
@@ -240,7 +240,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                     setSelectedSlot("");
                     setSelectedDate("");
                   }}
-                  className={`border py-3 text-xs font-black uppercase tracking-[0.08em] transition ${
+                  className={`border py-2 sm:py-2.5 text-xs font-black uppercase tracking-[0.08em] transition ${
                     selectedType === t.value
                       ? "border-aio-red bg-aio-red text-white"
                       : "border-aio-line text-aio-muted hover:border-aio-red hover:text-white"
@@ -254,24 +254,24 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
           </div>
 
           {/* Calendar */}
-          <div className="mt-6 border border-aio-line p-5">
+          <div className="mt-4 border border-aio-line bg-aio-panel/80 p-4 sm:p-5 shadow-[var(--aio-shadow-hard)] backdrop-blur-sm">
             {/* Month nav */}
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-black text-white">
+              <h2 className="text-base sm:text-lg font-black text-white">
                 {MONTHS[calMonth]} {calYear}
               </h2>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5">
                 <button
                   type="button"
                   onClick={prevMonth}
-                  className="flex h-11 w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                  className="flex h-9 sm:h-10 w-9 sm:w-10 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
                 >
                   ←
                 </button>
                 <button
                   type="button"
                   onClick={nextMonth}
-                  className="flex h-11 w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                  className="flex h-9 sm:h-10 w-9 sm:w-10 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
                 >
                   →
                 </button>
@@ -279,11 +279,11 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
             </div>
 
             {/* Day headers */}
-            <div className="mt-5 grid grid-cols-7">
+            <div className="mt-4 grid grid-cols-7">
               {DAYS.map((d, i) => (
                 <div
                   key={`${d}-${i}`}
-                  className="py-2 text-center text-xs font-black uppercase tracking-wider text-aio-muted"
+                  className="py-1 sm:py-1.5 text-center text-xs font-black uppercase tracking-wider text-aio-muted"
                 >
                   {d}
                 </div>
@@ -294,7 +294,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
             <div className="grid grid-cols-7">
               {calendarDays.map((day, i) => {
                 if (day === null) {
-                  return <div key={`empty-${i}`} className="h-12" />;
+                  return <div key={`empty-${i}`} className="h-10 sm:h-11" />;
                 }
 
                 const dateStr = formatDate(calYear, calMonth, day);
@@ -314,7 +314,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                       setSelectedDate(dateStr);
                       setSelectedSlot("");
                     }}
-                    className={`relative flex h-12 items-center justify-center text-sm font-bold transition ${
+                    className={`relative flex h-10 sm:h-11 items-center justify-center text-xs sm:text-sm font-bold transition ${
                       isSelected
                         ? "bg-aio-red text-white"
                         : hasSlots && !isPast
@@ -334,12 +334,12 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
             </div>
 
             {!selectedType && (
-              <p className="mt-4 text-center text-xs font-semibold text-aio-muted">
+              <p className="mt-3 text-center text-xs font-semibold text-aio-muted">
                 Select a session type above to see available dates.
               </p>
             )}
 
-            <p className="mt-4 text-center text-[0.6rem] font-black uppercase tracking-[0.15em] text-aio-muted/50">
+            <p className="mt-3 text-center text-[0.6rem] font-black uppercase tracking-[0.15em] text-aio-muted/50">
               Closed Sundays · Sat 9-5 · Mon-Fri 10-8
             </p>
           </div>

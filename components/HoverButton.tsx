@@ -28,7 +28,7 @@ type ButtonProps = BaseProps & {
 type Props = LinkProps | ButtonProps;
 
 const baseClass =
-  "group relative inline-flex min-h-12 items-center justify-center overflow-hidden px-6 text-sm font-black uppercase tracking-[0.08em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+  "group relative inline-flex min-h-12 cursor-pointer items-center justify-center overflow-hidden px-6 text-sm font-black uppercase tracking-[0.08em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
 
 const variantStyles: Record<Variant, { container: string; textHover: string; blob: string }> = {
   red: {

@@ -72,7 +72,7 @@ export default function CheckoutModal({ formData, onClose }: CheckoutModalProps)
           </div>
           <button
             onClick={onClose}
-            className="flex items-center gap-1.5 text-[0.65rem] font-black uppercase tracking-[0.14em] text-aio-muted transition hover:text-white"
+            className="flex cursor-pointer items-center gap-1.5 text-[0.65rem] font-black uppercase tracking-[0.14em] text-aio-muted transition hover:text-white"
             aria-label="Close checkout"
           >
             <svg

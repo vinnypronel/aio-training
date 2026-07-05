@@ -4,6 +4,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import RouteTransition from "@/components/RouteTransition";
 import AdminBadge from "@/components/AdminBadge";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.trainingaio.com"),
@@ -33,13 +34,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full" data-scroll-behavior="smooth">
+    <html lang="en" className="h-full" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-aio-black text-white antialiased">
+        {/* Arm the reveal system before first paint so above-fold content
+            enters instead of flashing. If hydration never happens (JS off or
+            crashed), the failsafe un-hides everything after 4s. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('reveal-js');window.__revealFailsafe=setTimeout(function(){document.documentElement.classList.remove('reveal-js')},4000);",
+          }}
+        />
         <Nav />
         <main className="flex-1 pt-20 lg:pt-24">{children}</main>
         <Footer />
         <RouteTransition />
         <AdminBadge />
+        <ScrollReveal />
       </body>
     </html>
   );

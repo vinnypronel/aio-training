@@ -31,21 +31,34 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-center px-6 pt-20 text-center lg:pt-24">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p className="mb-4 text-xs font-black uppercase tracking-[0.28em] text-aio-red sm:text-sm">
+          <p className="hero-item mb-4 text-xs font-black uppercase tracking-[0.28em] text-aio-red sm:text-sm">
             All In One Training
           </p>
           <h1 className="max-w-[18ch] font-brand-display text-balance text-[clamp(3rem,8vw,6.5rem)] font-black uppercase leading-[0.92] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]">
-            <span>Build Your Athlete&apos;s</span>{" "}
+            <span>
+              {["Build", "Your", "Athlete’s"].map((word, i) => [
+                i > 0 ? " " : null,
+                <span
+                  key={word}
+                  className="hero-word"
+                  style={{ animationDelay: `${120 + i * 90}ms` }}
+                >
+                  {word}
+                </span>,
+              ])}
+            </span>{" "}
             <span className="mt-1 block text-aio-red drop-shadow-[0_10px_28px_rgba(255,0,0,0.22)]">
-              Next Level.
+              <span className="hero-word" style={{ animationDelay: "420ms" }}>
+                Next Level.
+              </span>
             </span>
           </h1>
-          <p className="mt-6 max-w-[680px] text-base font-semibold leading-7 text-white sm:text-lg md:leading-8">
+          <p className="hero-item mt-6 max-w-[680px] text-base font-semibold leading-7 text-white sm:text-lg md:leading-8" style={{ animationDelay: "560ms" }}>
             Sport-specific training for baseball, football, basketball, soccer,
             and private athlete development. Parents get a clear plan. Athletes
             get focused reps that carry into the season.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="hero-item mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "680ms" }}>
             <HoverButton href="/booking" className="min-h-13 px-8 py-3.5 md:text-base">
               Book Your Session
             </HoverButton>
@@ -57,17 +70,17 @@ export default function Home() {
       </section>
 
       <section className="bg-aio-paper py-20 text-aio-ink md:py-24">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="lg:-translate-x-[75px]">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="min-[1760px]:-translate-x-[75px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Train with the best, All In One place
             </p>
-            <h2 className="mt-4 font-brand-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-black uppercase leading-[0.95]">
+            <h2 data-reveal className="mt-4 font-brand-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-black uppercase leading-[0.95]">
               <span className="block md:whitespace-nowrap">Built For Athletes</span>
               <span className="block md:whitespace-nowrap">And The Families</span>
               <span className="block md:whitespace-nowrap">Backing Them.</span>
             </h2>
-            <div className="mt-6 space-y-5 text-base font-semibold leading-8 text-aio-ink">
+            <div data-reveal className="mt-6 space-y-5 text-base font-semibold leading-8 text-aio-ink">
               <p>
                 All In One Training works with youth and high school athletes
                 across baseball, football, basketball, soccer, and private
@@ -80,11 +93,13 @@ export default function Home() {
                 practices, games, and tryouts.
               </p>
             </div>
-            <HoverButton href="/training-services" className="mt-8">
-              Explore Training
-            </HoverButton>
+            <div data-reveal>
+              <HoverButton href="/training-services" className="mt-8">
+                Explore Training
+              </HoverButton>
+            </div>
           </div>
-          <div className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)] lg:translate-x-[75px] lg:scale-[1.15]">
+          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)] min-[1760px]:translate-x-[75px] min-[1760px]:scale-[1.15]">
             <Image
               src="/assets/images/services-football-card.webp"
               alt="Youth football athlete driving a sled on outdoor turf"
@@ -96,22 +111,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-aio-black py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-          <div className="lg:order-2 lg:col-start-2 lg:row-start-1 lg:translate-x-[105px]">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+      <section className="bg-aio-black py-16 text-white md:py-20">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-x-10 gap-y-6 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="lg:order-2 lg:col-start-2 lg:row-start-1">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Where We Train
             </p>
-            <h2 className="mt-4 font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[0.95]">
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(1.5rem,2.8vw,2.5rem)] font-black uppercase leading-[0.95]">
               <span className="block md:whitespace-nowrap">Scheduled Sessions.</span>
               <span className="block md:whitespace-nowrap">Game Transfer.</span>
             </h2>
           </div>
 
-          <div className="relative lg:order-1 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:-translate-x-[55px] lg:-translate-y-[30px] lg:scale-[1.4]">
+          <div className="relative lg:order-1 lg:col-start-1 lg:row-span-2 lg:row-start-1">
             <div className="absolute -left-4 -top-4 h-24 w-24 border-l-4 border-t-4 border-aio-red" />
             <div className="absolute -bottom-4 -right-4 h-24 w-24 border-b-4 border-r-4 border-aio-red" />
-            <div className="relative aspect-[3/2] w-full overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
+            <div data-reveal="fade" className="relative aspect-[3/2] w-full overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
               <Image
                 src="/assets/images/home-field-drills.webp"
                 alt="Youth football athletes running cone drills on an outdoor field"
@@ -126,8 +141,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:order-3 lg:col-start-2 lg:row-start-2 lg:translate-x-[105px]">
-            <div className="space-y-5">
+          <div className="lg:order-3 lg:col-start-2 lg:row-start-2">
+            <div className="space-y-3">
               <TrainingCard
                 title="Indoor Sessions"
                 tag="Confirmed before each session"
@@ -145,9 +160,11 @@ export default function Home() {
                 ]}
               />
             </div>
-            <HoverButton href="/booking" className="mt-8">
-              Book A Session
-            </HoverButton>
+            <div data-reveal>
+              <HoverButton href="/booking" className="mt-5">
+                Book A Session
+              </HoverButton>
+            </div>
           </div>
         </div>
       </section>
@@ -165,22 +182,22 @@ function TrainingCard({
   items: string[];
 }) {
   return (
-    <article className="border border-aio-line p-5 md:p-6">
-      <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
+    <article data-reveal className="border border-aio-line p-4 md:p-5">
+      <h3 className="font-brand-display text-lg font-black uppercase leading-none">
         {title}
       </h3>
-      <div className="mt-2 text-sm font-black uppercase tracking-[0.08em] text-aio-red-on-dark">
+      <div className="mt-2 text-xs font-black uppercase tracking-[0.08em] text-aio-red-on-dark">
         {tag}
       </div>
-      <ul className="mt-5 space-y-3">
+      <ul className="mt-3 space-y-1.5">
         {items.map((item) => (
           <li
             key={item}
-            className="flex gap-3 text-sm font-semibold leading-7 text-aio-body"
+            className="flex gap-2.5 text-xs font-semibold leading-5 text-aio-body"
           >
             <span
               aria-hidden
-              className="mt-2 h-2.5 w-2.5 shrink-0 bg-aio-red"
+              className="mt-1.5 h-2 w-2 shrink-0 bg-aio-red"
             />
             <span>{item}</span>
           </li>

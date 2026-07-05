@@ -50,9 +50,9 @@ export default async function ClinicSuccessPage({
 
   return (
     <section className="min-h-screen bg-aio-black pt-28 pb-20 text-white md:pt-32">
-      <div className="mx-auto max-w-[640px] px-6 text-center">
+      <div data-reveal-group className="mx-auto max-w-[640px] px-6 text-center">
         {/* Check icon */}
-        <div className="mx-auto flex h-20 w-20 items-center justify-center border border-emerald-500/30 bg-emerald-500/10">
+        <div data-reveal className="mx-auto flex h-20 w-20 items-center justify-center border border-emerald-500/30 bg-emerald-500/10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -65,7 +65,7 @@ export default async function ClinicSuccessPage({
           </svg>
         </div>
 
-        <div className="mt-8">
+        <div data-reveal className="mt-8">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-aio-red">
             {confirmed ? "Payment Confirmed" : "Registration Received"}
           </p>
@@ -128,7 +128,7 @@ export default async function ClinicSuccessPage({
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <div data-reveal className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/events"
             className="inline-flex min-h-12 items-center justify-center bg-aio-red px-8 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover"

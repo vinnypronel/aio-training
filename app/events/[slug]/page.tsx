@@ -30,8 +30,8 @@ export default async function EventDetailPage({
 
   return (
     <section className="bg-aio-black pt-28 pb-20 text-white md:pt-32">
-      <div className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative border border-aio-line bg-aio-panel p-2">
+      <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div data-reveal="fade" className="relative border border-aio-line bg-aio-panel p-2">
           <Image
             src={event.flyer}
             alt={`${event.title} flyer`}
@@ -41,13 +41,13 @@ export default async function EventDetailPage({
           />
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-aio-red">
+          <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-aio-red">
             {event.badge}
           </p>
-          <h1 className="mt-4 font-brand-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.95]">
+          <h1 data-reveal className="mt-4 font-brand-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.95]">
             {event.title}
           </h1>
-          <dl className="mt-8 space-y-4">
+          <dl data-reveal className="mt-8 space-y-4">
             {[
               ["Date", event.date],
               ["Location", event.location],
@@ -61,7 +61,7 @@ export default async function EventDetailPage({
               </div>
             ))}
           </dl>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div data-reveal className="mt-8 flex flex-col gap-3 sm:flex-row">
             <HoverButton href="tel:+17144408053">Call To Reserve</HoverButton>
             <HoverButton href="/events" variant="outline">
               Back To Events

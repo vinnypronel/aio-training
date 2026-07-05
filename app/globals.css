@@ -100,9 +100,13 @@ html {
   scrollbar-gutter: stable;
 }
 
+body {
+  overflow-x: clip;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
-  height: 7px;
+  height: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -176,6 +180,80 @@ h4 {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal system
+
+   Usage:
+   - data-reveal            → fade + 26px rise when scrolled into view
+   - data-reveal="fade"     → opacity-only (for elements that own transforms)
+   - data-reveal-group      → on a container: children with data-reveal
+                              cascade in with an 80ms stagger
+   - .hero-item / .hero-word → load-time entrances for hero sections
+                              (set animation-delay inline)
+
+   The `reveal-js` class is added by an inline script before first paint and
+   confirmed by <ScrollReveal/>; without JS nothing is ever hidden. Reveals
+   use animations (not transitions) so they never clobber the `transition`
+   utilities cards use for hover states, and every element returns to its
+   natural styles once the entrance finishes.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-js [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+  }
+
+  html.reveal-js [data-reveal].is-revealed {
+    animation: aio-reveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  html.reveal-js [data-reveal="fade"].is-revealed {
+    animation-name: aio-reveal-fade;
+  }
+
+  html.reveal-js .hero-item {
+    opacity: 0;
+    animation: aio-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  html.reveal-js .hero-word {
+    display: inline-block;
+    opacity: 0;
+    animation: aio-hero-word 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes aio-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aio-reveal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aio-hero-word {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (min-width: 768px) {

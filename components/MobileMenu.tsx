@@ -141,17 +141,17 @@ export default function MobileMenu() {
                       href={link.href}
                       onClick={close}
                       aria-current={active ? "page" : undefined}
-                      className="group flex items-baseline gap-4 py-2.5 focus-visible:outline-none sm:gap-6"
+                      className="group flex items-baseline gap-4 py-1.5 focus-visible:outline-none sm:gap-6 sm:py-2.5"
                     >
                       <span
-                        className={`w-7 shrink-0 font-brand-display text-sm font-bold tracking-[0.15em] transition-colors ${
+                        className={`w-7 shrink-0 font-brand-display text-xs sm:text-sm font-bold tracking-[0.15em] transition-colors ${
                           active ? "text-aio-red-on-dark" : "text-aio-muted group-hover:text-aio-red-on-dark"
                         }`}
                       >
                         0{i + 1}
                       </span>
                       <span
-                        className={`whitespace-nowrap font-brand-display text-[clamp(1.9rem,7.5vw,4rem)] font-black uppercase leading-[0.95] tracking-tight transition-colors group-focus-visible:text-aio-red-on-dark ${
+                        className={`whitespace-nowrap font-brand-display text-[clamp(1.5rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-tight transition-colors group-focus-visible:text-aio-red-on-dark ${
                           active ? "text-aio-red-on-dark" : "text-white group-hover:text-aio-red-on-dark"
                         }`}
                       >
@@ -165,7 +165,7 @@ export default function MobileMenu() {
                       </span>
                     </Link>
                     {hasSubs && (
-                      <div className="flex flex-col pb-5 pl-11 sm:pl-[3.25rem]">
+                      <div className="flex flex-col pb-3 pl-11 sm:pb-5 sm:pl-[3.25rem]">
                         {sportsLinks.map((sport) => {
                           const sportActive = pathname === sport.href;
                           return (
@@ -174,7 +174,7 @@ export default function MobileMenu() {
                               href={sport.href}
                               onClick={close}
                               aria-current={sportActive ? "page" : undefined}
-                              className={`group/sub flex items-center gap-3.5 py-2 font-brand-display text-[clamp(1.2rem,5.2vw,1.85rem)] font-black uppercase leading-tight tracking-[0.06em] transition-colors focus-visible:outline-none focus-visible:text-aio-red-on-dark ${
+                              className={`group/sub flex items-center gap-3.5 py-1.5 sm:py-2 font-brand-display text-[clamp(1rem,4.5vw,1.85rem)] font-black uppercase leading-tight tracking-[0.06em] transition-colors focus-visible:outline-none focus-visible:text-aio-red-on-dark ${
                                 sportActive
                                   ? "text-aio-red-on-dark"
                                   : "text-aio-muted hover:text-aio-red-on-dark"
@@ -182,7 +182,7 @@ export default function MobileMenu() {
                             >
                               <span
                                 aria-hidden
-                                className={`h-2.5 w-2.5 shrink-0 rotate-45 transition-colors ${
+                                className={`h-0.5 w-3 shrink-0 transition-colors ${
                                   sportActive ? "bg-aio-red-on-dark" : "bg-aio-red group-hover/sub:bg-aio-red-on-dark"
                                 }`}
                               />
@@ -198,7 +198,7 @@ export default function MobileMenu() {
             </nav>
 
             <div
-              className={`mt-auto pt-8 ${reveal()}`}
+              className={`mt-auto pt-4 sm:pt-8 ${reveal()}`}
               style={revealDelay(primaryLinks.length)}
             >
               <div className="grid gap-3 sm:grid-cols-2">

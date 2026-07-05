@@ -194,7 +194,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 href={`/events/${event.slug}`}
                 className="inline-flex min-h-11 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                Open
+                More Info
               </Link>
             </div>
           </div>

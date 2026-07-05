@@ -57,16 +57,16 @@ export default function ContactUsPage() {
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Support Online
           </p>
-          <h1 className="mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]">
+          <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Let&apos;s Get <span className="text-aio-red">To Work.</span>
           </h1>
-          <p className="mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg">
+          <p className="hero-item mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg" style={{ animationDelay: "260ms" }}>
             Ready to book a session or ask about a program? Send the athlete&apos;s sport, age, and goal so AIO can point you to the right next step.
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="hero-item mt-9 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "400ms" }}>
             <HoverButton href="tel:+17144408053">
               Call AIO
             </HoverButton>
@@ -78,9 +78,9 @@ export default function ContactUsPage() {
       </section>
 
       <section className="bg-aio-paper pt-20 pb-8 md:pt-24 md:pb-10">
-        <div className="mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
           {/* Left — contact info card */}
-          <div className="bg-white p-8 text-aio-ink shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:p-10">
+          <div data-reveal className="bg-white p-8 text-aio-ink shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:p-10">
             <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Get In Touch
             </p>
@@ -119,7 +119,7 @@ export default function ContactUsPage() {
           </div>
 
           {/* Right — dark form card */}
-          <div id="contact-form" className="bg-aio-black px-6 py-10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:px-10 md:py-12">
+          <div id="contact-form" data-reveal className="bg-aio-black px-6 py-10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:px-10 md:py-12">
             <h2 className="font-brand-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-black uppercase leading-none">
               Send Us A Message
             </h2>
@@ -133,10 +133,11 @@ export default function ContactUsPage() {
 
       <section className="bg-aio-paper pb-16 md:pb-20">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid gap-5 md:grid-cols-3">
+          <div data-reveal-group className="grid gap-5 md:grid-cols-3">
             {reasons.map((r) => (
               <article
                 key={r.title}
+                data-reveal
                 className="bg-white p-6 text-aio-ink shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
               >
                 <h3 className="font-brand-display text-xl font-black uppercase leading-none">
@@ -156,14 +157,14 @@ export default function ContactUsPage() {
           CALL
         </span>
         <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-[760px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em]">
+          <div data-reveal-group className="max-w-[760px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Prefer To Talk?
             </p>
-            <h2 className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
               Call AIO Training.
             </h2>
-            <p className="mt-5 max-w-[620px] text-base font-bold leading-8">
+            <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
               Talk through the athlete&apos;s sport, age, schedule, and training goal.
             </p>
           </div>

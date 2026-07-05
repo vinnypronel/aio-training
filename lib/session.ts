@@ -2,6 +2,12 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
+if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
+  throw new Error(
+    "SESSION_SECRET env var is required (min 32 chars). Generate one with: openssl rand -hex 32"
+  );
+}
+
 const encodedKey = new TextEncoder().encode(process.env.SESSION_SECRET);
 const COOKIE_NAME = "aio-admin-session";
 

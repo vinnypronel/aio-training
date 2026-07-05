@@ -38,19 +38,19 @@ export default async function EventsPage() {
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 py-20">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Train with the best, All In One place
           </p>
-          <h1 className="mt-4 font-brand-display text-[clamp(2.75rem,7vw,6rem)] font-black uppercase leading-[0.9]">
+          <h1 className="hero-item mt-4 font-brand-display text-[clamp(2.75rem,7vw,6rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Upcoming<br />
             <span className="text-aio-red">Events</span>
           </h1>
           {firstEvent ? (
             <>
-              <p className="mt-5 max-w-[680px] text-base font-semibold leading-8 text-aio-body md:text-lg">
+              <p className="hero-item mt-5 max-w-[680px] text-base font-semibold leading-8 text-aio-body md:text-lg" style={{ animationDelay: "260ms" }}>
                 Check out our upcoming events and register before spots fill up.
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="hero-item mt-7 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "400ms" }}>
                 <HoverButton href={`/events/${firstEvent.slug}`}>
                   Reserve Your Spot
                 </HoverButton>
@@ -69,22 +69,24 @@ export default async function EventsPage() {
       </section>
 
       <section className="bg-aio-black py-20 md:py-24">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+        <div data-reveal-group className="mx-auto max-w-[1280px] px-6">
+          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
             Upcoming Events
           </p>
-          <h2 className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Reserve From<br className="lg:hidden" /> The Board.
           </h2>
           <div aria-hidden className="mt-4 h-px w-full bg-aio-line" />
-          <p className="mt-4 text-sm font-bold uppercase tracking-[0.12em] text-aio-muted">
+          <p data-reveal className="mt-4 text-sm font-bold uppercase tracking-[0.12em] text-aio-muted">
             Showing {events.length} event{events.length !== 1 ? "s" : ""}
           </p>
 
           {events.length > 0 ? (
             <div className="mx-auto mt-10 grid max-w-[900px] gap-6 sm:grid-cols-2 sm:[&>*:only-child]:col-span-2">
               {events.map((event) => (
-                <EventCard key={event.id} event={event} isAdmin={isAdmin} />
+                <div key={event.id} data-reveal>
+                  <EventCard event={event} isAdmin={isAdmin} />
+                </div>
               ))}
             </div>
           ) : (
@@ -105,14 +107,14 @@ export default async function EventsPage() {
           Events
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div className="max-w-[800px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-white">
+          <div data-reveal-group className="max-w-[800px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Questions?
             </p>
-            <h2 className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.9]">
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.9]">
               Call Before<br />You Reserve.
             </h2>
-            <p className="mt-5 max-w-[660px] text-sm font-semibold leading-relaxed text-white">
+            <p data-reveal className="mt-5 max-w-[660px] text-sm font-semibold leading-relaxed text-white">
               Use the flyer phone number if you need help choosing the right session.
             </p>
           </div>

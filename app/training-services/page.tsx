@@ -94,36 +94,38 @@ export default function TrainingServicesPage() {
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Training And Services Hub
           </p>
-          <h1 className="mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]">
+          <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Where Athletes <span className="text-aio-red">Are Made.</span>
           </h1>
-          <p className="mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg">
+          <p className="hero-item mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg" style={{ animationDelay: "260ms" }}>
             Sport-specific developmental programs for youth and high school athletes. Choose the path that matches your athlete&apos;s season and goals.
           </p>
-          <HoverButton href="#tracks" className="mt-9">
-            Find Your Program
-          </HoverButton>
+          <div className="hero-item" style={{ animationDelay: "400ms" }}>
+            <HoverButton href="#tracks" className="mt-9">
+              Find Your Program
+            </HoverButton>
+          </div>
         </div>
       </section>
 
       <section id="tracks" className="bg-aio-paper py-20 text-aio-ink md:py-24">
-        <div className="mx-auto max-w-[1600px] px-6">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+        <div data-reveal-group className="mx-auto max-w-[1600px] px-6">
+          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Our Services
           </p>
-          <h2 className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Pick Your Training Track.
           </h2>
-          <p className="mt-5 max-w-[720px] text-base font-semibold leading-relaxed text-aio-ink lg:max-w-none lg:whitespace-nowrap">
+          <p data-reveal className="mt-5 max-w-[720px] text-base font-semibold leading-relaxed text-aio-ink lg:max-w-none lg:whitespace-nowrap">
             Each track keeps the same AIO standard: assess the athlete, program the work, and progress the plan as the season changes.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-6 sm:-mx-3 sm:grid-cols-3 md:grid-cols-5">
             {tracks.map((t) => (
-              <div key={t.href} className="group relative aspect-[3/4] transition-transform duration-300 hover:-translate-y-2">
+              <div key={t.href} data-reveal className="group relative aspect-[3/4] transition-transform duration-300 hover:-translate-y-2">
                 <Link
                   href={t.href}
                   className="relative flex h-full flex-col justify-end overflow-hidden bg-aio-black p-6 text-white transition [clip-path:polygon(0_0,100%_0,100%_calc(100%-40px),calc(100%-40px)_100%,0_100%)]"
@@ -162,17 +164,18 @@ export default function TrainingServicesPage() {
       </section>
 
       <section className="bg-aio-black py-20 text-white md:py-24">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+        <div data-reveal-group className="mx-auto max-w-[1280px] px-6">
+          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
             How We Work
           </p>
-          <h2 className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Three-Step Method.
           </h2>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {process.map((step) => (
               <article
                 key={step.number}
+                data-reveal
                 className="relative flex min-h-[300px] flex-col justify-between overflow-hidden border border-aio-line p-8 pt-8"
               >
                 <span
@@ -202,12 +205,12 @@ export default function TrainingServicesPage() {
         </div>
       </section>
 
-      <section className="relative bg-aio-black py-20 text-white md:py-24">
-        <div className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          <div className="relative p-6 lg:-translate-x-[245px] lg:scale-[1.6] lg:origin-left">
+      <section className="relative bg-aio-black py-20 text-white md:py-24 overflow-hidden">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+          <div className="relative p-6 xl:-translate-x-10 xl:scale-[1.1] xl:origin-left 2xl:-translate-x-20 2xl:scale-[1.2] min-[1760px]:-translate-x-[245px] min-[1760px]:scale-[1.6] transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
-            <div className="relative aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
+            <div data-reveal="fade" className="relative aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
               <Image
                 src="/assets/images/training-services-facility.webp"
                 alt="AIO training facility"
@@ -217,15 +220,15 @@ export default function TrainingServicesPage() {
               />
             </div>
           </div>
-          <div className="lg:translate-x-[205px]">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+          <div className="xl:translate-x-6 2xl:translate-x-12 min-[1760px]:translate-x-[205px] transition-transform duration-500">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Middlesex And Monmouth County
             </p>
-            <h2 className="mt-3 sm:whitespace-nowrap font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-none">
+            <h2 data-reveal className="mt-3 sm:whitespace-nowrap font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-none">
               Where We Train.
             </h2>
             <div className="mt-8 space-y-5">
-              <article className="border border-aio-line p-6">
+              <article data-reveal className="border border-aio-line p-6">
                 <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
                   Indoor Training Sessions
                 </h3>
@@ -236,7 +239,7 @@ export default function TrainingServicesPage() {
                   Strength, speed, and group work may use availability-dependent partner facilities. Contact AIO before visiting any training location. Each session location is confirmed before arrival.
                 </p>
               </article>
-              <article className="border border-aio-line p-6">
+              <article data-reveal className="border border-aio-line p-6">
                 <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
                   Permitted Fields And Courts
                 </h3>
@@ -254,21 +257,21 @@ export default function TrainingServicesPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-[760px] lg:-translate-x-[170px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em]">
+          <div data-reveal-group className="max-w-[760px] min-[1760px]:-translate-x-[170px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Not Sure Which Path?
             </p>
-            <h2 className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
               <span className="block sm:whitespace-nowrap">Start With A Coach</span>
               <span className="block">Conversation.</span>
             </h2>
 
-            <p className="mt-5 max-w-[620px] text-base font-bold leading-8">
+            <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
               Tell us the athlete&apos;s sport, age, season timing, and goal. AIO will point you toward the right training path.
             </p>
           </div>
-          <div className="relative flex flex-col items-center md:items-end lg:translate-x-[35px]">
-            <span aria-hidden className="lg:translate-x-[105px] -translate-y-[60px] font-brand-display text-[clamp(8rem,18vw,16rem)] font-black uppercase leading-none text-white/10">
+          <div className="relative flex flex-col items-center md:items-end min-[1760px]:translate-x-[35px]">
+            <span aria-hidden className="min-[1760px]:translate-x-[105px] -translate-y-[60px] font-brand-display text-[clamp(8rem,18vw,16rem)] font-black uppercase leading-none text-white/10">
               AIO
             </span>
             <Link

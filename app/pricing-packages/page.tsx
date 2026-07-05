@@ -105,19 +105,19 @@ export default function PricingPackagesPage() {
           aria-hidden
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
-        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 md:-translate-x-[25px] lg:pt-32">
+        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 min-[1760px]:-translate-x-[25px] lg:pt-32">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Pricing And Packages
           </p>
-          <h1 className="mt-4 max-w-[920px] font-brand-display text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]">
+          <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Invest In<br />
             <span className="text-aio-red">Your Game</span>
           </h1>
-          <p className="mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg">
+          <p className="hero-item mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg" style={{ animationDelay: "260ms" }}>
             Flexible payment options for private sessions, groups, training packs, monthly small-group plans, and team training.
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="hero-item mt-9 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "400ms" }}>
             <HoverButton href="/booking">
               Talk To A Coach
             </HoverButton>
@@ -173,7 +173,7 @@ export default function PricingPackagesPage() {
         parallaxImg="/assets/images/pricing-parallax-basketball.webp"
       />
 
-      <section className="relative overflow-hidden bg-aio-black py-20 text-white md:py-24">
+      <section className="relative overflow-hidden bg-aio-black py-14 text-white md:py-16">
         <Image
           src="/assets/images/pricing-parallax-football.webp"
           alt=""
@@ -182,31 +182,31 @@ export default function PricingPackagesPage() {
           className="pointer-events-none object-cover opacity-[0.15]"
         />
         <div className="relative mx-auto max-w-[1280px] px-6">
-          <div className="grid md:grid-cols-2">
-            <div className="flex flex-col justify-center border border-aio-line bg-aio-black p-8 md:p-12">
+          <div data-reveal-group className="grid md:grid-cols-2">
+            <div data-reveal className="flex flex-col justify-center border border-aio-line bg-aio-black p-8 md:p-10">
               <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
                 Team Training
               </p>
-              <h2 className="mt-4 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+              <h2 className="mt-4 font-brand-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-black uppercase leading-none">
                 Unit Cohesion.
               </h2>
             </div>
-            <article className="flex flex-col bg-white p-8 text-black md:p-10">
+            <article data-reveal className="flex flex-col bg-white p-6 text-black md:p-8">
               <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
                 Team Training
               </p>
-              <div className="mt-4 flex items-baseline gap-3">
-                <span className="font-brand-display text-6xl font-black leading-none">
+              <div className="mt-3 flex items-baseline gap-3">
+                <span className="font-brand-display text-5xl md:text-6xl font-black leading-none">
                   $190
                 </span>
                 <span className="text-xs font-black uppercase tracking-[0.12em] text-aio-muted">
                   per session
                 </span>
               </div>
-              <p className="mt-4 text-sm font-semibold leading-7 text-black">
+              <p className="mt-3 text-sm font-semibold leading-6 text-black">
                 60-75 minute team session for up to 12 athletes.
               </p>
-              <ul className="mt-5 space-y-3 text-sm font-semibold leading-6 text-black">
+              <ul className="mt-4 space-y-2 text-sm font-semibold leading-6 text-black">
                 <li className="flex gap-2">
                   <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 bg-aio-red" />
                   <span>Scheduled permitted field or court options, plus availability-dependent partner facilities</span>
@@ -222,7 +222,7 @@ export default function PricingPackagesPage() {
               </ul>
               <Link
                 href="/booking"
-                className="mt-8 inline-flex min-h-12 w-full items-center justify-center bg-aio-black px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-aio-black/80"
+                className="mt-6 inline-flex min-h-12 w-full items-center justify-center bg-aio-black px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:bg-aio-black/80"
               >
                 Ask About Team Training
               </Link>
@@ -238,15 +238,15 @@ export default function PricingPackagesPage() {
         >
           Plans
         </p>
-        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between lg:-translate-x-[165px]">
-          <div className="max-w-[760px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em]">
+        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between min-[1760px]:-translate-x-[165px]">
+          <div data-reveal-group className="max-w-[760px]">
+            <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Still Have Questions?
             </p>
-            <h2 className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
               Talk To A Coach Before You Pick.
             </h2>
-            <p className="mt-5 max-w-[620px] text-base font-bold leading-8">
+            <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
               Share the athlete&apos;s sport, age, schedule, and goal so AIO can point you toward the right option.
             </p>
           </div>
@@ -291,7 +291,7 @@ function PlanGroup({
   return (
     <section
       id={id}
-      className={`relative overflow-hidden ${bgClass} py-24 ${textClass} md:py-32 scroll-mt-20 lg:scroll-mt-24`}
+      className={`relative overflow-hidden ${bgClass} py-14 ${textClass} md:py-16 scroll-mt-20 lg:scroll-mt-24`}
     >
       {parallaxImg && (
         <Image
@@ -302,26 +302,27 @@ function PlanGroup({
           className="pointer-events-none absolute inset-0 object-cover opacity-[0.18]"
         />
       )}
-      <div className="relative mx-auto max-w-[1440px] px-6">
-        <p className={`text-xs font-black uppercase tracking-[0.28em] ${accent} ${plans.length <= 2 ? "text-center" : ""}`}>
+      <div data-reveal-group className="relative mx-auto max-w-[1440px] px-6">
+        <p data-reveal className={`text-xs font-black uppercase tracking-[0.28em] ${accent} ${plans.length <= 2 ? "text-center" : ""}`}>
           {label}
         </p>
-        <h2 className={`mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none ${plans.length <= 2 ? "text-center" : ""}`}>
+        <h2 data-reveal className={`mt-3 font-brand-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-black uppercase leading-none ${plans.length <= 2 ? "text-center" : ""}`}>
           {title}
         </h2>
-        <p className={`mt-4 text-base font-semibold leading-8 ${bodyText} ${plans.length <= 2 ? "text-center mx-auto max-w-[760px]" : "max-w-[760px]"}`}>
+        <p data-reveal className={`mt-3 text-sm font-semibold leading-7 ${bodyText} ${plans.length <= 2 ? "text-center mx-auto max-w-[760px]" : "max-w-[760px]"}`}>
           {intro}
         </p>
 
-        <div className={`mt-10 grid gap-8 md:grid-cols-2 ${plans.length > 2 ? "lg:grid-cols-3" : "mx-auto max-w-[920px]"}`}>
+        <div className={`mt-7 grid gap-6 md:grid-cols-2 ${plans.length > 2 ? "lg:grid-cols-3" : "mx-auto max-w-[920px]"}`}>
           {plans.map((plan) => (
             <article
               key={plan.title}
+              data-reveal
               className={`relative flex flex-col border ${
                 plan.featured
                   ? "border-aio-red bg-aio-black text-white shadow-[var(--aio-shadow-hard)]"
                   : `${cardBorder} ${cardBg} ${cardText} shadow-[var(--aio-shadow-hard)]`
-              } p-8 md:p-12 transition hover:border-aio-red`}
+              } p-6 md:p-8 transition hover:border-aio-red`}
             >
               {plan.featured && (
                 <span className="absolute right-0 top-0 bg-aio-red px-4 py-2 text-[0.65rem] font-black uppercase tracking-[0.18em] text-white">
@@ -333,8 +334,8 @@ function PlanGroup({
                 {plan.title}
               </h3>
 
-              <div className="mt-5 flex items-baseline gap-2">
-                <span className="font-brand-display text-6xl md:text-7.5rem font-black leading-none">
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="font-brand-display text-5xl md:text-6xl font-black leading-none">
                   {plan.price}
                 </span>
                 <span className={`text-[0.65rem] font-black uppercase tracking-[0.15em] self-end pb-1.5 ${plan.featured ? "text-white" : "text-black"}`}>
@@ -342,11 +343,11 @@ function PlanGroup({
                 </span>
               </div>
 
-              <p className={`mt-5 text-sm font-semibold leading-6 ${plan.featured ? "text-white" : "text-black"}`}>
+              <p className={`mt-4 text-sm font-semibold leading-6 ${plan.featured ? "text-white" : "text-black"}`}>
                 {plan.body}
               </p>
 
-              <ul className="mt-6 space-y-3 text-sm font-semibold leading-6">
+              <ul className="mt-4 space-y-2 text-sm font-semibold leading-6">
                 {plan.bullets.map((b) => (
                   <li key={b} className="flex gap-2">
                     <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-aio-red" />
@@ -356,14 +357,14 @@ function PlanGroup({
               </ul>
 
               {plan.savings && (
-                <p className={`mt-5 text-xs font-black uppercase tracking-[0.12em] ${plan.featured ? "text-aio-red" : accent}`}>
+                <p className={`mt-4 text-xs font-black uppercase tracking-[0.12em] ${plan.featured ? "text-aio-red" : accent}`}>
                   {plan.savings}
                 </p>
               )}
 
               <Link
                 href="/booking"
-                className={`mt-8 inline-flex min-h-12 items-center justify-center px-6 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-white transition ${
+                className={`mt-6 inline-flex min-h-12 items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition ${
                   plan.featured
                     ? "bg-aio-red hover:bg-aio-red-hover shadow-[var(--aio-shadow-red)]"
                     : "bg-aio-black hover:bg-aio-panel border border-aio-line"
