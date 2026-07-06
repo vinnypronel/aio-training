@@ -112,7 +112,7 @@ export default function SportPage({
 
       <section className="relative overflow-hidden bg-aio-paper py-20 text-aio-ink md:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className={`absolute right-0 top-1/2 -translate-y-1/2 select-none font-brand-display text-[clamp(8rem,20vw,18rem)] font-black uppercase leading-none text-aio-black/[0.14] ${
+          <span className={`absolute right-6 top-6 select-none font-brand-display text-[clamp(6rem,18vw,8rem)] font-black uppercase leading-none text-aio-black/[0.14] md:right-0 md:top-1/2 md:-translate-y-1/2 md:text-[clamp(8rem,20vw,18rem)] ${
             sport.toLowerCase().includes("baseball") ? "lg:translate-x-[180px]" : "lg:translate-x-[160px]"
           }`}>
             AIO
