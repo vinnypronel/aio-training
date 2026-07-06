@@ -98,6 +98,10 @@ html {
   scrollbar-color: var(--aio-red) var(--aio-black);
   /* Keep the gutter reserved so locking body scroll (mobile menu) doesn't shift the layout */
   scrollbar-gutter: stable;
+  /* Stop iOS Safari from auto-inflating text, which blows fixed-width
+     layouts (nowrap buttons/tags) past the viewport on iPhone. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {

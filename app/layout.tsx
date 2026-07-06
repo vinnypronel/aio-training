@@ -46,7 +46,7 @@ export default function RootLayout({
           }}
         />
         <Nav />
-        <main className="flex-1 pt-20 lg:pt-24">{children}</main>
+        <main className="flex-1 pt-20 lg:pt-24 overflow-x-clip">{children}</main>
         <Footer />
         <RouteTransition />
         <AdminBadge />

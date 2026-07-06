@@ -224,7 +224,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="relative w-full aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
+            <div className="relative min-w-0 w-full aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
               <div data-reveal="fade" className="absolute inset-0 h-full w-full">
                 <Image
                   src={heroImage}
@@ -247,7 +247,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
+            <div className="min-w-0 p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
               <div data-reveal className="h-full w-full">
                 <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
                   {program.tagLabel || "Program Coaching"}
@@ -276,7 +276,7 @@ export default function SportPage({
                     </dd>
                   </div>
                 </dl>
-                <div className="mt-8 flex gap-1.5 sm:gap-2">
+                <div className="mt-8 flex flex-wrap gap-1.5 sm:gap-2">
                   {program.tags.map((tag) => (
                     <span
                       key={tag}
@@ -287,7 +287,7 @@ export default function SportPage({
                   ))}
                 </div>
                 <div className="mt-8 flex justify-center lg:justify-start">
-                  <HoverButton href="/booking" className="w-full py-3 text-center sm:w-auto">
+                  <HoverButton href="/booking" className="w-full whitespace-normal! py-3 text-center sm:w-auto">
                     {program.ctaLabel}
                   </HoverButton>
                 </div>
