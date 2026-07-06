@@ -222,18 +222,20 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:min-h-[560px] isolate webkit-clip-fix">
-              <Image
-                src={heroImage}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover object-center"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-aio-black via-aio-black/20 to-transparent"
-              />
+            <div className="relative min-h-[300px] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:min-h-[560px] isolate webkit-clip-fix">
+              <div data-reveal="fade" className="absolute inset-0 h-full w-full">
+                <Image
+                  src={heroImage}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-aio-black via-aio-black/20 to-transparent"
+                />
+              </div>
               <div className="absolute right-0 bottom-0 left-0 hidden border-l-4 border-aio-red bg-aio-black/85 p-6 backdrop-blur lg:block">
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                   {program.programName || "AIO Training"}
