@@ -29,11 +29,12 @@ const sessionTypes = [
 
 const ageGroups = ["8-10", "11-13", "14-16", "17-18"];
 const sports = [
-  "Baseball",
-  "Football",
-  "Basketball",
-  "Soccer",
+  "Baseball Training",
+  "Football Training",
+  "Basketball Training",
+  "Soccer Training",
   "Personal Training",
+  "Team Training",
   "Not Sure Yet",
 ];
 
