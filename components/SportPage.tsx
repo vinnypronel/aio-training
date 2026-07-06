@@ -220,7 +220,7 @@ export default function SportPage({
                 {program.programLabel}
               </h3>
             </div>
-            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px]">
+            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px] isolate">
               <Image
                 src={heroImage}
                 alt=""
