@@ -98,7 +98,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
           <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
             Events
@@ -117,7 +117,7 @@ export default async function EventsPage() {
             </p>
           </div>
           <div className="justify-self-start lg:justify-self-auto lg:translate-y-[35px]">
-            <HoverButton href="tel:+17144408053" variant="black">
+            <HoverButton href="tel:+17144408053" variant="red">
               Call (714) 440-8053
             </HoverButton>
           </div>

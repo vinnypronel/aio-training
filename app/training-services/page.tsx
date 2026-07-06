@@ -255,7 +255,7 @@ export default function TrainingServicesPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
           <span className="absolute right-[30px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/10 lg:text-[16rem]">
             AIO
@@ -268,7 +268,7 @@ export default function TrainingServicesPage() {
             </p>
             <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
               <span className="block sm:whitespace-nowrap">Start With A</span>
-              <span className="block text-black">Conversation.</span>
+              <span className="block">Conversation.</span>
             </h2>
 
             <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
@@ -276,7 +276,7 @@ export default function TrainingServicesPage() {
             </p>
           </div>
           <div className="self-start md:self-auto md:translate-y-[35px]">
-            <HoverButton href="/booking" variant="black">
+            <HoverButton href="/booking" variant="red">
               Book A Consultation
             </HoverButton>
           </div>

@@ -152,7 +152,7 @@ export default function ContactUsPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
           <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/10 lg:text-[16rem]">
             CALL US
@@ -171,7 +171,7 @@ export default function ContactUsPage() {
             </p>
           </div>
           <div className="self-start md:self-auto md:translate-y-[35px]">
-            <HoverButton href="tel:+17144408053" variant="black">
+            <HoverButton href="tel:+17144408053" variant="red">
               Call (714) 440-8053
             </HoverButton>
           </div>
