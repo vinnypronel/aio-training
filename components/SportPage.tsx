@@ -193,7 +193,7 @@ export default function SportPage({
                 <h3 className="mt-4 font-brand-display text-2xl font-black uppercase leading-tight">
                   {t.title}
                 </h3>
-                <p className={`mt-4 text-sm font-semibold leading-6 ${tiersLight ? "text-aio-ink/70" : "text-aio-body"}`}>
+                <p className={`mt-4 text-sm font-semibold leading-6 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
                   {t.body}
                 </p>
                 {t.callout && (
