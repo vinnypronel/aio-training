@@ -214,10 +214,10 @@ export default function SportPage({
             {/* Mobile-only label above image */}
             <div data-reveal className="border-l-4 border-aio-red p-6 lg:hidden">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
-                {program.programLabel}
+                {program.programName || "AIO Training"}
               </p>
               <h3 className="mt-2 font-brand-display text-3xl font-black uppercase leading-none">
-                {program.programName || "AIO Training"}
+                {program.programLabel}
               </h3>
             </div>
             <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px]">
@@ -234,10 +234,10 @@ export default function SportPage({
               />
               <div className="absolute right-0 bottom-0 left-0 hidden border-l-4 border-aio-red bg-aio-black/85 p-6 backdrop-blur lg:block">
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
-                  {program.programLabel}
+                  {program.programName || "AIO Training"}
                 </p>
                 <h3 className="mt-2 font-brand-display text-3xl font-black uppercase leading-none">
-                  {program.programName || "AIO Training"}
+                  {program.programLabel}
                 </h3>
               </div>
             </div>
