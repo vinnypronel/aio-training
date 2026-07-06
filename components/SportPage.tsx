@@ -212,7 +212,7 @@ export default function SportPage({
         <div className="mx-auto max-w-[1280px] px-6">
           <div data-reveal-group className="grid gap-0 border border-aio-line lg:grid-cols-[0.9fr_1.1fr]">
             {/* Mobile-only label above image */}
-            <div data-reveal className="border-l-4 border-aio-red p-6 lg:hidden">
+            <div data-reveal className="border-l-4 border-b border-l-aio-red border-b-aio-line p-6 lg:hidden">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                 {program.programName || "AIO Training"}
               </p>
@@ -220,7 +220,7 @@ export default function SportPage({
                 {program.programLabel}
               </h3>
             </div>
-            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border border-aio-line bg-aio-black lg:min-h-[560px] isolate">
+            <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:min-h-[560px] isolate">
               <Image
                 src={heroImage}
                 alt=""
