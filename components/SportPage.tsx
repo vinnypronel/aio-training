@@ -190,10 +190,8 @@ export default function SportPage({
                     {t.number}.
                   </span>
                 </div>
-                {t.title.toLowerCase() === "youth development" && (
-                  <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red mt-4" />
-                )}
-                <h3 className={`font-brand-display text-2xl font-black uppercase leading-tight ${t.title.toLowerCase() === "youth development" ? "mt-3" : "mt-4"}`}>
+                <div className={`h-1 w-12 -skew-x-[18deg] mt-4 ${tiersLight ? "bg-aio-black" : "bg-white"}`} />
+                <h3 className="mt-3 font-brand-display text-2xl font-black uppercase leading-tight">
                   {t.title}
                 </h3>
                 <p className={`mt-4 text-sm font-semibold leading-6 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
