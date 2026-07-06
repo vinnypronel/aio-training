@@ -218,7 +218,7 @@ export default function FootballSkillsClinicPage() {
           {/* Reserve A Spot — sits below the pinned area so the flyer releases here */}
           <div id="register" data-reveal className="relative mt-10 border border-aio-line p-6 sm:p-8 bg-transparent scroll-mt-28">
             {/* Early rate badge (scaled down for compactness) */}
-            <div className="absolute top-4 right-4 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
+            <div className="mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
               <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Early Rate Active</span>
               <span className="font-brand-display text-sm font-black text-white leading-none">
                 $125<span className="ml-0.5 text-[9px] font-semibold text-white">/athlete</span>
