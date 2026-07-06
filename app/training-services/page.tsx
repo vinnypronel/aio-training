@@ -86,7 +86,7 @@ export default function TrainingServicesPage() {
           fill
           priority
           sizes="100vw"
-          className="-scale-x-100 object-cover object-[30%_30%]"
+          className="-scale-x-100 object-cover object-[15%_30%] lg:object-[30%_30%]"
         />
         <div
           aria-hidden
