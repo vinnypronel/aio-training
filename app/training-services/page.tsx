@@ -210,7 +210,7 @@ export default function TrainingServicesPage() {
           <div className="relative p-6 lg:-translate-x-20 lg:scale-[1.2] lg:origin-left transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
-            <div className="relative aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)] isolate webkit-clip-fix">
+            <div className="relative w-full aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)] isolate webkit-clip-fix">
               <div data-reveal="fade" className="absolute inset-0 h-full w-full">
                 <Image
                   src="/assets/images/training-services-facility.webp"

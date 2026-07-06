@@ -222,7 +222,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="relative aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
+            <div className="relative w-full aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
               <div data-reveal="fade" className="absolute inset-0 h-full w-full">
                 <Image
                   src={heroImage}
@@ -285,7 +285,7 @@ export default function SportPage({
                   ))}
                 </div>
                 <div className="mt-8 flex justify-center lg:justify-start">
-                  <HoverButton href="/booking" className="w-4/5 sm:w-auto">
+                  <HoverButton href="/booking" className="max-w-[85%] whitespace-normal! py-3 text-center sm:w-auto sm:max-w-none">
                     {program.ctaLabel}
                   </HoverButton>
                 </div>
