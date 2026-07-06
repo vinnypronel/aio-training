@@ -2,13 +2,16 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) {
-  throw new Error(
-    "SESSION_SECRET env var is required (min 32 chars). Generate one with: openssl rand -hex 32"
-  );
+function getEncodedKey() {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "SESSION_SECRET env var is required (min 32 chars). Generate one with: openssl rand -hex 32"
+    );
+  }
+  return new TextEncoder().encode(secret);
 }
 
-const encodedKey = new TextEncoder().encode(process.env.SESSION_SECRET);
 const COOKIE_NAME = "aio-admin-session";
 
 type SessionPayload = {
@@ -17,11 +20,12 @@ type SessionPayload = {
 };
 
 async function encrypt(payload: SessionPayload) {
+  const key = getEncodedKey();
   return new SignJWT({ email: payload.email })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(payload.expiresAt)
-    .sign(encodedKey);
+    .sign(key);
 }
 
 async function decrypt(
@@ -29,7 +33,8 @@ async function decrypt(
 ): Promise<{ email: string } | null> {
   if (!session) return null;
   try {
-    const { payload } = await jwtVerify(session, encodedKey, {
+    const key = getEncodedKey();
+    const { payload } = await jwtVerify(session, key, {
       algorithms: ["HS256"],
     });
     return payload as { email: string };
