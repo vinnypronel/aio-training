@@ -212,13 +212,15 @@ export default function SportPage({
         <div className="mx-auto max-w-[1280px] px-6">
           <div data-reveal-group className="grid gap-0 border border-aio-line lg:grid-cols-[0.9fr_1.1fr]">
             {/* Mobile-only label above image */}
-            <div data-reveal className="border-l-4 border-b border-l-aio-red border-b-aio-line p-6 lg:hidden">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
-                {program.programName || "AIO Training"}
-              </p>
-              <h3 className="mt-2 font-brand-display text-3xl font-black uppercase leading-none">
-                {program.programLabel}
-              </h3>
+            <div className="border-l-4 border-b border-l-aio-red border-b-aio-line p-6 lg:hidden">
+              <div data-reveal>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
+                  {program.programName || "AIO Training"}
+                </p>
+                <h3 className="mt-2 font-brand-display text-3xl font-black uppercase leading-none">
+                  {program.programLabel}
+                </h3>
+              </div>
             </div>
             <div data-reveal="fade" className="relative min-h-[300px] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:min-h-[560px] isolate webkit-clip-fix">
               <Image
@@ -241,48 +243,50 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div data-reveal className="p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
-              <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
-                {program.tagLabel || "Program Coaching"}
-              </p>
-              <h2 className="mt-4 max-w-[700px] font-brand-display text-[clamp(2.25rem,5vw,4.75rem)] font-black uppercase leading-none lg:max-w-[700px]">
-                {program.programTitle}
-              </h2>
-              <p className="mt-6 text-base font-semibold leading-8 text-aio-body">
-                {program.description}
-              </p>
-              <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="border border-aio-line bg-aio-black p-4">
-                  <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
-                    Program Scope
-                  </dt>
-                  <dd className="mt-2 text-sm font-black text-white">
-                    {program.scope}
-                  </dd>
+            <div className="p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
+              <div data-reveal className="h-full w-full">
+                <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+                  {program.tagLabel || "Program Coaching"}
+                </p>
+                <h2 className="mt-4 max-w-[700px] font-brand-display text-[clamp(2.25rem,5vw,4.75rem)] font-black uppercase leading-none lg:max-w-[700px]">
+                  {program.programTitle}
+                </h2>
+                <p className="mt-6 text-base font-semibold leading-8 text-aio-body">
+                  {program.description}
+                </p>
+                <dl className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <div className="border border-aio-line bg-aio-black p-4">
+                    <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
+                      Program Scope
+                    </dt>
+                    <dd className="mt-2 text-sm font-black text-white">
+                      {program.scope}
+                    </dd>
+                  </div>
+                  <div className="border border-aio-line bg-aio-black p-4">
+                    <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
+                      Service Area
+                    </dt>
+                    <dd className="mt-2 text-sm font-black text-white">
+                      {program.serviceArea}
+                    </dd>
+                  </div>
+                </dl>
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {program.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-aio-line-strong px-3 py-2 text-xs font-black uppercase"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                <div className="border border-aio-line bg-aio-black p-4">
-                  <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
-                    Service Area
-                  </dt>
-                  <dd className="mt-2 text-sm font-black text-white">
-                    {program.serviceArea}
-                  </dd>
+                <div className="mt-8 flex justify-center lg:justify-start">
+                  <HoverButton href="/booking" className="w-full sm:w-auto">
+                    {program.ctaLabel}
+                  </HoverButton>
                 </div>
-              </dl>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {program.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="border border-aio-line-strong px-3 py-2 text-xs font-black uppercase"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-8 flex justify-center lg:justify-start">
-                <HoverButton href="/booking" className="w-full sm:w-auto">
-                  {program.ctaLabel}
-                </HoverButton>
               </div>
             </div>
           </div>
