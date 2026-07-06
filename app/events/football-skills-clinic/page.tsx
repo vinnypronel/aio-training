@@ -27,15 +27,15 @@ export default function FootballSkillsClinicPage() {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-top opacity-[0.13]"
+            className="object-cover object-top opacity-[0.28]"
           />
-          <div className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-85 mix-blend-multiply" />
           <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent to-aio-black" />
         </div>
 
         {/* Ghost typography */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-full max-w-[1280px]">
-          <p className="absolute right-0 top-24 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.04] md:top-16">
+          <p className="absolute right-0 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[200px]">
             Clinic
           </p>
         </div>

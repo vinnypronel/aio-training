@@ -111,7 +111,7 @@ export default function RouteTransition() {
           width={600}
           height={270}
           priority
-          className="h-auto w-[180px] sm:w-[220px]"
+          className="h-auto w-[270px] sm:w-[330px]"
         />
         <p className="mt-5 text-xs font-black uppercase tracking-[0.32em] text-aio-red-on-dark">
           All In One Training

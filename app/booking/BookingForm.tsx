@@ -27,7 +27,7 @@ const sessionTypes = [
   { value: "event", label: "Event" },
 ];
 
-const ageGroups = ["8-10", "11-13", "14-16", "17-18"];
+const ageGroups = ["8-12", "13-18"];
 const sports = [
   "Baseball Training",
   "Football Training",

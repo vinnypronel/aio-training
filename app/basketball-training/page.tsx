@@ -15,7 +15,11 @@ export default function BasketballTrainingPage() {
       heroLineTwo="The Court."
       heroBlurb="Basketball development for athletes building handle confidence, shooting consistency, lateral quickness, and two-way habits."
       introLabel="Core Philosophy"
-      introTitle="The Foundation Of Dominance."
+      introTitle={
+        <>
+          The Foundation<br className="hidden lg:inline" /> Of Dominance.
+        </>
+      }
       introBody="AIO basketball training ties skill detail to the athletic qualities that let players separate, defend, finish, and compete with control."
       pillars={[
         { number: "01", title: "Ball Handling And IQ", body: "Handle pressure, read space, and make cleaner decisions with the ball." },

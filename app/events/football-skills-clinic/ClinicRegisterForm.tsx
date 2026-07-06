@@ -19,7 +19,7 @@ type AthleteEntry = {
   sport: string;
 };
 
-const ageGroups = ["8-10 (Youth)", "11-12 (Youth)", "13-18 (Teen)"];
+const ageGroups = ["8-12", "13-18"];
 const sports = ["Football", "Baseball", "Basketball", "Soccer", "Personal Training", "Not Sure Yet"];
 
 const inputClass =

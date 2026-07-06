@@ -18,12 +18,11 @@ type Plan = {
 
 const dropIn: Plan[] = [
   {
-    title: "Private",
-    price: "$60",
+    title: "Large Group",
+    price: "$20",
     unit: "per athlete",
-    body: "One-on-one athlete development session.",
-    bullets: ["60 minute session", "Focused coach attention", "Mechanical detail"],
-    featured: true,
+    body: "Broader skill work for larger athlete groups.",
+    bullets: ["7-12 athletes", "60-75 minute session", "Skill stations and situational drills"],
   },
   {
     title: "Small Group",
@@ -33,11 +32,12 @@ const dropIn: Plan[] = [
     bullets: ["3-6 athletes", "60 minute session", "High-rep competitive environment"],
   },
   {
-    title: "Large Group",
-    price: "$20",
+    title: "Private",
+    price: "$60",
     unit: "per athlete",
-    body: "Broader skill work for larger athlete groups.",
-    bullets: ["7-12 athletes", "60-75 minute session", "Skill stations and situational drills"],
+    body: "One-on-one athlete development session.",
+    bullets: ["60 minute session", "Focused coach attention", "Mechanical detail"],
+    featured: true,
   },
 ];
 
@@ -233,7 +233,7 @@ export default function PricingPackagesPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <p className="absolute right-[40px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
+          <p className="absolute right-[40px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/27">
             Plans
           </p>
         </div>
@@ -367,8 +367,8 @@ function PlanGroup({
                 href="/booking"
                 className={`mt-6 inline-flex min-h-12 items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition ${
                   plan.featured
-                    ? "bg-aio-red hover:bg-aio-red-hover shadow-[var(--aio-shadow-red)]"
-                    : "bg-aio-black hover:bg-aio-panel border border-aio-line"
+                    ? "bg-aio-red hover:bg-aio-red/80 shadow-[var(--aio-shadow-red)]"
+                    : "bg-aio-black hover:bg-aio-black/80 border border-aio-line"
                 }`}
               >
                 Ask A Coach

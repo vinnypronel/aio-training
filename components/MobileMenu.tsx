@@ -76,19 +76,19 @@ export default function MobileMenu() {
       {/* Red flash curtain — leads the reveal, trails the exit */}
       <div
         aria-hidden
-        className={`absolute inset-0 bg-aio-red transition-[clip-path] ${CURTAIN_EASE} motion-reduce:transition-none ${
+        className={`absolute inset-0 origin-top transform-gpu bg-aio-red transition-transform will-change-transform ${CURTAIN_EASE} motion-reduce:transition-none ${
           open
-            ? "duration-500 [clip-path:inset(0_0_0%_0)]"
-            : "delay-100 duration-500 [clip-path:inset(0_0_100%_0)]"
+            ? "duration-500 translate-y-0"
+            : "delay-100 duration-500 -translate-y-full"
         }`}
       />
 
       {/* Main panel */}
       <div
-        className={`absolute inset-0 flex flex-col overflow-hidden bg-aio-black text-white transition-[clip-path] ${CURTAIN_EASE} motion-reduce:transition-none ${
+        className={`absolute inset-0 flex origin-top transform-gpu flex-col overflow-hidden bg-aio-black text-white transition-transform will-change-transform ${CURTAIN_EASE} motion-reduce:transition-none ${
           open
-            ? "delay-100 duration-[600ms] [clip-path:inset(0_0_0%_0)]"
-            : "duration-500 [clip-path:inset(0_0_100%_0)]"
+            ? "delay-100 duration-[600ms] translate-y-0"
+            : "duration-500 -translate-y-full"
         }`}
       >
         {/* Atmosphere: red glow */}

@@ -71,7 +71,7 @@ export default function Home() {
 
       <section className="bg-aio-paper py-20 text-aio-ink md:py-24">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
+          <div className="lg:-translate-x-[70px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Train with the best, All In One place
             </p>
@@ -99,7 +99,7 @@ export default function Home() {
               </HoverButton>
             </div>
           </div>
-          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)]">
+          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)] lg:translate-x-[70px] lg:scale-[1.15]">
             <Image
               src="/assets/images/services-football-card.webp"
               alt="Youth football athlete driving a sled on outdoor turf"
@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       <section className="bg-aio-black py-16 text-white md:py-20">
-        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-x-10 gap-y-6 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] lg:max-w-[1536px] gap-x-10 gap-y-6 px-6 lg:grid-cols-[1.1fr_1.3fr] lg:items-center lg:translate-x-[125px]">
           <div className="lg:order-2 lg:col-start-2 lg:row-start-1">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Where We Train
@@ -123,7 +123,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="relative lg:order-1 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+          <div className="relative lg:order-1 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:-translate-x-[170px]">
             <div className="absolute -left-4 -top-4 h-24 w-24 border-l-4 border-t-4 border-aio-red" />
             <div className="absolute -bottom-4 -right-4 h-24 w-24 border-b-4 border-r-4 border-aio-red" />
             <div data-reveal="fade" className="relative aspect-[3/2] w-full overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
@@ -142,7 +142,7 @@ export default function Home() {
           </div>
 
           <div className="lg:order-3 lg:col-start-2 lg:row-start-2">
-            <div className="space-y-3">
+            <div className="space-y-5">
               <TrainingCard
                 title="Indoor Sessions"
                 tag="Confirmed before each session"
@@ -161,7 +161,7 @@ export default function Home() {
               />
             </div>
             <div data-reveal>
-              <HoverButton href="/booking" className="mt-5">
+              <HoverButton href="/booking" className="mt-7">
                 Book A Session
               </HoverButton>
             </div>
@@ -182,22 +182,22 @@ function TrainingCard({
   items: string[];
 }) {
   return (
-    <article data-reveal className="border border-aio-line p-4 md:p-5">
-      <h3 className="font-brand-display text-lg font-black uppercase leading-none">
+    <article data-reveal className="border border-aio-line p-5 md:p-6">
+      <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
         {title}
       </h3>
-      <div className="mt-2 text-xs font-black uppercase tracking-[0.08em] text-aio-red-on-dark">
+      <div className="mt-2.5 text-[13px] font-black uppercase tracking-[0.08em] text-aio-red-on-dark">
         {tag}
       </div>
-      <ul className="mt-3 space-y-1.5">
+      <ul className="mt-5 space-y-3">
         {items.map((item) => (
           <li
             key={item}
-            className="flex gap-2.5 text-xs font-semibold leading-5 text-aio-body"
+            className="flex gap-3 text-sm font-semibold leading-relaxed text-aio-body"
           >
             <span
               aria-hidden
-              className="mt-1.5 h-2 w-2 shrink-0 bg-aio-red"
+              className="mt-2 h-2.5 w-2.5 shrink-0 bg-aio-red"
             />
             <span>{item}</span>
           </li>

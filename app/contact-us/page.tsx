@@ -154,7 +154,7 @@ export default function ContactUsPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/10 lg:text-[16rem]">
+          <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/27 lg:text-[16rem]">
             CALL US
           </span>
         </div>

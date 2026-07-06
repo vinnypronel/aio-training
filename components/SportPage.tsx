@@ -58,7 +58,7 @@ export default function SportPage({
   heroLineTwo: string;
   heroBlurb: string;
   introLabel: string;
-  introTitle: string;
+  introTitle: ReactNode;
   introBody: string;
   pillars: SportPillar[];
   tiers: SportTier[];
@@ -112,19 +112,21 @@ export default function SportPage({
 
       <section className="relative overflow-hidden bg-aio-paper py-20 text-aio-ink md:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className="absolute right-0 top-1/2 -translate-y-1/2 select-none font-brand-display text-[clamp(8rem,20vw,18rem)] font-black uppercase leading-none text-aio-black/[0.08]">
+          <span className={`absolute right-0 top-1/2 -translate-y-1/2 select-none font-brand-display text-[clamp(8rem,20vw,18rem)] font-black uppercase leading-none text-aio-black/[0.14] ${
+            sport.toLowerCase().includes("baseball") ? "lg:translate-x-[180px]" : "lg:translate-x-[160px]"
+          }`}>
             AIO
           </span>
         </div>
-        <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6">
+        <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6 lg:-translate-x-[90px]">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
           <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             {introLabel}
           </p>
-          <h2 data-reveal className="mt-4 max-w-[1000px] font-brand-display text-[clamp(2.5rem,6vw,5.25rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="mt-4 max-w-[1000px] lg:max-w-[1050px] font-brand-display text-[clamp(2.5rem,6vw,5.25rem)] font-black uppercase leading-none">
             {introTitle}
           </h2>
-          <p data-reveal className="mt-5 max-w-[760px] text-base font-semibold leading-8 text-aio-ink">
+          <p data-reveal className="mt-5 max-w-[760px] lg:max-w-[680px] text-base font-semibold leading-8 text-aio-ink">
             {introBody}
           </p>
         </div>
@@ -274,18 +276,18 @@ export default function SportPage({
                     </dd>
                   </div>
                 </dl>
-                <div className="mt-8 flex flex-wrap gap-2">
+                <div className="mt-8 flex gap-1.5 sm:gap-2">
                   {program.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="border border-aio-line-strong px-3 py-2 text-xs font-black uppercase"
+                      className="border border-aio-line-strong px-2 py-1.5 text-[10px] sm:px-3 sm:py-2 sm:text-xs font-black uppercase whitespace-nowrap"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <div className="mt-8 flex justify-center lg:justify-start">
-                  <HoverButton href="/booking" className="max-w-[85%] whitespace-normal! py-3 text-center sm:w-auto sm:max-w-none">
+                  <HoverButton href="/booking" className="w-full py-3 text-center sm:w-auto">
                     {program.ctaLabel}
                   </HoverButton>
                 </div>
@@ -298,12 +300,12 @@ export default function SportPage({
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <p
           aria-hidden
-          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/10 ${ctaWordmarkClassName || ""}`}
+          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/27 lg:-translate-x-[100px] ${ctaWordmarkClassName || ""}`}
         >
           {ctaWordmark}
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div data-reveal-group className="max-w-5xl lg:-translate-x-[220px] transition-transform duration-500">
+          <div data-reveal-group className="max-w-5xl lg:-translate-x-[120px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?
             </p>

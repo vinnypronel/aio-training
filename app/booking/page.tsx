@@ -48,7 +48,7 @@ export default async function BookingPage() {
 
       {/* Ghost typography */}
       <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-        <p className="absolute left-0 top-16 select-none whitespace-nowrap font-brand-display text-[clamp(3.5rem,18vw,16rem)] font-black uppercase leading-none text-white/[0.04] md:top-10">
+        <p className="absolute left-0 top-16 select-none whitespace-nowrap font-brand-display text-[clamp(3.5rem,18vw,16rem)] font-black uppercase leading-none text-white/[0.18] md:top-10">
           Game Day
         </p>
       </div>
