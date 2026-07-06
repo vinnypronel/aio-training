@@ -287,3 +287,9 @@ h4 {
     zoom: tan(atan2(100vw, 1920px));
   }
 }
+
+/* WebKit absolute positioning overflow-hidden clipping bug fix */
+.webkit-clip-fix {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
