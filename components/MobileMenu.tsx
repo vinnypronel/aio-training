@@ -71,7 +71,7 @@ export default function MobileMenu() {
       aria-modal="true"
       aria-label="Site navigation"
       inert={!open}
-      className={`fixed inset-0 z-[60] xl:hidden ${open ? "" : "pointer-events-none"}`}
+      className={`fixed inset-0 z-[60] lg:hidden ${open ? "" : "pointer-events-none"}`}
     >
       {/* Red flash curtain — leads the reveal, trails the exit */}
       <div
@@ -120,13 +120,13 @@ export default function MobileMenu() {
             aria-label="Close menu"
             className="grid h-11 w-11 place-items-center border border-aio-line-strong text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
           >
-            <MenuIcon isOpen />
+            <MenuIcon isOpen={open} />
           </button>
         </div>
 
         {/* Scrollable body */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-2 [-ms-overflow-style:none] [scrollbar-width:none] md:px-6 [&::-webkit-scrollbar]:hidden">
-          <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col">
+          <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center py-[min(1.5rem,2svh)]">
             <nav aria-label="Primary" className="flex flex-col">
               {primaryLinks.map((link, i) => {
                 const active = pathname === link.href;
@@ -141,7 +141,7 @@ export default function MobileMenu() {
                       href={link.href}
                       onClick={close}
                       aria-current={active ? "page" : undefined}
-                      className="group flex items-baseline gap-4 py-1.5 focus-visible:outline-none sm:gap-6 sm:py-2.5"
+                      className="group flex items-baseline gap-4 py-[min(0.75rem,1svh)] focus-visible:outline-none sm:gap-6"
                     >
                       <span
                         className={`w-7 shrink-0 font-brand-display text-xs sm:text-sm font-bold tracking-[0.15em] transition-colors ${
@@ -151,7 +151,7 @@ export default function MobileMenu() {
                         0{i + 1}
                       </span>
                       <span
-                        className={`whitespace-nowrap font-brand-display text-[clamp(1.5rem,6vw,4rem)] font-black uppercase leading-[0.95] tracking-tight transition-colors group-focus-visible:text-aio-red-on-dark ${
+                        className={`whitespace-nowrap font-brand-display text-[clamp(1.25rem,min(7.5vw,4.8svh),4rem)] font-black uppercase leading-[0.95] tracking-tight transition-colors group-focus-visible:text-aio-red-on-dark ${
                           active ? "text-aio-red-on-dark" : "text-white group-hover:text-aio-red-on-dark"
                         }`}
                       >
@@ -165,7 +165,7 @@ export default function MobileMenu() {
                       </span>
                     </Link>
                     {hasSubs && (
-                      <div className="flex flex-col pb-3 pl-11 sm:pb-5 sm:pl-[3.25rem]">
+                      <div className="flex flex-col pb-[min(0.75rem,1.2svh)] pl-11 sm:pl-[3.25rem]">
                         {sportsLinks.map((sport) => {
                           const sportActive = pathname === sport.href;
                           return (
@@ -174,10 +174,10 @@ export default function MobileMenu() {
                               href={sport.href}
                               onClick={close}
                               aria-current={sportActive ? "page" : undefined}
-                              className={`group/sub flex items-center gap-3.5 py-1.5 sm:py-2 font-brand-display text-[clamp(1rem,4.5vw,1.85rem)] font-black uppercase leading-tight tracking-[0.06em] transition-colors focus-visible:outline-none focus-visible:text-aio-red-on-dark ${
+                              className={`group/sub flex items-center gap-3.5 py-[min(0.5rem,0.7svh)] font-brand-display text-[clamp(0.95rem,min(5.5vw,3svh),1.85rem)] font-black uppercase leading-tight tracking-[0.06em] transition-colors focus-visible:outline-none focus-visible:text-aio-red-on-dark ${
                                 sportActive
                                   ? "text-aio-red-on-dark"
-                                  : "text-aio-muted hover:text-aio-red-on-dark"
+                                  : "text-white hover:text-aio-red-on-dark"
                               }`}
                             >
                               <span
@@ -198,48 +198,49 @@ export default function MobileMenu() {
             </nav>
 
             <div
-              className={`mt-auto pt-4 sm:pt-8 ${reveal()}`}
+              className={`mt-[min(2.5rem,3.5svh)] pt-[min(1rem,1.5svh)] ${reveal()}`}
               style={revealDelay(primaryLinks.length)}
             >
               <div className="grid gap-3 sm:grid-cols-2">
-                <HoverButton href="tel:+17144408053" variant="outline" className="w-full">
-                  Call (714) 440-8053
-                </HoverButton>
+                <div className="flex items-center gap-3">
+                  <HoverButton href="tel:+17144408053" variant="outline" className="flex-1">
+                    Call (714) 440-8053
+                  </HoverButton>
+                  <div className="flex shrink-0 gap-3">
+                    <a
+                      href="https://www.instagram.com/aio_training"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={close}
+                      aria-label="Follow AIO Training on Instagram"
+                      className="grid h-11 w-11 place-items-center border border-white/35 text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+                        <rect x="3" y="3" width="18" height="18" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
+                    </a>
+                    <a
+                      href="https://www.facebook.com/people/AIO-training/61589139513684/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={close}
+                      aria-label="Follow AIO Training on Facebook"
+                      className="grid h-11 w-11 place-items-center border border-white/35 text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden>
+                        <path d="M13.5 21.5v-8h2.7l.4-3.1h-3.1V8.4c0-.9.2-1.5 1.5-1.5h1.7V4.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.2H7.5v3.1h2.8v8h3.2z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
                 <HoverButton href="/booking" className="w-full">
                   Get Started
                 </HoverButton>
               </div>
 
-              <div className="mt-5 flex items-center justify-center gap-3">
-                <a
-                  href="https://www.instagram.com/aio_training"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={close}
-                  aria-label="Follow AIO Training on Instagram"
-                  className="grid h-12 w-12 place-items-center border border-aio-line text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
-                    <rect x="3" y="3" width="18" height="18" rx="5" />
-                    <circle cx="12" cy="12" r="4" />
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                  </svg>
-                </a>
-                <a
-                  href="https://www.facebook.com/people/AIO-training/61589139513684/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={close}
-                  aria-label="Follow AIO Training on Facebook"
-                  className="grid h-12 w-12 place-items-center border border-aio-line text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
-                    <path d="M13.5 21.5v-8h2.7l.4-3.1h-3.1V8.4c0-.9.2-1.5 1.5-1.5h1.7V4.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.2H7.5v3.1h2.8v8h3.2z" />
-                  </svg>
-                </a>
-              </div>
-
-              <p className="mt-5 whitespace-nowrap text-center text-[min(0.7rem,2.5vw)] font-bold uppercase tracking-[0.1em] text-aio-muted">
+              <p className="mt-[min(1.25rem,1.8svh)] whitespace-nowrap text-center text-[min(0.7rem,2.5vw)] font-bold uppercase tracking-[0.1em] text-aio-muted">
                 All In One Training · Build Your Athlete&apos;s Next Level
               </p>
             </div>
@@ -256,7 +257,7 @@ export default function MobileMenu() {
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
-        className="grid h-11 w-11 place-items-center border border-aio-line-strong text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black xl:hidden"
+        className="grid h-11 w-11 place-items-center border border-aio-line-strong text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black lg:hidden"
       >
         <MenuIcon isOpen={open} />
       </button>

@@ -92,7 +92,7 @@ const subscriptions: Plan[] = [
 export default function PricingPackagesPage() {
   return (
     <>
-      <section className="relative -mt-20 flex h-[100svh] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
+      <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
           src="/assets/images/pricing-hero-athlete-huddle.webp"
           alt="Athletes huddled around their coach"
@@ -232,14 +232,13 @@ export default function PricingPackagesPage() {
       </section>
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
-        <p
-          aria-hidden
-          className="pointer-events-none absolute right-[125px] top-1/2 -translate-y-1/2 -mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10"
-        >
-          Plans
-        </p>
+        <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+          <p className="absolute right-[-20px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
+            Plans
+          </p>
+        </div>
         <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
-          <div data-reveal-group className="max-w-[760px]">
+          <div data-reveal-group className="max-w-[760px] md:-translate-x-[200px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Still Have Questions?
             </p>
@@ -250,9 +249,11 @@ export default function PricingPackagesPage() {
               Share the athlete&apos;s sport, age, schedule, and goal so AIO can point you toward the right option.
             </p>
           </div>
-          <HoverButton href="/booking" variant="black">
-            Talk To A Coach
-          </HoverButton>
+          <div className="self-start md:self-auto md:translate-y-[35px]">
+            <HoverButton href="/booking" variant="black">
+              Talk To A Coach
+            </HoverButton>
+          </div>
         </div>
       </section>
     </>

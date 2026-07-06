@@ -49,7 +49,7 @@ export default async function ClinicSuccessPage({
       : "";
 
   return (
-    <section className="min-h-screen bg-aio-black pt-28 pb-20 text-white md:pt-32">
+    <section className="min-h-[calc(100svh/var(--dz,1))] bg-aio-black pt-28 pb-20 text-white md:pt-32">
       <div data-reveal-group className="mx-auto max-w-[640px] px-6 text-center">
         {/* Check icon */}
         <div data-reveal className="mx-auto flex h-20 w-20 items-center justify-center border border-emerald-500/30 bg-emerald-500/10">

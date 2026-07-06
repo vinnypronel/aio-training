@@ -10,6 +10,7 @@ export default function SoccerTrainingPage() {
       sport="Soccer Training"
       heroImage="/assets/images/soccer-training-hero.webp"
       heroImageAlt="Youth soccer player on the field"
+      heroImagePosition="object-[60%_center]"
       heroLineOne="Win The"
       heroLineTwo="First Touch."
       heroBlurb="Technical and athletic development for players who want a cleaner touch, sharper footwork, and the speed to take over on the ball."
@@ -38,6 +39,7 @@ export default function SoccerTrainingPage() {
         ctaLabel: "Ask About Soccer Training",
       }}
       ctaWordmark="Pitch"
+      ctaWordmarkClassName="!right-[45px]"
       ctaTitle="Build A Sharper Soccer Player."
       ctaBlurb="Tell us the player's age, position, season timing, and the skill that needs focused work."
     />

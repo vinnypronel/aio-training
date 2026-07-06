@@ -29,7 +29,7 @@ export default async function AdminCalendarPage() {
   }));
 
   return (
-    <section className="min-h-screen bg-aio-black px-6 py-20 text-white md:py-24">
+    <section className="min-h-[calc(100svh/var(--dz,1))] bg-aio-black px-6 py-20 text-white md:py-24">
       <div className="mx-auto max-w-[1280px]">
         <div className="flex items-center justify-between">
           <div>

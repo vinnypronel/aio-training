@@ -10,7 +10,7 @@ export default async function AdminLoginPage() {
   if (session) redirect("/admin/dashboard");
 
   return (
-    <section className="flex min-h-[calc(100vh-80px)] items-center justify-center bg-aio-black px-6">
+    <section className="flex min-h-[calc(100vh/var(--dz,1)-80px)] items-center justify-center bg-aio-black px-6">
       <div className="w-full max-w-[420px]">
         <div className="border border-aio-line bg-aio-panel">
           {/* Red accent top bar */}

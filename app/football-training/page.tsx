@@ -10,6 +10,7 @@ export default function FootballTrainingPage() {
       sport="Football Performance"
       heroImage="/assets/images/football-hero-turf.webp"
       heroImageAlt="Youth football athlete sprinting on outdoor turf"
+      heroImagePosition="object-[20%_center]"
       heroLineOne="Own The"
       heroLineTwo="Gridiron."
       heroBlurb="Position-specific football development for athletes building speed, power, body control, and confidence inside the lines."
@@ -38,7 +39,7 @@ export default function FootballTrainingPage() {
         tags: ["Speed", "Agility", "Strength", "Game IQ"],
         ctaLabel: "Ask About Football Training",
       }}
-      ctaWordmark="Dominate"
+      ctaWordmark="Compete"
       ctaTitle="Train For The Next Down."
       ctaBlurb="Start with the athlete's age, position, season schedule, and the skill gap that matters most."
     />

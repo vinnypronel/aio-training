@@ -3,7 +3,6 @@ import HoverButton from "@/components/HoverButton";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/session";
 import AddEventForm from "./AddEventForm";
-import CallCTAButton from "./CallCTAButton";
 import EventCard from "./EventCard";
 
 export const metadata = {
@@ -23,7 +22,7 @@ export default async function EventsPage() {
 
   return (
     <>
-      <section className="relative flex h-[90svh] items-center overflow-hidden bg-aio-black pt-24 text-white">
+      <section className="relative flex h-[calc(90svh/var(--dz,1))] items-center overflow-hidden bg-aio-black pt-24 text-white">
         <Image
           src="/assets/images/home-field-drills.webp"
           alt="Athletes doing cone drills on turf"
@@ -100,14 +99,13 @@ export default async function EventsPage() {
       </section>
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
-        <p
-          aria-hidden
-          className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 -mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10"
-        >
-          Events
-        </p>
+        <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+          <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
+            Events
+          </p>
+        </div>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div data-reveal-group className="max-w-[800px]">
+          <div data-reveal-group className="max-w-[800px] lg:-translate-x-[130px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Questions?
             </p>
@@ -118,8 +116,10 @@ export default async function EventsPage() {
               Use the flyer phone number if you need help choosing the right session.
             </p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-            <CallCTAButton />
+          <div className="justify-self-start lg:justify-self-auto lg:translate-y-[35px]">
+            <HoverButton href="tel:+17144408053" variant="black">
+              Call (714) 440-8053
+            </HoverButton>
           </div>
         </div>
       </section>

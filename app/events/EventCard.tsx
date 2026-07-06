@@ -213,7 +213,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             className="absolute inset-0 cursor-zoom-out"
             onClick={() => setIsFlyerOpen(false)}
           />
-          <div className="relative z-10 flex max-h-[90vh] max-w-[90vw] items-center justify-center">
+          <div className="relative z-10 flex max-h-[calc(90vh/var(--dz,1))] max-w-[calc(90vw/var(--dz,1))] items-center justify-center">
             {/* Close Button */}
             <button
               onClick={() => setIsFlyerOpen(false)}
@@ -238,7 +238,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
               <img
                 src={event.flyer}
                 alt={`${event.title} flyer fullscreen`}
-                className="max-h-[80vh] max-w-[85vw] object-contain shadow-lg"
+                className="max-h-[calc(80vh/var(--dz,1))] max-w-[calc(85vw/var(--dz,1))] object-contain shadow-lg"
               />
             </div>
           </div>

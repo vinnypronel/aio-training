@@ -32,9 +32,9 @@ export default function PersonalTrainingPage() {
         { number: "03", ageLabel: "Step 03", title: "Progress Review", body: "Coach feedback keeps the next block aligned with the athlete's current work.", callout: "Owner and lead trainer Jon Guzman runs every private session." },
       ]}
       program={{
-        programLabel: "Owner / Lead Trainer",
+        programLabel: "Personal Training Program",
         programTitle: "Private Athlete Development",
-        programName: "Jon Guzman",
+        programName: "AIO TRAINING",
         tagLabel: "Lead Personal Trainer",
         description: "Jon Guzman leads AIO Training with a focus on private athlete development, sport-transfer work, and session plans built around the athlete in front of him.",
         scope: "Private strength, speed, skill transfer, and mobility work",

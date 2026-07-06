@@ -28,7 +28,7 @@ type ButtonProps = BaseProps & {
 type Props = LinkProps | ButtonProps;
 
 const baseClass =
-  "group relative inline-flex min-h-12 cursor-pointer items-center justify-center overflow-hidden px-6 text-sm font-black uppercase tracking-[0.08em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+  "group relative inline-flex min-h-12 cursor-pointer items-center justify-center overflow-hidden px-6 text-sm font-black uppercase tracking-[0.08em] whitespace-nowrap transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
 
 const variantStyles: Record<Variant, { container: string; textHover: string; blob: string }> = {
   red: {
@@ -62,9 +62,10 @@ export default function HoverButton({
 
   const v = variantStyles[variant];
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseEnter = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setHoverPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setIsHovered(true);
   };
 
   const inner = (
@@ -75,7 +76,9 @@ export default function HoverButton({
         {children}
       </span>
       <span
-        className={`pointer-events-none absolute rounded-full ${v.blob} transition-all duration-1000 ease-out -translate-x-1/2 -translate-y-1/2`}
+        className={`pointer-events-none absolute rounded-full ${v.blob} transition-all -translate-x-1/2 -translate-y-1/2 ${
+          isHovered ? "duration-[1400ms] ease-in-out" : "duration-[800ms] ease-out"
+        }`}
         style={{
           left: hoverPos.x,
           top: hoverPos.y,
@@ -87,8 +90,7 @@ export default function HoverButton({
   );
 
   const sharedProps = {
-    onMouseEnter: () => setIsHovered(true),
-    onMouseMove: handleMouseMove,
+    onMouseEnter: handleMouseEnter,
     onMouseLeave: () => setIsHovered(false),
     className: `${baseClass} ${v.container} ${className}`,
   };

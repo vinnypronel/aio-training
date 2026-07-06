@@ -32,9 +32,9 @@ export default async function BookingPage() {
     }));
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-aio-black px-6 py-20 text-white md:py-24">
+    <section className="relative min-h-[calc(100svh/var(--dz,1))] overflow-hidden bg-aio-black px-6 py-20 text-white md:py-24">
       {/* Dimmed photographic underlay, faded into black toward the form */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[90vh] min-h-[560px]">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[calc(90vh/var(--dz,1))] min-h-[560px]">
         <Image
           src="/assets/images/booking-bg.webp"
           alt=""
@@ -47,12 +47,11 @@ export default async function BookingPage() {
       </div>
 
       {/* Ghost typography */}
-      <p
-        aria-hidden
-        className="pointer-events-none absolute left-0 top-16 select-none whitespace-nowrap font-brand-display text-[clamp(6rem,18vw,16rem)] font-black uppercase leading-none text-white/[0.04] md:top-10"
-      >
-        Game Day
-      </p>
+      <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+        <p className="absolute left-0 top-16 select-none whitespace-nowrap font-brand-display text-[clamp(3.5rem,18vw,16rem)] font-black uppercase leading-none text-white/[0.04] md:top-10">
+          Game Day
+        </p>
+      </div>
 
       <div data-reveal className="relative z-10 mx-auto max-w-[1280px]">
         <BookingForm slots={availableSlots} />

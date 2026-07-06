@@ -1,5 +1,6 @@
 import Image from "next/image";
 import HoverButton from "@/components/HoverButton";
+import { ReactNode } from "react";
 
 type SportPillar = {
   number: string;
@@ -47,6 +48,8 @@ export default function SportPage({
   ctaWordmark,
   ctaTitle,
   ctaBlurb,
+  heroImagePosition = "object-center",
+  ctaWordmarkClassName,
 }: {
   sport: string;
   heroImage: string;
@@ -65,19 +68,21 @@ export default function SportPage({
   tiersLight?: boolean;
   program: SportProgram;
   ctaWordmark: string;
-  ctaTitle: string;
+  ctaTitle: ReactNode;
   ctaBlurb: string;
+  heroImagePosition?: string;
+  ctaWordmarkClassName?: string;
 }) {
   return (
     <>
-      <section className="relative -mt-20 flex h-[100svh] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
+      <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
           src={heroImage}
           alt={heroImageAlt}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className={`object-cover ${heroImagePosition}`}
         />
         <div
           aria-hidden
@@ -106,12 +111,11 @@ export default function SportPage({
       </section>
 
       <section className="relative overflow-hidden bg-aio-paper py-20 text-aio-ink md:py-24">
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-[calc(2%+20px)] top-1/2 -translate-y-1/2 select-none font-brand-display text-[clamp(8rem,20vw,18rem)] font-black uppercase leading-none text-aio-black/[0.08]"
-        >
-          AIO
-        </span>
+        <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 select-none font-brand-display text-[clamp(8rem,20vw,18rem)] font-black uppercase leading-none text-aio-black/[0.08]">
+            AIO
+          </span>
+        </div>
         <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6">
           <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
           <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
@@ -275,7 +279,7 @@ export default function SportPage({
                 ))}
               </div>
               <div className="mt-8 flex justify-center lg:justify-start">
-                <HoverButton href="/booking" className="w-4/5 sm:w-auto">
+                <HoverButton href="/booking" className="w-full sm:w-auto">
                   {program.ctaLabel}
                 </HoverButton>
               </div>
@@ -287,12 +291,12 @@ export default function SportPage({
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <p
           aria-hidden
-          className="pointer-events-none absolute cta-watermark font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10"
+          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/10 ${ctaWordmarkClassName || ""}`}
         >
           {ctaWordmark}
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div data-reveal-group className="max-w-[800px]">
+          <div data-reveal-group className="max-w-5xl lg:-translate-x-[220px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?
             </p>
@@ -303,8 +307,8 @@ export default function SportPage({
               {ctaBlurb}
             </p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-            <HoverButton href="/booking" variant="black" className="w-full sm:w-auto">
+          <div className="justify-self-start lg:justify-self-auto lg:translate-y-[35px]">
+            <HoverButton href="/booking" variant="black">
               Book A Session
             </HoverButton>
           </div>

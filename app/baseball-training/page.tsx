@@ -10,6 +10,7 @@ export default function BaseballTrainingPage() {
       sport="Baseball Training"
       heroImage="/assets/images/baseball-hero-batting-cage.webp"
       heroImageAlt="Youth baseball player swinging a bat in an outdoor batting cage"
+      heroImagePosition="object-[65%_center]"
       heroLineOne="Built For The"
       heroLineTwo="Diamond."
       heroBlurb="Precision and power development for hitters, pitchers, fielders, and baseball athletes building mechanics that hold up in games."
@@ -37,7 +38,8 @@ export default function BaseballTrainingPage() {
         tags: ["Hitting", "Fielding", "Throwing", "Strength"],
         ctaLabel: "Ask About Baseball Training",
       }}
-      ctaWordmark="Diamond"
+      ctaWordmark="Prospect"
+      ctaWordmarkClassName="md:!right-[25px]"
       ctaTitle="Build Your Baseball Plan."
       ctaBlurb="Tell us the athlete's age, position, season timing, and current training goal."
     />

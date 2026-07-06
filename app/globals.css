@@ -143,6 +143,7 @@ body {
 
 .footer-link:hover,
 .footer-link:focus-visible,
+.footer-link.active,
 a:hover > .footer-link,
 a:focus-visible > .footer-link {
   background-position: 0 0;
@@ -177,9 +178,11 @@ h4 {
 }
 
 .cta-watermark {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: auto;
+  right: 20px;
+  bottom: 0;
+  top: auto;
+  transform: none;
 }
 
 /* ---------------------------------------------------------------------------
@@ -258,6 +261,29 @@ h4 {
 
 @media (min-width: 768px) {
   .cta-watermark {
-    transform: translate(calc(-50% + 450px), calc(-50% - 60px));
+    left: auto;
+    right: -20px;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(calc(-50% - 60px));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Desktop design lock
+
+   The desktop layout is designed at a 1920px viewport. On any other desktop
+   width, scale the entire page proportionally (like a zoomed photo) so every
+   monitor shows the identical composition — same relative positions, sizes,
+   and margins. Viewport units (svh/vh heroes) are exempt from zoom per spec,
+   so full-screen sections still fill the screen exactly.
+--------------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  html {
+    /* 100vw ÷ 1920px as a plain number — tan(atan2()) is the widely
+       supported way to divide two lengths in CSS. All var(--dz, 1)
+       usages fall back to 1 below this breakpoint. */
+    --dz: tan(atan2(100vw, 1920px));
+    zoom: tan(atan2(100vw, 1920px));
   }
 }

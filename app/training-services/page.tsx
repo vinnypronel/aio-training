@@ -79,14 +79,14 @@ export default function TrainingServicesPage() {
   return (
     <>
       <title>Training &amp; Services | AIO Training</title>
-      <section className="relative -mt-20 flex h-[100svh] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
+      <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
           src="/assets/images/training-services-hero.webp"
           alt="AIO Training athlete sprinting on the field"
           fill
           priority
           sizes="100vw"
-          className="-scale-x-100 object-cover object-[center_30%]"
+          className="-scale-x-100 object-cover object-[30%_30%]"
         />
         <div
           aria-hidden
@@ -125,7 +125,7 @@ export default function TrainingServicesPage() {
 
           <div className="mt-10 grid grid-cols-1 gap-6 sm:-mx-3 sm:grid-cols-3 md:grid-cols-5">
             {tracks.map((t) => (
-              <div key={t.href} data-reveal className="group relative aspect-[3/4] transition-transform duration-300 hover:-translate-y-2">
+              <div key={t.href} data-reveal className="group relative aspect-[3/4] max-w-[300px] mx-auto w-full transition-transform duration-300 hover:-translate-y-2 sm:max-w-none">
                 <Link
                   href={t.href}
                   className="relative flex h-full flex-col justify-end overflow-hidden bg-aio-black p-6 text-white transition [clip-path:polygon(0_0,100%_0,100%_calc(100%-40px),calc(100%-40px)_100%,0_100%)]"
@@ -146,10 +146,10 @@ export default function TrainingServicesPage() {
                   <span aria-hidden className="absolute right-0 bottom-10 h-14 w-1 bg-aio-red" />
 
                   <div className="relative z-10">
-                    <h3 className="min-h-[2.5rem] font-brand-display text-2xl font-black uppercase leading-[0.95] text-aio-red drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] sm:text-3xl xl:min-h-[4rem] xl:text-[2rem]">
+                    <h3 className="min-h-[2.5rem] font-brand-display text-2xl font-black uppercase leading-[0.95] text-aio-red drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] sm:text-3xl lg:min-h-[4rem] lg:text-[2rem]">
                       {t.title}
                     </h3>
-                    <p className="mt-3 text-[0.78rem] font-semibold leading-5 text-white xl:text-sm xl:leading-6">
+                    <p className="mt-3 text-[0.78rem] font-semibold leading-5 text-white lg:text-sm lg:leading-6">
                       {t.body}
                     </p>
                     <span className="fill-red-on-hover mt-4 inline-flex items-center text-[0.7rem] font-black uppercase tracking-[0.14em]">
@@ -207,7 +207,7 @@ export default function TrainingServicesPage() {
 
       <section className="relative bg-aio-black py-20 text-white md:py-24 overflow-hidden">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          <div className="relative p-6 xl:-translate-x-10 xl:scale-[1.1] xl:origin-left 2xl:-translate-x-20 2xl:scale-[1.2] transition-transform duration-500">
+          <div className="relative p-6 lg:-translate-x-20 lg:scale-[1.2] lg:origin-left transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
             <div data-reveal="fade" className="relative aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
@@ -220,7 +220,7 @@ export default function TrainingServicesPage() {
               />
             </div>
           </div>
-          <div className="xl:translate-x-6 2xl:translate-x-12 transition-transform duration-500">
+          <div className="lg:translate-x-12 transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Middlesex And Monmouth County
             </p>
@@ -256,43 +256,29 @@ export default function TrainingServicesPage() {
       </section>
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
+        <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+          <span className="absolute right-[30px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/10 lg:text-[16rem]">
+            AIO
+          </span>
+        </div>
+        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
           <div data-reveal-group className="max-w-[760px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Not Sure Which Path?
             </p>
             <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
-              <span className="block sm:whitespace-nowrap">Start With A Coach</span>
-              <span className="block">Conversation.</span>
+              <span className="block sm:whitespace-nowrap">Start With A</span>
+              <span className="block text-black">Conversation.</span>
             </h2>
 
             <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
               Tell us the athlete&apos;s sport, age, season timing, and goal. AIO will point you toward the right training path.
             </p>
           </div>
-          <div className="relative flex flex-col items-center md:items-end">
-            <span aria-hidden className="-translate-y-[60px] font-brand-display text-[clamp(8rem,18vw,16rem)] font-black uppercase leading-none text-white/10">
-              AIO
-            </span>
-            <Link
-              href="/booking"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={() => setIsHovered(false)}
-              className="relative -mt-8 inline-flex min-h-12 items-center justify-center overflow-hidden bg-aio-black px-6 text-sm font-black uppercase tracking-[0.08em] text-white"
-            >
-              <span className="relative z-10 mix-blend-difference">Book A Consultation</span>
-              <span
-                className="pointer-events-none absolute rounded-full bg-white transition-all duration-700 ease-out -translate-x-1/2 -translate-y-1/2"
-                style={{
-                  left: hoverPos.x,
-                  top: hoverPos.y,
-                  width: isHovered ? "600px" : "0px",
-                  height: isHovered ? "600px" : "0px",
-                  mixBlendMode: "difference",
-                }}
-              />
-            </Link>
+          <div className="self-start md:self-auto md:translate-y-[35px]">
+            <HoverButton href="/booking" variant="black">
+              Book A Consultation
+            </HoverButton>
           </div>
         </div>
       </section>

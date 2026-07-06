@@ -10,7 +10,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <section className="relative -mt-20 flex h-[calc(100svh-0px)] min-h-[560px] items-center justify-center overflow-hidden bg-aio-black text-white lg:-mt-24">
+      <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center justify-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         {/* Background hero video */}
         <video
           autoPlay

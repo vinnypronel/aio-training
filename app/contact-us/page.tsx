@@ -42,7 +42,7 @@ const reasons = [
 export default function ContactUsPage() {
   return (
     <>
-      <section className="relative -mt-20 flex h-[100svh] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
+      <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
           src="/assets/images/contact-hero-coach-consult.webp"
           alt="Coach consulting with an athlete and parent"
@@ -131,19 +131,19 @@ export default function ContactUsPage() {
         </div>
       </section>
 
-      <section className="bg-aio-paper pb-16 md:pb-20">
+      <section className="bg-aio-paper pb-8 md:pb-10">
         <div className="mx-auto max-w-[1280px] px-6">
           <div data-reveal-group className="grid gap-5 md:grid-cols-3">
             {reasons.map((r) => (
               <article
                 key={r.title}
                 data-reveal
-                className="bg-white p-6 text-aio-ink shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+                className="bg-white py-5 px-6 text-aio-ink shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
               >
                 <h3 className="font-brand-display text-xl font-black uppercase leading-none">
                   {r.title}
                 </h3>
-                <p className="mt-3 text-sm font-semibold leading-6 text-aio-ink/65">
+                <p className="mt-3 text-sm font-semibold leading-6 text-aio-ink">
                   {r.body}
                 </p>
               </article>
@@ -153,11 +153,13 @@ export default function ContactUsPage() {
       </section>
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
-        <span aria-hidden className="pointer-events-none absolute right-[calc(-5%+425px)] top-1/2 -translate-y-1/2 -mt-[60px] select-none font-brand-display text-[16rem] font-black uppercase leading-none text-white/10">
-          CALL
-        </span>
+        <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
+          <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/10 lg:text-[16rem]">
+            CALL US
+          </span>
+        </div>
         <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
-          <div data-reveal-group className="max-w-[760px]">
+          <div data-reveal-group className="max-w-[760px] md:-translate-x-[80px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Prefer To Talk?
             </p>
@@ -168,7 +170,7 @@ export default function ContactUsPage() {
               Talk through the athlete&apos;s sport, age, schedule, and training goal.
             </p>
           </div>
-          <div className="translate-y-[35px]">
+          <div className="self-start md:self-auto md:translate-y-[35px]">
             <HoverButton href="tel:+17144408053" variant="black">
               Call (714) 440-8053
             </HoverButton>

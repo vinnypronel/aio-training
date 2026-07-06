@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const sportsLinks = [
   { href: "/baseball-training", label: "Baseball Training" },
@@ -23,6 +26,7 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   return (
     <footer className="border-t border-aio-line bg-aio-black text-white">
       <div className="mx-auto max-w-[1280px] px-6 py-10 md:py-16">
@@ -41,7 +45,7 @@ export default function Footer() {
                 className="h-auto w-[160px] md:w-[180px]"
               />
             </Link>
-            <p className="max-w-[340px] text-base font-semibold leading-7 text-aio-body">
+            <p className="max-w-[340px] text-base font-semibold leading-7 text-aio-body opacity-0 select-none pointer-events-none">
               Train with the best, All In One place
             </p>
             <div className="space-y-3">
@@ -90,9 +94,9 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-aio-line">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-6 py-3 text-xs font-semibold text-aio-muted md:flex-row md:items-center md:justify-between md:py-4">
-          <p className="text-left">© 2026 All In One Training. All rights reserved.</p>
-          <nav className="flex items-center gap-4" aria-label="Social links">
+        <div className="mx-auto flex max-w-[1280px] flex-row flex-wrap items-center justify-between gap-4 px-6 py-3 text-xs font-semibold text-aio-muted md:py-4">
+          <p className="text-left w-full order-last md:w-auto md:order-1">© 2026 All In One Training. All rights reserved.</p>
+          <nav className="flex items-center gap-4 order-1 md:order-2" aria-label="Social links">
             <div className="relative h-11 w-11 md:w-11">
               <a
                 href="https://www.instagram.com/aio_training"
@@ -133,16 +137,19 @@ export default function Footer() {
               </a>
             </div>
           </nav>
-          <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Legal links">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="footer-link text-sm font-semibold"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 order-2 md:order-3 text-right" aria-label="Legal links">
+            {legalLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`footer-link text-sm font-semibold ${isActive ? "active" : ""}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>

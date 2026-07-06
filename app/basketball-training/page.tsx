@@ -10,6 +10,7 @@ export default function BasketballTrainingPage() {
       sport="Basketball Training"
       heroImage="/assets/images/basketball-hero-shooting.webp"
       heroImageAlt="Youth basketball player shooting on an outdoor court"
+      heroImagePosition="object-[65%_center]"
       heroLineOne="Take Over"
       heroLineTwo="The Court."
       heroBlurb="Basketball development for athletes building handle confidence, shooting consistency, lateral quickness, and two-way habits."
@@ -37,8 +38,9 @@ export default function BasketballTrainingPage() {
         tags: ["Shooting", "Handle", "Defense", "Conditioning"],
         ctaLabel: "Ask About Basketball Training",
       }}
-      ctaWordmark="Court"
-      ctaTitle="Build Court Habits That Hold."
+      ctaWordmark="Drive"
+      ctaWordmarkClassName="!right-[45px]"
+      ctaTitle={<>Court Habits<br />That Hold.</>}
       ctaBlurb="Bring the athlete's age, role, season timing, and the court skill that needs focused work."
     />
   );

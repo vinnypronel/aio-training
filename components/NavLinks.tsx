@@ -30,7 +30,7 @@ export default function NavLinks() {
   }
 
   return (
-    <div className="hidden items-center gap-1 xl:flex">
+    <div className="hidden items-center gap-1 lg:flex">
       <Link href="/" className={linkClass("/", ["/"])}>
         Home
       </Link>

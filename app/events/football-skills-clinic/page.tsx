@@ -21,7 +21,7 @@ export default function FootballSkillsClinicPage() {
     <>
       <section className="relative overflow-clip bg-aio-black pt-28 pb-20 text-white md:pt-32">
         {/* Dimmed photographic underlay, faded into black below the header */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[85vh] min-h-[560px]">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[calc(85vh/var(--dz,1))] min-h-[560px]">
           <Image
             src="/assets/images/clinic-bg.webp"
             alt=""
@@ -34,12 +34,11 @@ export default function FootballSkillsClinicPage() {
         </div>
 
         {/* Ghost typography */}
-        <p
-          aria-hidden
-          className="pointer-events-none absolute right-0 top-24 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.04] md:top-16"
-        >
-          Clinic
-        </p>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-full max-w-[1280px]">
+          <p className="absolute right-0 top-24 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.04] md:top-16">
+            Clinic
+          </p>
+        </div>
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6">
           {/* Header Grid */}
