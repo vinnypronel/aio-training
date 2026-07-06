@@ -231,7 +231,7 @@ export default function PricingPackagesPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
           <p className="absolute right-[40px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
             Plans
@@ -243,14 +243,14 @@ export default function PricingPackagesPage() {
               Still Have Questions?
             </p>
             <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]">
-              Talk To A Coach Before You Pick.
+              Talk To A Coach<br /><span className="text-black">Before You Pick.</span>
             </h2>
             <p data-reveal className="mt-5 max-w-[620px] text-base font-bold leading-8">
               Share the athlete&apos;s sport, age, schedule, and goal so AIO can point you toward the right option.
             </p>
           </div>
           <div className="self-start md:self-auto md:translate-y-[35px]">
-            <HoverButton href="/booking" variant="red">
+            <HoverButton href="/booking" variant="black">
               Talk To A Coach
             </HoverButton>
           </div>

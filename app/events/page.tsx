@@ -98,7 +98,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
           <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/10">
             Events
@@ -110,14 +110,14 @@ export default async function EventsPage() {
               Questions?
             </p>
             <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.9]">
-              Call Before<br />You Reserve.
+              Call Before<br /><span className="text-black">You Reserve.</span>
             </h2>
             <p data-reveal className="mt-5 max-w-[660px] text-sm font-semibold leading-relaxed text-white">
               Use the flyer phone number if you need help choosing the right session.
             </p>
           </div>
           <div className="justify-self-start lg:justify-self-auto lg:translate-y-[35px]">
-            <HoverButton href="tel:+17144408053" variant="red">
+            <HoverButton href="tel:+17144408053" variant="black">
               Call (714) 440-8053
             </HoverButton>
           </div>

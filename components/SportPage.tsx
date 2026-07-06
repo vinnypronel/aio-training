@@ -289,7 +289,7 @@ export default function SportPage({
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-aio-black border-t border-aio-line py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <p
           aria-hidden
           className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/10 ${ctaWordmarkClassName || ""}`}
@@ -309,7 +309,7 @@ export default function SportPage({
             </p>
           </div>
           <div className="justify-self-start lg:justify-self-auto lg:translate-y-[35px]">
-            <HoverButton href="/booking" variant="red">
+            <HoverButton href="/booking" variant="black">
               Book A Session
             </HoverButton>
           </div>

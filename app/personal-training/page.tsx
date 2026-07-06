@@ -43,7 +43,11 @@ export default function PersonalTrainingPage() {
         ctaLabel: "Ask About Personal Training",
       }}
       ctaWordmark="Intent"
-      ctaTitle="Book Focused 1:1 Work."
+      ctaTitle={
+        <>
+          Book Focused<br /><span className="text-black">1:1 Work.</span>
+        </>
+      }
       ctaBlurb="Private sessions are planned around the athlete's sport, schedule, movement needs, and next competitive moment."
     />
   );

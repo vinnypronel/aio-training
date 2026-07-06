@@ -40,7 +40,11 @@ export default function BasketballTrainingPage() {
       }}
       ctaWordmark="Drive"
       ctaWordmarkClassName="!right-[45px]"
-      ctaTitle={<>Court Habits<br />That Hold.</>}
+      ctaTitle={
+        <>
+          Court Habits<br /><span className="text-black">That Hold.</span>
+        </>
+      }
       ctaBlurb="Bring the athlete's age, role, season timing, and the court skill that needs focused work."
     />
   );

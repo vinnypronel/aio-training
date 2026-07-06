@@ -40,7 +40,11 @@ export default function SoccerTrainingPage() {
       }}
       ctaWordmark="Pitch"
       ctaWordmarkClassName="!right-[45px]"
-      ctaTitle="Build A Sharper Soccer Player."
+      ctaTitle={
+        <>
+          Build A Sharper<br /><span className="text-black">Soccer Player.</span>
+        </>
+      }
       ctaBlurb="Tell us the player's age, position, season timing, and the skill that needs focused work."
     />
   );

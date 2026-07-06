@@ -40,7 +40,11 @@ export default function BaseballTrainingPage() {
       }}
       ctaWordmark="Prospect"
       ctaWordmarkClassName="md:!right-[25px]"
-      ctaTitle="Build Your Baseball Plan."
+      ctaTitle={
+        <>
+          Build Your<br /><span className="text-black">Baseball Plan.</span>
+        </>
+      }
       ctaBlurb="Tell us the athlete's age, position, season timing, and current training goal."
     />
   );

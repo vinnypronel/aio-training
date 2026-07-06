@@ -40,7 +40,11 @@ export default function FootballTrainingPage() {
         ctaLabel: "Ask About Football Training",
       }}
       ctaWordmark="Compete"
-      ctaTitle="Train For The Next Down."
+      ctaTitle={
+        <>
+          Train For The<br /><span className="text-black">Next Down.</span>
+        </>
+      }
       ctaBlurb="Start with the athlete's age, position, season schedule, and the skill gap that matters most."
     />
   );
