@@ -11,7 +11,7 @@ type SportPillar = {
 type SportTier = {
   number: string;
   ageLabel: string;
-  title: string;
+  title: ReactNode;
   body: string;
   callout?: string;
 };
@@ -26,6 +26,7 @@ type SportProgram = {
   ctaLabel: string;
   tagLabel?: string;
   programName?: string;
+  programImage?: string;
 };
 
 export default function SportPage({
@@ -112,7 +113,7 @@ export default function SportPage({
 
       <section className="relative overflow-hidden bg-aio-paper py-20 text-aio-ink md:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className={`absolute right-6 top-6 select-none font-brand-display text-[clamp(6rem,18vw,8rem)] font-black uppercase leading-none text-aio-black/[0.14] md:right-0 md:top-1/2 md:-translate-y-1/2 md:text-[clamp(8rem,20vw,18rem)] ${
+          <span className={`absolute right-6 top-1 select-none font-brand-display text-[clamp(6rem,18vw,8rem)] font-black uppercase leading-none text-aio-black/[0.14] md:right-0 md:top-1/2 md:-translate-y-1/2 md:text-[clamp(8rem,20vw,18rem)] ${
             sport.toLowerCase().includes("baseball") ? "lg:translate-x-[180px]" : "lg:translate-x-[160px]"
           }`}>
             AIO
@@ -132,28 +133,26 @@ export default function SportPage({
         </div>
       </section>
 
-      <section className="bg-aio-black py-16 text-white md:py-24">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div data-reveal-group className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-aio-black py-20 text-white md:py-28">
+        <div className="mx-auto max-w-[1536px] px-6 md:px-10">
+          <div data-reveal-group className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {pillars.map((p) => (
               <article
                 key={p.number}
                 data-reveal
-                className="relative min-h-[220px] overflow-hidden bg-white p-6 text-aio-ink shadow-[var(--aio-shadow-hard)]"
+                className="relative min-h-[290px] overflow-hidden bg-white p-8 md:p-12 text-aio-ink shadow-[var(--aio-shadow-hard)]"
               >
-                <span
-                  aria-hidden
-                  className="absolute right-0 bottom-0 h-16 w-16 bg-aio-red [clip-path:polygon(100%_0,100%_100%,0_100%)]"
-                />
-                <div className="relative z-10">
-                  <p className="font-brand-display text-5xl font-black leading-none text-aio-ink">
-                    {p.number}.
-                  </p>
-                  <div aria-hidden className="mt-3 mb-6 h-[3px] w-20 -skew-x-[18deg] bg-aio-red" />
-                  <h3 className="mt-3 font-brand-display text-2xl font-black uppercase leading-none">
+                <p
+                  className="absolute right-2 top-2 md:right-3 md:top-3 font-brand-display text-5xl md:text-6xl font-black leading-none text-transparent pointer-events-none select-none"
+                  style={{ WebkitTextStroke: "2px #1a1a1a" }}
+                >
+                  {p.number}.
+                </p>
+                <div className="relative z-10 translate-x-[-6px] translate-y-[12px]">
+                  <h3 className="mt-14 md:mt-16 font-brand-display text-2xl md:text-[1.85rem] font-black uppercase leading-tight">
                     {p.title}
                   </h3>
-                  <div className="mt-4 text-sm font-semibold leading-7 text-aio-ink">
+                  <div className="mt-5 text-sm md:text-base font-semibold leading-7 md:leading-8 text-aio-ink">
                     {p.body}
                   </div>
                 </div>
@@ -166,14 +165,13 @@ export default function SportPage({
       <section className={`relative overflow-hidden py-20 md:py-24 ${tiersLight ? "bg-aio-paper text-aio-ink" : "bg-aio-black text-white"}`}>
         <div data-reveal-group className="relative z-10 mx-auto max-w-[1280px] px-6">
           <div className="max-w-[760px]">
-            <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <p data-reveal className="text-sm font-black uppercase tracking-[0.28em] text-aio-red">
               {tiersLabel ?? `${sport} Path`}
             </p>
-            <h2 data-reveal className="mt-4 font-brand-display text-[clamp(2.25rem,5vw,4.75rem)] font-black uppercase leading-none">
+            <h2 data-reveal className="mt-4 font-brand-display text-[clamp(2.75rem,6vw,5.75rem)] font-black uppercase leading-none">
               {tiersTitle ?? "Athlete Tiers"}
             </h2>
-            <p data-reveal className={`mt-5 text-base font-semibold leading-8 ${tiersLight ? "text-aio-ink/70" : "text-aio-body"}`}>
+            <p data-reveal className={`mt-5 text-lg font-semibold leading-8 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
               {tiersIntro}
             </p>
           </div>
@@ -182,25 +180,24 @@ export default function SportPage({
               <li
                 key={t.number}
                 data-reveal
-                className={`flex flex-col p-8 py-4 ${tiersLight ? "bg-white shadow-[0_4px_24px_rgba(0,0,0,0.08)]" : "border border-aio-line bg-transparent"}`}
+                className={`flex flex-col p-8 py-6 ${tiersLight ? "bg-white shadow-[0_16px_40px_rgba(0,0,0,0.24)]" : "border border-aio-line bg-transparent"}`}
               >
                 <div className="flex items-start justify-end gap-4">
                   <span
                     aria-hidden
-                    className={`shrink-0 font-brand-display text-7xl font-black leading-none ${tiersLight ? "text-aio-red/60" : "text-aio-red-on-dark/60"}`}
+                    className={`shrink-0 font-brand-display text-7xl font-black leading-none ${tiersLight ? "text-aio-red" : "text-aio-red-on-dark"}`}
                   >
                     {t.number}.
                   </span>
                 </div>
-                <div className={`h-1 w-12 -skew-x-[18deg] mt-4 ${tiersLight ? "bg-aio-black" : "bg-white"}`} />
-                <h3 className="mt-3 font-brand-display text-2xl font-black uppercase leading-tight">
+                <h3 className="mt-4 font-brand-display text-3xl font-black uppercase leading-tight">
                   {t.title}
                 </h3>
-                <p className={`mt-4 text-sm font-semibold leading-6 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
+                <p className={`mt-4 text-base font-semibold leading-7 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
                   {t.body}
                 </p>
                 {t.callout && (
-                  <p className="mt-5 border-l-2 border-aio-red pl-3 text-xs font-black uppercase tracking-[0.12em]">
+                  <p className="mt-5 border-l-2 border-aio-red pl-3 text-sm font-black uppercase tracking-[0.12em]">
                     {t.callout}
                   </p>
                 )}
@@ -227,7 +224,7 @@ export default function SportPage({
             <div className="relative min-w-0 w-full aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
               <div data-reveal="fade" className="absolute inset-0 h-full w-full">
                 <Image
-                  src={heroImage}
+                  src={program.programImage || heroImage}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 45vw, 100vw"
@@ -300,11 +297,11 @@ export default function SportPage({
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <p
           aria-hidden
-          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/27 lg:-translate-x-[100px] ${ctaWordmarkClassName || ""}`}
+          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/23 -translate-y-[34px] lg:translate-y-0 lg:-translate-x-[100px] ${ctaWordmarkClassName || ""}`}
         >
           {ctaWordmark}
         </p>
-        <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 -translate-y-[34px] lg:translate-y-0 lg:grid-cols-[1fr_auto] lg:items-end">
           <div data-reveal-group className="max-w-5xl lg:-translate-x-[120px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?

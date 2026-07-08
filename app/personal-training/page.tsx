@@ -24,12 +24,12 @@ export default function PersonalTrainingPage() {
       ]}
       tiersLight
       tiersLabel="Platform Architecture"
-      tiersTitle="The 1:1 Blueprint"
+      tiersTitle={"The\u00a01:1\u00a0Blueprint"}
       tiersIntro="Private sessions map the starting point, build the block, and keep the next action clear."
       tiers={[
         { number: "01", ageLabel: "Step 01", title: "Individual Assessment", body: "Movement, strength, mobility, skill, and confidence baselines." },
         { number: "02", ageLabel: "Step 02", title: "Training Integration", body: "Strength, conditioning, movement quality, and sport transfer in one plan." },
-        { number: "03", ageLabel: "Step 03", title: "Progress Review", body: "Coach feedback keeps the next block aligned with the athlete's current work.", callout: "Owner and lead trainer Jon Guzman runs every private session." },
+        { number: "03", ageLabel: "Step 03", title: <>Progress<br />Review</>, body: "Coach feedback keeps the next block aligned with the athlete's current work." },
       ]}
       program={{
         programLabel: "Personal Training Program",

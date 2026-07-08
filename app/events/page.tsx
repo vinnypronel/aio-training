@@ -50,7 +50,7 @@ export default async function EventsPage() {
                 Check out our upcoming events and register before spots fill up.
               </p>
               <div className="hero-item mt-7 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "400ms" }}>
-                <HoverButton href={`/events/${firstEvent.slug}`}>
+                <HoverButton href={`/events/${firstEvent.slug}#register`}>
                   Reserve Your Spot
                 </HoverButton>
                 <HoverButton href={`/events/${firstEvent.slug}`} variant="outline">
@@ -100,11 +100,11 @@ export default async function EventsPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/27">
+          <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/23 -translate-y-[34px] lg:-translate-y-1/2">
             Events
           </p>
         </div>
-        <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 -translate-y-[34px] lg:translate-y-0 lg:grid-cols-[1fr_auto] lg:items-end">
           <div data-reveal-group className="max-w-[800px] lg:-translate-x-[130px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Questions?

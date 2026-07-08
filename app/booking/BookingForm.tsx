@@ -21,21 +21,24 @@ type AthleteEntry = {
 };
 
 const sessionTypes = [
-  { value: "private", label: "Private Training" },
-  { value: "small-group", label: "Small Group" },
-  { value: "large-group", label: "Large Group" },
-  { value: "event", label: "Event" },
+  { value: "Speed and Agility Training", label: "Speed and Agility Training" },
+  { value: "Personal Training", label: "Personal Training" },
+  { value: "Team Training", label: "Team Training" },
+  { value: "Baseball Training", label: "Baseball Training" },
+  { value: "Football Training", label: "Football Training" },
+  { value: "Soccer Training", label: "Soccer Training" },
+  { value: "Basketball Training", label: "Basketball Training" },
 ];
 
 const ageGroups = ["8-12", "13-18"];
 const sports = [
-  "Baseball Training",
-  "Football Training",
-  "Basketball Training",
-  "Soccer Training",
+  "Speed and Agility Training",
   "Personal Training",
   "Team Training",
-  "Not Sure Yet",
+  "Baseball Training",
+  "Football Training",
+  "Soccer Training",
+  "Basketball Training",
 ];
 
 const DAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -78,6 +81,9 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   const [selectedType, setSelectedType] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [openAgeDropdownIdx, setOpenAgeDropdownIdx] = useState<number | null>(null);
+  const [openSportDropdownIdx, setOpenSportDropdownIdx] = useState<number | null>(null);
 
   // Multi-athlete state
   const [athletes, setAthletes] = useState<AthleteEntry[]>([emptyAthlete()]);
@@ -88,19 +94,19 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
 
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
-  const filteredSlots = selectedType
-    ? slots.filter((s) => s.type === selectedType)
-    : slots;
-
-  const datesWithSlots = useMemo(() => {
-    const set = new Set<string>();
-    for (const s of filteredSlots) set.add(s.date);
-    return set;
-  }, [filteredSlots]);
-
-  const slotsForDate = selectedDate
-    ? filteredSlots.filter((s) => s.date === selectedDate)
-    : [];
+  const slotsForDate = useMemo(() => {
+    if (!selectedDate) return [];
+    
+    return [
+      { startTime: "09:00", endTime: "10:30" },
+      { startTime: "10:30", endTime: "12:00" },
+      { startTime: "12:00", endTime: "13:30" },
+      { startTime: "13:30", endTime: "15:00" },
+      { startTime: "15:00", endTime: "16:30" },
+      { startTime: "16:30", endTime: "18:00" },
+      { startTime: "18:00", endTime: "19:30" },
+    ];
+  }, [selectedDate]);
 
   const calendarDays = getCalendarDays(calYear, calMonth);
 
@@ -132,7 +138,11 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   const athleteCount = athletes.length;
 
   // Find selected slot info for summary
-  const selectedSlotInfo = slots.find((s) => s.id === selectedSlot);
+  const selectedSlotInfo = useMemo(() => {
+    if (!selectedSlot) return null;
+    const [start, end] = selectedSlot.split("-");
+    return { startTime: start, endTime: end };
+  }, [selectedSlot]);
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
         weekday: "long", month: "long", day: "numeric", year: "numeric",
@@ -172,18 +182,91 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
       {/* Top row: Hero text left, Calendar right */}
       <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
         {/* Left: Hero info */}
-        <div className="pt-4">
+        <div className="pt-2 lg:-translate-x-[50px]">
           <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
           <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
             Reserve Your Spot
           </p>
-          <h1 className="mt-4 font-brand-display text-[clamp(2.75rem,7vw,5rem)] font-black uppercase leading-[0.9]">
+          <h1 className="mt-4 font-brand-display text-[clamp(2.75rem,7vw,5.5rem)] font-black uppercase leading-[0.9]">
             Book A<br />
             <span className="text-aio-red">Session</span>
           </h1>
-          <p className="mt-5 max-w-[480px] text-base font-semibold leading-8 text-aio-body md:text-lg">
-            Pick your training type, choose an available time slot, and we&apos;ll confirm your spot.
+          <p className="mt-5 max-w-[520px] text-base font-semibold leading-8 text-aio-body md:text-lg">
+            Pick your training type, choose an available time slot, and we&apos;ll reach out to confirm your spot.
           </p>
+
+          {/* Program Selection Dropdown */}
+          <div className="mt-8 max-w-[420px] relative">
+            <label className="block text-[0.65rem] font-black uppercase tracking-[0.18em] text-aio-muted">
+              Choose Your Training Path *
+            </label>
+            
+            {/* Hidden Input for Form Submission */}
+            <input type="hidden" name="type" value={selectedType} />
+
+            {/* Custom Dropdown Trigger */}
+            <button
+              id="booking-type-select-trigger"
+              type="button"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="mt-2 flex w-full items-center justify-between border border-aio-line bg-aio-black/60 px-4 py-3 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-aio-red focus:outline-none"
+            >
+              <span>
+                {selectedType ? sessionTypes.find(t => t.value === selectedType)?.label : "Select a Program"}
+              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={3}
+                className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+
+            {/* Backdrop click listener to close dropdown */}
+            {isDropdownOpen && (
+              <div
+                className="fixed inset-0 z-20"
+                onClick={() => setIsDropdownOpen(false)}
+              />
+            )}
+
+            {/* Custom Dropdown Menu */}
+            <div
+              className={`absolute top-full left-0 z-30 mt-1 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
+                isDropdownOpen
+                  ? "visible opacity-100 scale-y-100"
+                  : "invisible opacity-0 scale-y-95 pointer-events-none"
+              }`}
+            >
+              <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+                {sessionTypes.map((t) => (
+                  <button
+                    key={t.value}
+                    type="button"
+                    onClick={() => {
+                      setSelectedType(t.value);
+                      setIsDropdownOpen(false);
+                      setSelectedSlot("");
+                      setSelectedDate("");
+                    }}
+                    className={`block w-full text-left px-4 py-3 text-xs font-black uppercase tracking-[0.1em] transition-colors hover:bg-aio-panel ${
+                      selectedType === t.value
+                        ? "text-aio-red bg-aio-panel/40"
+                        : "text-white/85 hover:text-aio-red"
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Time Slots for Selected Date */}
           {selectedDate && (
@@ -197,162 +280,135 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 </p>
               ) : (
                 <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                  {slotsForDate.map((slot) => (
-                    <button
-                      key={slot.id}
-                      type="button"
-                      onClick={() => setSelectedSlot(slot.id)}
-                      className={`border p-4 text-left transition ${
-                        selectedSlot === slot.id
-                          ? "border-aio-red bg-aio-red/10"
-                          : "border-aio-line hover:border-aio-red"
-                      }`}
-                    >
-                      <p className="text-sm font-bold text-white">
-                        {formatTime12(slot.startTime)} – {formatTime12(slot.endTime)}
-                      </p>
-                      {slot.title && (
-                        <p className="mt-0.5 text-xs text-aio-muted">{slot.title}</p>
-                      )}
-                      <p className="mt-1.5 text-[0.65rem] font-bold text-emerald-400">
-                        {slot.spotsLeft} spot{slot.spotsLeft !== 1 && "s"} left
-                      </p>
-                    </button>
-                  ))}
+                  {slotsForDate.map((slot) => {
+                    const slotValue = `${slot.startTime}-${slot.endTime}`;
+                    const isSelected = selectedSlot === slotValue;
+                    return (
+                      <button
+                        key={slotValue}
+                        type="button"
+                        onClick={() => setSelectedSlot(slotValue)}
+                        className={`border p-4 text-left transition ${
+                          isSelected
+                            ? "border-aio-red bg-aio-red/10"
+                            : "border-aio-line hover:border-aio-red"
+                        }`}
+                      >
+                        <p className="text-sm font-bold text-white">
+                          {formatTime12(slot.startTime)} – {formatTime12(slot.endTime)}
+                        </p>
+                        <p className="mt-1 text-[0.65rem] font-bold text-aio-muted">
+                          Request Slot
+                        </p>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
-              <input type="hidden" name="slotId" value={selectedSlot} />
+              <input type="hidden" name="date" value={selectedDate} />
+              <input type="hidden" name="startTime" value={selectedSlotInfo?.startTime || ""} />
+              <input type="hidden" name="endTime" value={selectedSlotInfo?.endTime || ""} />
             </div>
           )}
         </div>
 
         {/* Right: Session types + Calendar */}
-        <div className="lg:max-w-[480px] lg:justify-self-end w-full">
-          {/* Session Type Buttons */}
-          <div>
-            <label className={labelClass}>Session Type *</label>
-            <div className="mt-2 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-              {sessionTypes.map((t) => (
-                <button
-                  key={t.value}
-                  type="button"
-                  onClick={() => {
-                    setSelectedType(t.value);
-                    setSelectedSlot("");
-                    setSelectedDate("");
-                  }}
-                  className={`border py-2 sm:py-2.5 text-xs font-black uppercase tracking-[0.08em] transition ${
-                    selectedType === t.value
-                      ? "border-aio-red bg-aio-red text-white"
-                      : "border-aio-line text-aio-muted hover:border-aio-red hover:text-white"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-            <input type="hidden" name="type" value={selectedType} />
-          </div>
-
+        <div className="lg:max-w-[650px] lg:justify-self-end w-full lg:translate-x-[110px]">
           {/* Calendar */}
-          <div className="mt-4 border border-aio-line bg-aio-panel/80 p-4 sm:p-5 shadow-[var(--aio-shadow-hard)] backdrop-blur-sm">
-            {/* Month nav */}
-            <div className="flex items-center justify-between">
-              <h2 className="text-base sm:text-lg font-black text-white">
-                {MONTHS[calMonth]} {calYear}
-              </h2>
-              <div className="flex gap-1.5">
-                <button
-                  type="button"
-                  onClick={prevMonth}
-                  className="flex h-9 sm:h-10 w-9 sm:w-10 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  onClick={nextMonth}
-                  className="flex h-9 sm:h-10 w-9 sm:w-10 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
-                >
-                  →
-                </button>
+          <div className="mt-2 lg:mt-[80px] border border-aio-line p-5 sm:p-7">
+            {!selectedType ? (
+              <div className="flex min-h-[340px] flex-col items-center justify-center p-6 text-center">
+                <p className="text-sm font-semibold text-aio-muted">
+                  Please choose your training path on the left to unlock the calendar.
+                </p>
               </div>
-            </div>
-
-            {/* Day headers */}
-            <div className="mt-4 grid grid-cols-7">
-              {DAYS.map((d, i) => (
-                <div
-                  key={`${d}-${i}`}
-                  className="py-1 sm:py-1.5 text-center text-xs font-black uppercase tracking-wider text-aio-muted"
-                >
-                  {d}
+            ) : (
+              <>
+                {/* Month nav */}
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl sm:text-5xl font-black text-white leading-none">
+                    {MONTHS[calMonth]} {calYear}
+                  </h2>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={prevMonth}
+                      className="flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                    >
+                      ←
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextMonth}
+                      className="flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center border border-aio-line text-aio-muted transition hover:border-aio-red hover:text-white"
+                    >
+                      →
+                    </button>
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            {/* Day cells */}
-            <div className="grid grid-cols-7">
-              {calendarDays.map((day, i) => {
-                if (day === null) {
-                  return <div key={`empty-${i}`} className="h-10 sm:h-11" />;
-                }
+                {/* Day headers */}
+                <div className="mt-8 grid grid-cols-7">
+                  {DAYS.map((d, i) => (
+                    <div
+                      key={`${d}-${i}`}
+                      className="py-2 sm:py-2.5 text-center text-sm font-black uppercase tracking-wider text-aio-muted"
+                    >
+                      {d}
+                    </div>
+                  ))}
+                </div>
 
-                const dateStr = formatDate(calYear, calMonth, day);
-                const hasSlots = selectedType && datesWithSlots.has(dateStr);
-                const isPast = dateStr < todayStr;
-                const isSelected = dateStr === selectedDate;
-                const isToday = dateStr === todayStr;
-                const isSunday = new Date(calYear, calMonth, day).getDay() === 0;
-                const isDisabled = isPast || isSunday;
+                {/* Day cells */}
+                <div className="mt-2 grid grid-cols-7">
+                  {calendarDays.map((day, i) => {
+                    if (day === null) {
+                      return <div key={`empty-${i}`} className="h-14 sm:h-[72px]" />;
+                    }
 
-                return (
-                  <button
-                    key={dateStr}
-                    type="button"
-                    disabled={isDisabled}
-                    onClick={() => {
-                      setSelectedDate(dateStr);
-                      setSelectedSlot("");
-                    }}
-                    className={`relative flex h-10 sm:h-11 items-center justify-center text-xs sm:text-sm font-bold transition ${
-                      isSelected
-                        ? "bg-aio-red text-white"
-                        : hasSlots && !isPast
-                          ? "bg-aio-red/20 text-white ring-1 ring-aio-red/40 hover:bg-aio-red/35"
-                          : isDisabled
-                            ? "cursor-not-allowed text-aio-muted/30"
-                            : "cursor-pointer text-white/60 hover:bg-white/10"
-                    } ${isToday && !isSelected ? "ring-1 ring-aio-red" : ""}`}
-                  >
-                    {day}
-                    {hasSlots && !isPast && !isSelected && (
-                      <span className="absolute bottom-1.5 h-1 w-1 rounded-full bg-aio-red" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                    const dateStr = formatDate(calYear, calMonth, day);
+                    const isPast = dateStr < todayStr;
+                    const isSelected = dateStr === selectedDate;
+                    const isToday = dateStr === todayStr;
+                    const isDisabled = isPast;
 
-            {!selectedType && (
-              <p className="mt-3 text-center text-xs font-semibold text-aio-muted">
-                Select a session type above to see available dates.
-              </p>
+                    return (
+                      <button
+                        key={dateStr}
+                        type="button"
+                        disabled={isDisabled}
+                        onClick={() => {
+                          setSelectedDate(dateStr);
+                          setSelectedSlot("");
+                        }}
+                        className={`relative flex h-14 sm:h-[72px] items-center justify-center text-sm sm:text-lg font-bold transition ${
+                          isSelected
+                            ? "ring-1 ring-aio-red text-white"
+                            : isDisabled
+                              ? "cursor-not-allowed text-aio-muted/30"
+                              : "cursor-pointer text-white/60 hover:bg-white/10"
+                        }`}
+                      >
+                        {day}
+                        {isToday && (
+                          <span className="absolute bottom-3 h-2 w-2 rounded-full bg-aio-red" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
             )}
-
-            <p className="mt-3 text-center text-[0.6rem] font-black uppercase tracking-[0.15em] text-aio-muted/50">
-              Closed Sundays · Sat 9-5 · Mon-Fri 10-8
-            </p>
           </div>
         </div>
-      </div>
+  </div>
 
       {/* Your Information + Athletes — only show after slot is picked */}
       {selectedSlot && (
         <div className="mt-12 border-t border-aio-line pt-10">
 
           {/* ── Parent / Guardian ─────────────────────────── */}
-          <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red">
+          <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red-on-dark">
             Parent / Guardian Info
           </h3>
 
@@ -400,9 +456,9 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
           {/* ── Athletes ──────────────────────────────────── */}
           <div className="mt-10">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red">
+              <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red-on-dark">
                 Athletes{" "}
-                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center bg-aio-red text-[0.6rem] font-black text-white">
+                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center bg-aio-red-on-dark text-[0.6rem] font-black text-white">
                   {athleteCount}
                 </span>
               </h3>
@@ -468,19 +524,69 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                       >
                         Age Group
                       </label>
-                      <select
-                        id={`athlete-age-${idx}`}
-                        value={athlete.ageGroup}
-                        onChange={(e) => updateAthlete(idx, "ageGroup", e.target.value)}
-                        className={`mt-2 ${inputClass}`}
-                      >
-                        <option value="" className="text-black bg-white">Select</option>
-                        {ageGroups.map((a) => (
-                          <option key={a} value={a} className="text-black bg-white">
-                            {a}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative mt-2">
+                        {/* Custom Dropdown Trigger */}
+                        <button
+                          id={`athlete-age-select-trigger-${idx}`}
+                          type="button"
+                          onClick={() => {
+                            setOpenAgeDropdownIdx(openAgeDropdownIdx === idx ? null : idx);
+                            setOpenSportDropdownIdx(null);
+                          }}
+                          className="flex w-full items-center justify-between border border-aio-line bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-aio-red focus:outline-none"
+                        >
+                          <span>{athlete.ageGroup || "Select"}</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                            className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                              openAgeDropdownIdx === idx ? "rotate-180" : ""
+                            }`}
+                          >
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </button>
+
+                        {/* Backdrop click listener to close dropdown */}
+                        {openAgeDropdownIdx === idx && (
+                          <div
+                            className="fixed inset-0 z-20"
+                            onClick={() => setOpenAgeDropdownIdx(null)}
+                          />
+                        )}
+
+                        {/* Custom Dropdown Menu */}
+                        <div
+                          className={`absolute top-full left-0 z-30 mt-1 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
+                            openAgeDropdownIdx === idx
+                              ? "visible opacity-100 scale-y-100"
+                              : "invisible opacity-0 scale-y-95 pointer-events-none"
+                          }`}
+                        >
+                          <div className="max-h-[200px] overflow-y-auto custom-scrollbar">
+                            {ageGroups.map((a) => (
+                              <button
+                                key={a}
+                                type="button"
+                                onClick={() => {
+                                  updateAthlete(idx, "ageGroup", a);
+                                  setOpenAgeDropdownIdx(null);
+                                }}
+                                className={`block w-full text-left px-4 py-3 text-xs font-black uppercase tracking-[0.1em] transition-colors hover:bg-aio-panel ${
+                                  athlete.ageGroup === a
+                                    ? "text-aio-red bg-aio-panel/40"
+                                    : "text-white/85 hover:text-aio-red"
+                                }`}
+                              >
+                                {a}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     {/* Sport */}
                     <div>
@@ -490,19 +596,69 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                       >
                         Sport
                       </label>
-                      <select
-                        id={`athlete-sport-${idx}`}
-                        value={athlete.sport}
-                        onChange={(e) => updateAthlete(idx, "sport", e.target.value)}
-                        className={`mt-2 ${inputClass}`}
-                      >
-                        <option value="" className="text-black bg-white">Select</option>
-                        {sports.map((s) => (
-                          <option key={s} value={s} className="text-black bg-white">
-                            {s}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative mt-2">
+                        {/* Custom Dropdown Trigger */}
+                        <button
+                          id={`athlete-sport-select-trigger-${idx}`}
+                          type="button"
+                          onClick={() => {
+                            setOpenSportDropdownIdx(openSportDropdownIdx === idx ? null : idx);
+                            setOpenAgeDropdownIdx(null);
+                          }}
+                          className="flex w-full items-center justify-between border border-aio-line bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-aio-red focus:outline-none"
+                        >
+                          <span>{athlete.sport || "Select"}</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                            className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                              openSportDropdownIdx === idx ? "rotate-180" : ""
+                            }`}
+                          >
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </button>
+
+                        {/* Backdrop click listener to close dropdown */}
+                        {openSportDropdownIdx === idx && (
+                          <div
+                            className="fixed inset-0 z-20"
+                            onClick={() => setOpenSportDropdownIdx(null)}
+                          />
+                        )}
+
+                        {/* Custom Dropdown Menu */}
+                        <div
+                          className={`absolute top-full left-0 z-30 mt-1 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
+                            openSportDropdownIdx === idx
+                              ? "visible opacity-100 scale-y-100"
+                              : "invisible opacity-0 scale-y-95 pointer-events-none"
+                          }`}
+                        >
+                          <div className="max-h-[250px] overflow-y-auto custom-scrollbar">
+                            {sports.map((s) => (
+                              <button
+                                key={s}
+                                type="button"
+                                onClick={() => {
+                                  updateAthlete(idx, "sport", s);
+                                  setOpenSportDropdownIdx(null);
+                                }}
+                                className={`block w-full text-left px-4 py-3 text-xs font-black uppercase tracking-[0.1em] transition-colors hover:bg-aio-panel ${
+                                  athlete.sport === s
+                                    ? "text-aio-red bg-aio-panel/40"
+                                    : "text-white/85 hover:text-aio-red"
+                                }`}
+                              >
+                                {s}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -591,11 +747,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
             disabled={pending || !selectedSlot}
             className="mt-6 w-full py-3.5 sm:w-auto sm:px-12"
           >
-            {pending
-              ? "Submitting…"
-              : athleteCount === 1
-                ? "Book Session"
-                : `Book for ${athleteCount} Athletes`}
+            {pending ? "Submitting…" : "Request Session"}
           </HoverButton>
         </div>
       )}

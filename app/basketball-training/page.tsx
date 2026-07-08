@@ -22,7 +22,7 @@ export default function BasketballTrainingPage() {
       }
       introBody="AIO basketball training ties skill detail to the athletic qualities that let players separate, defend, finish, and compete with control."
       pillars={[
-        { number: "01", title: "Ball Handling And IQ", body: "Handle pressure, read space, and make cleaner decisions with the ball." },
+        { number: "01", title: "Ball\u00a0Handling And\u00a0IQ", body: "Handle pressure, read space, and make cleaner decisions with the ball." },
         { number: "02", title: "Shooting Mechanics", body: "Footwork, balance, release consistency, and shot prep in game-like situations." },
         { number: "03", title: "Defensive Principles", body: "Closeouts, lateral movement, containment angles, and help-side responsibility." },
         { number: "04", title: "Athletic Development", body: "Vertical force, first-step acceleration, mobility, and conditioning for the court." },
@@ -41,6 +41,7 @@ export default function BasketballTrainingPage() {
         serviceArea: "Middlesex and Monmouth County athletes",
         tags: ["Shooting", "Handle", "Defense", "Conditioning"],
         ctaLabel: "Ask About Basketball Training",
+        programImage: "/assets/images/basketball-program-coaching.png",
       }}
       ctaWordmark="Drive"
       ctaWordmarkClassName="!right-[45px]"

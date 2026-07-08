@@ -154,11 +154,11 @@ export default function ContactUsPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/27 lg:text-[16rem]">
+          <span className="absolute right-[10px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(3rem,12.75vw,12rem)] font-black uppercase leading-none text-white/23 lg:text-[12rem] -translate-y-[34px] md:-translate-y-1/2">
             CALL US
           </span>
         </div>
-        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
+        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 -translate-y-[34px] md:translate-y-0 md:flex-row md:items-end md:justify-between">
           <div data-reveal-group className="max-w-[760px] md:-translate-x-[80px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Prefer To Talk?

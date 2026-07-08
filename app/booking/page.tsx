@@ -32,7 +32,7 @@ export default async function BookingPage() {
     }));
 
   return (
-    <section className="relative min-h-[calc(100svh/var(--dz,1))] overflow-hidden bg-aio-black px-6 py-20 text-white md:py-24">
+    <section className="relative min-h-[calc(100svh/var(--dz,1))] overflow-hidden bg-aio-black px-6 pt-[12px] pb-20 text-white md:pt-[36px] md:pb-24">
       {/* Dimmed photographic underlay, faded into black toward the form */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[calc(90vh/var(--dz,1))] min-h-[560px]">
         <Image
@@ -40,20 +40,13 @@ export default async function BookingPage() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-top opacity-[0.14]"
+          className="object-cover object-top opacity-[0.24]"
         />
         <div className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply" />
         <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent to-aio-black" />
       </div>
 
-      {/* Ghost typography */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-        <p className="absolute left-0 top-16 select-none whitespace-nowrap font-brand-display text-[clamp(3.5rem,18vw,16rem)] font-black uppercase leading-none text-white/[0.18] md:top-10">
-          Game Day
-        </p>
-      </div>
-
-      <div data-reveal className="relative z-10 mx-auto max-w-[1280px]">
+      <div data-reveal className="relative z-10 mx-auto max-w-[1360px]">
         <BookingForm slots={availableSlots} />
       </div>
     </section>

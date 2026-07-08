@@ -70,17 +70,17 @@ function HeaderGetStartedButton() {
       className="group relative inline-flex min-h-11 items-center justify-center overflow-hidden bg-aio-red px-5 text-xs font-black tracking-[0.1em] uppercase text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
     >
       <span className={`relative z-10 transition-colors duration-300 ${isHovered ? "text-aio-red" : "text-white"}`}>
-        Get Started
+        Book Now
       </span>
       <span
         className={`pointer-events-none absolute rounded-full bg-white -translate-x-1/2 -translate-y-1/2 transition-all ${
-          isHovered ? "duration-[1400ms] ease-in-out" : "duration-[800ms] ease-out"
+          isHovered ? "duration-[600ms] ease-in-out" : "duration-[400ms] ease-out"
         }`}
         style={{
           left: hoverPos.x,
           top: hoverPos.y,
-          width: isHovered ? "360px" : "0px",
-          height: isHovered ? "360px" : "0px",
+          width: isHovered ? "800px" : "0px",
+          height: isHovered ? "800px" : "0px",
         }}
       />
     </Link>

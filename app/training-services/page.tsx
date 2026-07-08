@@ -186,7 +186,7 @@ export default function TrainingServicesPage() {
                 </span>
 
                 <div>
-                  <p className="text-2xl font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
+                  <p className="translate-y-[10px] text-2xl font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                     {step.label}
                   </p>
                 </div>
@@ -206,8 +206,8 @@ export default function TrainingServicesPage() {
       </section>
 
       <section className="relative bg-aio-black py-20 text-white md:py-24 overflow-hidden">
-        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-          <div className="relative p-6 lg:-translate-x-20 lg:scale-[1.2] lg:origin-left transition-transform duration-500">
+        <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.75fr_1fr] lg:items-center">
+          <div className="relative p-6 lg:-translate-x-[136px] lg:scale-[1.3] lg:origin-left transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
             <div className="relative w-full aspect-[16/9] overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)] isolate webkit-clip-fix">
@@ -216,13 +216,14 @@ export default function TrainingServicesPage() {
                   src="/assets/images/training-services-facility.webp"
                   alt="AIO training facility"
                   fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) 55vw, 100vw"
                   className="object-cover"
+                  priority
                 />
               </div>
             </div>
           </div>
-          <div className="lg:translate-x-12 transition-transform duration-500">
+          <div className="lg:translate-x-[88px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Middlesex And Monmouth County
             </p>
@@ -237,9 +238,10 @@ export default function TrainingServicesPage() {
                 <p className="mt-2 text-xs font-black uppercase tracking-[0.12em] text-aio-red-on-dark">
                   Confirmed before each session
                 </p>
-                <p className="mt-4 text-sm font-semibold leading-7 text-aio-body">
-                  Strength, speed, and group work may use availability-dependent partner facilities. Contact AIO before visiting any training location. Each session location is confirmed before arrival.
-                </p>
+                <div className="mt-4 text-sm font-semibold leading-7 text-aio-body flex gap-3">
+                  <span className="shrink-0 text-aio-red font-black select-none">–</span>
+                  <span>Strength, speed, and group work may use availability-dependent partner facilities. Contact AIO before visiting any training location. Each session location is confirmed before arrival.</span>
+                </div>
               </article>
               <article data-reveal className="border border-aio-line p-6">
                 <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
@@ -248,9 +250,10 @@ export default function TrainingServicesPage() {
                 <p className="mt-2 text-xs font-black uppercase tracking-[0.12em] text-aio-red-on-dark">
                   Middlesex and Monmouth County
                 </p>
-                <p className="mt-4 text-sm font-semibold leading-7 text-aio-body">
-                  Outdoor transfer work is scheduled at permitted fields and courts when the plan calls for live sport space. Every session location is confirmed with the athlete&apos;s training schedule before arrival.
-                </p>
+                <div className="mt-4 text-sm font-semibold leading-7 text-aio-body flex gap-3">
+                  <span className="shrink-0 text-aio-red font-black select-none">–</span>
+                  <span>Outdoor transfer work is scheduled at permitted fields and courts when the plan calls for live sport space. Every session location is confirmed with the athlete&apos;s training schedule before arrival.</span>
+                </div>
               </article>
             </div>
           </div>
@@ -259,11 +262,11 @@ export default function TrainingServicesPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className="absolute right-[30px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/27 lg:text-[16rem]">
+          <span className="absolute right-[30px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[60px] select-none font-brand-display text-[clamp(4rem,17vw,16rem)] font-black uppercase leading-none text-white/23 lg:text-[16rem] -translate-y-[34px] md:-translate-y-1/2">
             AIO
           </span>
         </div>
-        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
+        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-6 px-6 -translate-y-[34px] md:translate-y-0 md:flex-row md:items-end md:justify-between">
           <div data-reveal-group className="max-w-[760px]">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Not Sure Which Path?

@@ -233,11 +233,11 @@ export default function PricingPackagesPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <p className="absolute right-[40px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/27">
+          <p className="absolute right-[40px] md:right-[-140px] bottom-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/23 -translate-y-[34px] md:-translate-y-1/2">
             Plans
           </p>
         </div>
-        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between">
+        <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-6 px-6 -translate-y-[34px] md:translate-y-0 md:flex-row md:items-end md:justify-between">
           <div data-reveal-group className="max-w-[760px] md:-translate-x-[200px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em]">
               Still Have Questions?
@@ -367,7 +367,7 @@ function PlanGroup({
                 href="/booking"
                 className={`mt-6 inline-flex min-h-12 items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-[0.1em] text-white transition ${
                   plan.featured
-                    ? "bg-aio-red hover:bg-aio-red/80 shadow-[var(--aio-shadow-red)]"
+                    ? "bg-aio-red hover:bg-aio-red/80"
                     : "bg-aio-black hover:bg-aio-black/80 border border-aio-line"
                 }`}
               >

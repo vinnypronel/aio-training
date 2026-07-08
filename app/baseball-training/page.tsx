@@ -15,7 +15,11 @@ export default function BaseballTrainingPage() {
       heroLineTwo="Diamond."
       heroBlurb="Precision and power development for hitters, pitchers, fielders, and baseball athletes building mechanics that hold up in games."
       introLabel="Our Baseball Program"
-      introTitle="Mechanics, Power, And Game Transfer."
+      introTitle={
+        <>
+          Mechanics, Power, And <span className="whitespace-nowrap">Game Transfer.</span>
+        </>
+      }
       introBody="AIO baseball sessions pair sport-specific skill work with the strength and movement qualities athletes need through a long season."
       pillars={[
         { number: "01", title: "Hitting Mechanics", body: "Swing path, contact point, lower-half timing, and repeatable bat speed." },
@@ -39,7 +43,7 @@ export default function BaseballTrainingPage() {
         ctaLabel: "Ask About Baseball Training",
       }}
       ctaWordmark="Prospect"
-      ctaWordmarkClassName="md:!right-[25px]"
+      ctaWordmarkClassName="md:!right-[-70px] lg:!translate-y-[8px]"
       ctaTitle={
         <>
           Build Your<br /><span className="text-black">Baseball Plan.</span>

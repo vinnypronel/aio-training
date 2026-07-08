@@ -21,12 +21,14 @@ export async function submitBooking(
   const name = (formData.get("name") as string)?.trim();
   const email = (formData.get("email") as string)?.trim();
   const phone = (formData.get("phone") as string)?.trim() || "";
-  const slotId = (formData.get("slotId") as string)?.trim();
   const type = (formData.get("type") as string)?.trim();
+  const date = (formData.get("date") as string)?.trim();
+  const startTime = (formData.get("startTime") as string)?.trim();
+  const endTime = (formData.get("endTime") as string)?.trim();
   const athletesRaw = (formData.get("athletes") as string)?.trim() || "[]";
 
-  if (!name || !email || !type) {
-    return { status: "error", message: "Name, email, and session type are required." };
+  if (!name || !email || !type || !date || !startTime || !endTime) {
+    return { status: "error", message: "Name, email, training type, date, and time slot are required." };
   }
 
   // Parse athlete list
@@ -81,17 +83,32 @@ export async function submitBooking(
   // claim the last spot.
   try {
     await prisma.$transaction(async (tx) => {
-      if (slotId) {
-        const slot = await tx.timeSlot.findUnique({ where: { id: slotId } });
-        if (!slot) throw new Error("Time slot not found.");
-        if (slot.bookedCount + athleteCount > slot.maxCapacity) {
-          const spotsLeft = slot.maxCapacity - slot.bookedCount;
-          throw new Error(
-            spotsLeft === 0
-              ? "This time slot is full."
-              : `Only ${spotsLeft} spot${spotsLeft !== 1 ? "s" : ""} left — reduce your athlete count to continue.`,
-          );
-        }
+      let slot = await tx.timeSlot.findFirst({
+        where: {
+          date,
+          startTime,
+          endTime,
+          type,
+        },
+      });
+
+      if (!slot) {
+        slot = await tx.timeSlot.create({
+          data: {
+            date,
+            startTime,
+            endTime,
+            type,
+            title: `${type} Request`,
+            maxCapacity: 99,
+            bookedCount: athleteCount,
+          },
+        });
+      } else {
+        await tx.timeSlot.update({
+          where: { id: slot.id },
+          data: { bookedCount: { increment: athleteCount } },
+        });
       }
 
       await tx.booking.create({
@@ -100,16 +117,9 @@ export async function submitBooking(
           status: "new",
           notes,
           customerId,
-          timeSlotId: slotId || null,
+          timeSlotId: slot.id,
         },
       });
-
-      if (slotId) {
-        await tx.timeSlot.update({
-          where: { id: slotId },
-          data: { bookedCount: { increment: athleteCount } },
-        });
-      }
     });
   } catch (e) {
     return {

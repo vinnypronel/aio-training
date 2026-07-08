@@ -19,7 +19,7 @@ const skills = [
 export default function FootballSkillsClinicPage() {
   return (
     <>
-      <section className="relative overflow-clip bg-aio-black pt-28 pb-20 text-white md:pt-32">
+      <section className="relative max-w-full overflow-x-clip bg-aio-black pt-28 pb-20 text-white md:pt-32">
         {/* Dimmed photographic underlay, faded into black below the header */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[calc(85vh/var(--dz,1))] min-h-[560px]">
           <Image
@@ -35,7 +35,7 @@ export default function FootballSkillsClinicPage() {
 
         {/* Ghost typography */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-full max-w-[1280px]">
-          <p className="absolute right-0 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[200px]">
+          <p className="absolute right-5 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[200px]">
             Clinic
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function FootballSkillsClinicPage() {
                 Register Now
               </HoverButton>
               <HoverButton href="/events" variant="outline" className="text-xs tracking-[0.14em]">
-                Close
+                Back to Events
               </HoverButton>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function FootballSkillsClinicPage() {
               <div data-reveal className="border border-aio-line p-6 sm:p-8 bg-transparent">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
                   <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Dates
                     </span>
                     <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
@@ -80,7 +80,7 @@ export default function FootballSkillsClinicPage() {
                     </span>
                   </div>
                   <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Time
                     </span>
                     <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
@@ -88,7 +88,7 @@ export default function FootballSkillsClinicPage() {
                     </span>
                   </div>
                   <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Location
                     </span>
                     <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
@@ -96,7 +96,7 @@ export default function FootballSkillsClinicPage() {
                     </span>
                   </div>
                   <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Age Groups
                     </span>
                     <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
@@ -121,7 +121,7 @@ export default function FootballSkillsClinicPage() {
                 </h3>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="border border-aio-red bg-transparent p-6">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Early Registration
                     </span>
                     <span className="mt-3 block font-brand-display text-4xl font-black text-white leading-none">
@@ -132,7 +132,7 @@ export default function FootballSkillsClinicPage() {
                     </span>
                   </div>
                   <div className="border border-aio-line bg-transparent p-6">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Standard Registration
                     </span>
                     <span className="mt-3 block font-brand-display text-4xl font-black text-white leading-none">
@@ -151,10 +151,10 @@ export default function FootballSkillsClinicPage() {
                   What Athletes Work On
                 </h3>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {skills.map((s) => (
+                  {skills.map((s, idx) => (
                     <div key={s.title} data-reveal className="border border-aio-line bg-transparent p-6">
                       <h4 className="font-brand-display text-lg font-black uppercase text-white leading-none">
-                        {s.title}
+                        {String(idx + 1).padStart(2, "0")}. {s.title}
                       </h4>
                       <p className="mt-3 text-xs font-semibold leading-relaxed text-aio-body">
                         {s.body}

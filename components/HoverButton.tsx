@@ -33,7 +33,7 @@ const baseClass =
 const variantStyles: Record<Variant, { container: string; textHover: string; blob: string }> = {
   red: {
     container:
-      "bg-aio-red text-white shadow-[var(--aio-shadow-red)] focus-visible:ring-white focus-visible:ring-offset-aio-black",
+      "bg-aio-red text-white focus-visible:ring-white focus-visible:ring-offset-aio-black",
     textHover: "text-aio-red",
     blob: "bg-white",
   },
@@ -77,7 +77,7 @@ export default function HoverButton({
       </span>
       <span
         className={`pointer-events-none absolute rounded-full ${v.blob} transition-all -translate-x-1/2 -translate-y-1/2 ${
-          isHovered ? "duration-[1400ms] ease-in-out" : "duration-[800ms] ease-out"
+          isHovered ? "duration-[600ms] ease-in-out" : "duration-[400ms] ease-out"
         }`}
         style={{
           left: hoverPos.x,

@@ -197,8 +197,10 @@ function TrainingCard({
           >
             <span
               aria-hidden
-              className="mt-2 h-2.5 w-2.5 shrink-0 bg-aio-red"
-            />
+              className="shrink-0 text-aio-red-on-dark font-black select-none"
+            >
+              –
+            </span>
             <span>{item}</span>
           </li>
         ))}

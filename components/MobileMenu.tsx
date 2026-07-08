@@ -236,7 +236,7 @@ export default function MobileMenu() {
                   </div>
                 </div>
                 <HoverButton href="/booking" className="w-full">
-                  Get Started
+                  Book Now
                 </HoverButton>
               </div>
 

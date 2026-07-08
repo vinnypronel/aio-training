@@ -152,7 +152,6 @@ export default function CalendarView({ slots }: { slots: SlotData[] }) {
               const hasSlots = datesWithSlots.has(dateStr);
               const isSelected = dateStr === selectedDate;
               const isToday = dateStr === todayStr;
-              const isSunday = new Date(calYear, calMonth, day).getDay() === 0;
               const isPast = dateStr < todayStr;
 
               return (
@@ -168,9 +167,7 @@ export default function CalendarView({ slots }: { slots: SlotData[] }) {
                         ? "bg-aio-red text-white"
                         : isToday
                           ? "bg-aio-red/20 text-white"
-                          : isSunday
-                            ? "text-aio-muted/40"
-                            : "text-white/80 hover:bg-white/5"
+                          : "text-white/80 hover:bg-white/5"
                   }`}
                 >
                   {day}
@@ -181,10 +178,6 @@ export default function CalendarView({ slots }: { slots: SlotData[] }) {
               );
             })}
           </div>
-
-          <p className="mt-4 text-center text-[0.65rem] font-black uppercase tracking-[0.15em] text-aio-muted">
-            Closed Sundays · Sat 9-5 · Mon-Fri 10-8
-          </p>
         </div>
 
         {/* Right: Time Slots for Selected Date */}
