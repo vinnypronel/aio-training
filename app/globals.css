@@ -297,3 +297,29 @@ h4 {
   -webkit-mask-image: -webkit-radial-gradient(white, black);
   mask-image: radial-gradient(white, black);
 }
+
+/* Ensure all clickable interactive elements display pointer cursor */
+button,
+a,
+select,
+summary,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+/* Prevent pointer cursor on disabled interactive elements */
+button:disabled,
+a[disabled],
+input:disabled,
+select:disabled,
+textarea:disabled,
+[role="button"][aria-disabled="true"],
+.disabled {
+  cursor: not-allowed !important;
+}
+

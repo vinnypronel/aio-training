@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
@@ -27,6 +28,15 @@ export async function submitContactForm(
     return {
       status: "error",
       message: "Please provide your name and a valid email address.",
+    };
+  }
+
+  // Throttle spam: 5 messages per 10 minutes per IP.
+  const limit = await rateLimit("contact", { max: 5, windowMs: 10 * 60 * 1000 });
+  if (!limit.ok) {
+    return {
+      status: "error",
+      message: "Too many messages sent. Please wait a few minutes and try again.",
     };
   }
 

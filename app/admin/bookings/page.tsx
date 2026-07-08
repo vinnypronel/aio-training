@@ -20,8 +20,13 @@ export default async function AdminBookingsPage({
   const params = await searchParams;
   const filter = params.status || "all";
 
+  // Time-slot / training requests only. Event registrations live under
+  // /admin/event-signups so the two intake streams stay separate.
+  const notEvent = { type: { not: "event" } };
+
   const bookings = await prisma.booking.findMany({
-    where: filter !== "all" ? { status: filter } : undefined,
+    where:
+      filter !== "all" ? { AND: [notEvent, { status: filter }] } : notEvent,
     include: {
       customer: true,
       timeSlot: true,
@@ -32,6 +37,7 @@ export default async function AdminBookingsPage({
 
   const counts = await prisma.booking.groupBy({
     by: ["status"],
+    where: notEvent,
     _count: { id: true },
   });
 
@@ -48,12 +54,21 @@ export default async function AdminBookingsPage({
       <div className="mx-auto max-w-[1280px]">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-              Admin Panel
-            </p>
+            <div className="flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+              </svg>
+              <span>Admin Panel</span>
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+              </svg>
+            </div>
             <h1 className="mt-3 font-brand-display text-[clamp(2rem,5vw,3.5rem)] font-black uppercase leading-none">
-              Bookings
+              Booking Requests
             </h1>
+            <p className="mt-2 text-xs font-semibold text-aio-muted">
+              Training time requests. Event registrations are under Event Sign Ups.
+            </p>
           </div>
           <Link
             href="/admin/dashboard"

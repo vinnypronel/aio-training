@@ -4,7 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  // Prisma 7: connection URLs live in prisma.config.ts (Migrate) and the
+  // adapter in lib/db.ts (runtime), not here.
+  provider = "postgresql"
 }
 
 model Event {

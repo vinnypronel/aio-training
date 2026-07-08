@@ -90,7 +90,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
 
   return (
     <>
-      <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden border border-aio-line bg-transparent transition hover:border-aio-red">
+      <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden border border-aio-line bg-transparent transition hover:border-aio-red lg:max-w-none lg:flex-row lg:items-stretch lg:overflow-visible lg:border-0 lg:hover:border-0">
         {/* Full-card link overlay — keeps sibling buttons out of an anchor */}
         <Link
           href={`/events/${event.slug}`}
@@ -102,68 +102,68 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             <DeleteEventButton eventId={event.id} />
           </div>
         )}
-        <div className="relative h-[260px] sm:h-[300px] w-full overflow-hidden bg-aio-black">
+        <div className="relative h-[260px] w-full shrink-0 overflow-hidden bg-aio-black sm:h-[300px] lg:h-auto lg:aspect-[4/5] lg:w-[460px] lg:bg-transparent">
           <Image
             src={event.flyer}
             alt={`${event.title} flyer`}
             fill
-            sizes="(min-width: 640px) 400px, 90vw"
+            sizes="(min-width: 1024px) 540px, 90vw"
             className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
           />
           <span className="absolute top-0 left-0 bg-aio-red px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.16em] text-white">
             Limited Spots
           </span>
         </div>
-        <div className="flex flex-1 flex-col gap-2.5 px-5 py-4">
+        <div className="flex flex-1 flex-col gap-2.5 px-5 py-4 transition lg:justify-center lg:gap-4 lg:border lg:border-aio-line lg:px-9 lg:py-8 lg:group-hover:border-aio-red">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none lg:text-xs">
               {event.badge}
             </p>
-            <span className="fill-red-on-hover text-[9px] font-black uppercase tracking-[0.16em]">
+            <span className="fill-red-on-hover text-[9px] font-black uppercase tracking-[0.16em] lg:text-[10px]">
               Details
             </span>
           </div>
 
-          <h3 className="font-brand-display text-xl font-black uppercase leading-tight text-white">
+          <h3 className="font-brand-display text-xl font-black uppercase leading-tight text-white lg:text-4xl">
             {event.title}
           </h3>
 
-          <div className="mt-1 space-y-1.5">
-            <div className="border-l-2 border-aio-red pl-2">
-              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none">
+          <div className="mt-1 space-y-1.5 lg:mt-0 lg:flex lg:space-y-0 lg:gap-10">
+            <div className="border-l-2 border-aio-red pl-2 lg:pl-3">
+              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
                 Date
               </span>
-              <span className="mt-0.5 block text-xs font-semibold text-white">
+              <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-base">
                 {event.date}
               </span>
             </div>
-            <div className="border-l-2 border-aio-red pl-2">
-              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none">
+            <div className="border-l-2 border-aio-red pl-2 lg:pl-3">
+              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
                 Location
               </span>
-              <span className="mt-0.5 block text-xs font-semibold text-white">
+              <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-base">
                 {event.location}
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 mt-2">
+          <div className="grid grid-cols-2 gap-2 mt-2 lg:mt-1 lg:gap-3">
             {sessions.map((s) => {
               const { group, age } = parseSessionLabel(s.label);
               return (
                 <div
                   key={s.label}
-                  className="border border-aio-line px-2.5 py-1.5 bg-transparent"
+                  className="border border-aio-line px-2.5 py-1.5 bg-transparent lg:px-4 lg:py-3"
                 >
-                  <div className="text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none">
+                  <div className="text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
                     {group}
                   </div>
                   {age && (
-                    <div className="mt-0.5 text-xs font-black uppercase leading-none text-white">
+                    <div className="mt-0.5 text-xs font-black uppercase leading-none text-white lg:mt-1 lg:text-base">
                       {age}
                     </div>
                   )}
-                  <div className="mt-1 text-[9px] font-semibold text-aio-body leading-none">
+                  <div className="mt-1 text-[9px] font-semibold text-aio-body leading-none lg:mt-1.5 lg:text-xs">
                     {s.time}
                   </div>
                 </div>
@@ -171,28 +171,28 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             })}
           </div>
 
-          <div className="mt-3 flex items-end justify-between pt-2 border-t border-aio-line">
+          <div className="mt-3 flex items-end justify-between pt-2 border-t border-aio-line lg:mt-2 lg:pt-4">
             <div>
-              <div className="font-brand-display text-2xl font-black leading-none text-white uppercase">
+              <div className="font-brand-display text-2xl font-black leading-none text-white uppercase lg:text-4xl">
                 {priceInfo.main}
               </div>
               {priceInfo.sub && (
-                <div className="mt-0.5 text-[8px] font-black uppercase tracking-[0.12em] text-aio-muted leading-tight max-w-[160px]">
+                <div className="mt-0.5 text-[8px] font-black uppercase tracking-[0.12em] text-aio-muted leading-tight max-w-[160px] lg:mt-1.5 lg:text-[10px] lg:max-w-[220px]">
                   {priceInfo.sub}
                 </div>
               )}
             </div>
-            <div className="relative z-20 flex gap-2">
+            <div className="relative z-20 flex gap-2 lg:gap-3">
               <button
                 type="button"
                 onClick={() => setIsFlyerOpen(true)}
-                className="inline-flex min-h-11 items-center justify-center border border-aio-line px-4 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red"
+                className="inline-flex min-h-11 items-center justify-center border border-aio-line px-4 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red lg:min-h-12 lg:px-6 lg:text-xs"
               >
                 View Flyer
               </button>
               <Link
                 href={`/events/${event.slug}`}
-                className="inline-flex min-h-11 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex min-h-11 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white lg:min-h-12 lg:px-7 lg:text-xs"
               >
                 More Info
               </Link>
@@ -217,7 +217,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             {/* Close Button */}
             <button
               onClick={() => setIsFlyerOpen(false)}
-              className="absolute -top-12 right-0 flex items-center gap-1.5 text-xs font-black uppercase tracking-[0.15em] text-white/70 transition hover:text-white"
+              className="absolute -top-12 right-0 flex items-center gap-1.5 text-xs font-black uppercase tracking-[0.15em] text-white/70 cursor-pointer transition hover:text-white"
               aria-label="Close modal"
             >
               <span>Close</span>

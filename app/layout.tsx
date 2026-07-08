@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import RouteTransition from "@/components/RouteTransition";
 import AdminBadge from "@/components/AdminBadge";
 import ScrollReveal from "@/components/ScrollReveal";
+import MetaPixel from "@/components/MetaPixel";
+import ConsentBanner from "@/components/ConsentBanner";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.trainingaio.com"),
@@ -51,6 +53,8 @@ export default function RootLayout({
         <RouteTransition />
         <AdminBadge />
         <ScrollReveal />
+        <MetaPixel />
+        <ConsentBanner />
       </body>
     </html>
   );

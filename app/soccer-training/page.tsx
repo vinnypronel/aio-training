@@ -21,7 +21,7 @@ export default function SoccerTrainingPage() {
         { number: "01", title: "Ball\u00a0Mastery And\u00a0First\u00a0Touch", body: "Close control, both feet, and a settling touch that buys time in tight space." },
         { number: "02", title: "Passing And\u00a0Receiving", body: "Weight and timing on the pass, body shape to receive, and play under pressure." },
         { number: "03", title: "1v1\u00a0Attacking And\u00a0Defending", body: "Change of pace, feints, contained pressure, and recovery angles on defense." },
-        { number: "04", title: "Speed,\u00a0Agility, And\u00a0Footwork", body: "Acceleration, cutting mechanics, ladder footwork, and reactive change of direction." },
+        { number: "04", title: "Speed,\u00a0Agility, And\u00a0Footwork", body: "Acceleration, cutting\u00a0mechanics, ladder footwork, and reactive change of direction." },
       ]}
       tiersIntro="The soccer path scales from base ball control to game-speed application in small-sided play."
       tiers={[

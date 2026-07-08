@@ -30,10 +30,15 @@ export default function Home() {
         />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-center px-6 pt-20 text-center lg:pt-24">
-          <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mb-4 text-xs font-black uppercase tracking-[0.28em] text-aio-red sm:text-sm">
-            All In One Training
-          </p>
+          <div className="hero-item mb-4 flex items-center justify-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red sm:text-sm">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>All In One Training</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="max-w-[18ch] font-brand-display text-balance text-[clamp(3rem,8vw,6.5rem)] font-black uppercase leading-[0.92] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]">
             <span>
               {["Build", "Your", "Athlete’s"].map((word, i) => [
@@ -128,7 +133,7 @@ export default function Home() {
             <div className="absolute -bottom-4 -right-4 h-24 w-24 border-b-4 border-r-4 border-aio-red" />
             <div data-reveal="fade" className="relative aspect-[3/2] w-full overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
               <Image
-                src="/assets/images/home-field-drills.webp"
+                src="/assets/images/events-hero-aio-white.png"
                 alt="Youth football athletes running cone drills on an outdoor field"
                 fill
                 sizes="(min-width: 1024px) 52vw, 100vw"

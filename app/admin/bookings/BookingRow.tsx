@@ -51,14 +51,14 @@ export default function BookingRow({ booking }: BookingProps) {
             >
               {booking.status}
             </span>
-            <span className="text-[0.65rem] font-bold uppercase tracking-wider text-aio-muted">
+            <span className="text-[0.65rem] font-bold uppercase tracking-wider text-white/70">
               {typeLabels[booking.type] || booking.type}
             </span>
           </div>
           <p className="mt-2 text-sm font-black text-white">
             {booking.customer.name}
           </p>
-          <p className="mt-1 text-xs font-semibold text-aio-muted">
+          <p className="mt-1 text-xs font-semibold text-white/80">
             {booking.customer.email}
             {booking.customer.phone && ` · ${booking.customer.phone}`}
           </p>
@@ -73,13 +73,13 @@ export default function BookingRow({ booking }: BookingProps) {
                     {count} Athletes
                   </span>
                 )}
-                <p className="whitespace-pre-line text-xs font-semibold text-aio-muted italic">
+                <p className="whitespace-pre-line text-xs font-semibold text-white/80 italic">
                   {booking.notes}
                 </p>
               </div>
             );
           })()}
-          <p className="mt-2 text-[0.6rem] text-aio-muted">
+          <p className="mt-2 text-[0.6rem] text-white/60">
             {new Date(booking.createdAt).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",

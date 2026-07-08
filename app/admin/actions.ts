@@ -2,12 +2,10 @@
 
 import { timingSafeEqual } from "node:crypto";
 import { createSession, deleteSession } from "@/lib/session";
+import { rateLimit, clearLimit } from "@/lib/rate-limit";
 import { redirect } from "next/navigation";
 
-// In-memory throttle. Fine for a single-instance deploy; swap for a shared
-// store (Redis/Upstash) if the app is ever scaled horizontally.
-const attempts = new Map<string, { count: number; resetAt: number }>();
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 8;
 const WINDOW_MS = 15 * 60 * 1000;
 
 function safeEqual(a: string, b: string) {
@@ -27,9 +25,15 @@ export async function login(
     return { error: "Email and password are required." };
   }
 
+  // Durable throttle keyed by the submitted email. Every attempt counts; a
+  // successful login resets the counter.
   const key = email.toLowerCase();
-  const entry = attempts.get(key);
-  if (entry && entry.count >= MAX_ATTEMPTS && Date.now() < entry.resetAt) {
+  const limit = await rateLimit(
+    "login",
+    { max: MAX_ATTEMPTS, windowMs: WINDOW_MS },
+    key,
+  );
+  if (!limit.ok) {
     return { error: "Too many attempts. Try again in 15 minutes." };
   }
 
@@ -38,15 +42,10 @@ export async function login(
     safeEqual(password, process.env.ADMIN_PASSWORD ?? "");
 
   if (!ok) {
-    const base =
-      entry && Date.now() < entry.resetAt
-        ? entry
-        : { count: 0, resetAt: Date.now() + WINDOW_MS };
-    attempts.set(key, { count: base.count + 1, resetAt: base.resetAt });
     return { error: "Invalid credentials." };
   }
 
-  attempts.delete(key);
+  await clearLimit("login", key);
   await createSession(email);
   redirect("/admin/dashboard");
 }

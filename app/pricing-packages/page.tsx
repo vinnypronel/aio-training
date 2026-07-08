@@ -106,10 +106,15 @@ export default function PricingPackagesPage() {
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
-          <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            Pricing And Packages
-          </p>
+          <div className="hero-item mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>Pricing And Packages</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Invest In<br />
             <span className="text-aio-red">Your Game</span>
@@ -323,7 +328,7 @@ function PlanGroup({
                 plan.featured
                   ? "border-aio-red bg-aio-black text-white shadow-[var(--aio-shadow-hard)]"
                   : `${cardBorder} ${cardBg} ${cardText} shadow-[var(--aio-shadow-hard)]`
-              } p-6 md:p-8 transition hover:border-aio-red`}
+              } p-6 md:p-8 transition hover:border-aio-red ${plans.length === 3 ? "last:md:col-span-2 last:md:mx-auto last:md:w-1/2 last:lg:col-span-1 last:lg:w-auto last:lg:mx-0" : ""}`}
             >
               {plan.featured && (
                 <span className="absolute right-0 top-0 bg-aio-red px-4 py-2 text-[0.65rem] font-black uppercase tracking-[0.18em] text-white">

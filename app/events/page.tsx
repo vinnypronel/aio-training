@@ -24,7 +24,7 @@ export default async function EventsPage() {
     <>
       <section className="relative flex h-[calc(90svh/var(--dz,1))] items-center overflow-hidden bg-aio-black pt-24 text-white">
         <Image
-          src="/assets/images/home-field-drills.webp"
+          src="/assets/images/home-field-drills-aio-white.png"
           alt="Athletes doing cone drills on turf"
           fill
           priority
@@ -36,10 +36,15 @@ export default async function EventsPage() {
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 py-20">
-          <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            Train with the best, All In One place
-          </p>
+          <div className="hero-item mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>Train with the best, All In One place</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="hero-item mt-4 font-brand-display text-[clamp(2.75rem,7vw,6rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Upcoming<br />
             <span className="text-aio-red">Events</span>
@@ -81,7 +86,7 @@ export default async function EventsPage() {
           </p>
 
           {events.length > 0 ? (
-            <div className="mx-auto mt-10 grid max-w-[900px] gap-6 sm:grid-cols-2 sm:[&>*:only-child]:col-span-2">
+            <div className="mx-auto mt-10 flex max-w-[1120px] flex-col gap-6 lg:gap-8">
               {events.map((event) => (
                 <div key={event.id} data-reveal>
                   <EventCard event={event} isAdmin={isAdmin} />

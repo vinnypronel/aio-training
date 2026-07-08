@@ -18,10 +18,10 @@ export default function FootballTrainingPage() {
       introTitle="Build The Total Player."
       introBody="Football sessions connect movement, strength, role-specific technique, and game understanding so athletes can train with purpose."
       pillars={[
-        { number: "01", title: "Position-Specific Training", body: "Footwork, stance, release, backpedal, leverage, and contact skills mapped to role." },
+        { number: "01", title: "Position Training", body: "Footwork, stance, release, backpedal, leverage, and contact skills mapped to role." },
         { number: "02", title: "Speed And Agility", body: "Acceleration, deceleration, change of direction, hip control, and reactive burst." },
         { number: "03", title: "Strength And Power", body: "Ground force, collision readiness, trunk stiffness, and durable athletic mass." },
-        { number: "04", title: "Game IQ", body: "Situational awareness, assignment detail, and decision making under fatigue." },
+        { number: "04", title: <>Gameplay<br />IQ</>, body: "Situational awareness, assignment detail, and decision making under fatigue." },
       ]}
       tiersTitle="Athlete Development Pipeline"
       tiersIntro="The training block changes as the athlete moves from foundation work to high school demands."

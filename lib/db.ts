@@ -1,25 +1,14 @@
-import path from "node:path";
 import { PrismaClient } from "./generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-
-function resolveDatabaseUrl() {
-  const envUrl = process.env.DATABASE_URL;
-  if (!envUrl) {
-    return "file:" + process.cwd().replace(/\\/g, "/") + "/dev.db";
-  }
-  // For non-sqlite URLs (e.g. Postgres in production) use as-is.
-  if (!envUrl.startsWith("file:")) return envUrl;
-  // Resolve relative sqlite paths against cwd so the app always opens the same
-  // file regardless of the directory the process is launched from.
-  const filePart = envUrl.slice("file:".length);
-  const abs = path.isAbsolute(filePart)
-    ? filePart
-    : path.resolve(process.cwd(), filePart);
-  return "file:" + abs.replace(/\\/g, "/");
-}
+import { PrismaPg } from "@prisma/adapter-pg";
 
 function createPrismaClient() {
-  const adapter = new PrismaBetterSqlite3({ url: resolveDatabaseUrl() });
+  // Neon (Postgres) over its pooled endpoint. The pooled DATABASE_URL keeps
+  // serverless invocations from exhausting connections on Vercel.
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is required (Postgres connection string).");
+  }
+  const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({ adapter });
 }
 

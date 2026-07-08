@@ -11,31 +11,38 @@ export default async function AdminDashboardPage() {
   const session = await getSession();
   if (!session) redirect("/admin");
 
-  const today = new Date().toLocaleDateString("en-CA", {
-    timeZone: "America/New_York",
-  });
-
-  const [newBookings, upcomingSlots, customerCount, eventCount, recentBookings] =
-    await Promise.all([
-      prisma.booking.count({ where: { status: "new" } }),
-      prisma.timeSlot.count({ where: { date: { gte: today } } }),
-      prisma.customer.count(),
-      prisma.event.count(),
-      prisma.booking.findMany({
-        include: { customer: true, timeSlot: true, event: true },
-        orderBy: { createdAt: "desc" },
-        take: 5,
-      }),
-    ]);
+  const [
+    newBookings,
+    eventSignups,
+    messageCount,
+    customerCount,
+    recentBookings,
+  ] = await Promise.all([
+    prisma.booking.count({ where: { status: "new", type: { not: "event" } } }),
+    prisma.booking.count({ where: { type: "event" } }),
+    prisma.contactMessage.count(),
+    prisma.customer.count(),
+    prisma.booking.findMany({
+      include: { customer: true, timeSlot: true, event: true },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+    }),
+  ]);
 
   return (
     <section className="bg-aio-black px-6 py-20 md:py-24">
       <div className="mx-auto max-w-[1280px]">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-              Admin Panel
-            </p>
+            <div className="flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+              </svg>
+              <span>Admin Panel</span>
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+              </svg>
+            </div>
             <h1 className="mt-3 font-brand-display text-[clamp(2rem,5vw,3.5rem)] font-black uppercase leading-none">
               Dashboard
             </h1>
@@ -43,7 +50,7 @@ export default async function AdminDashboardPage() {
           <form action={logout}>
             <button
               type="submit"
-              className="border border-white/35 px-5 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:border-aio-red hover:text-aio-red"
+              className="border border-white/35 px-5 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white cursor-pointer transition hover:border-aio-red hover:text-aio-red"
             >
               Sign Out
             </button>
@@ -53,22 +60,30 @@ export default async function AdminDashboardPage() {
         {/* At-a-glance stats */}
         <div className="mt-10 grid gap-4 grid-cols-2 lg:grid-cols-4">
           <StatCard
-            label="New Bookings"
+            label="Total Requests"
             value={newBookings}
             href="/admin/bookings?status=new"
             highlight={newBookings > 0}
           />
-          <StatCard label="Upcoming Slots" value={upcomingSlots} href="/admin/calendar" />
-          <StatCard label="Customers" value={customerCount} href="/admin/customers" />
-          <StatCard label="Events" value={eventCount} href="/admin/events" />
+          <StatCard label="Total Event Sign Ups" value={eventSignups} href="/admin/event-signups" />
+          <StatCard label="Total Messages" value={messageCount} href="/admin/messages" />
+          <StatCard label="Total Customers" value={customerCount} href="/admin/customers" />
         </div>
 
         {/* Management sections */}
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <DashCard title="Calendar" description="Add time slots for the public to book" href="/admin/calendar" />
-          <DashCard title="Bookings" description="View and manage appointments" href="/admin/bookings" />
-          <DashCard title="Customers" description="Customer CRM and contact info" href="/admin/customers" />
-          <DashCard title="Events" description="Manage upcoming events and flyers" href="/admin/events" />
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <DashCard title="Event Sign Ups" description="Everyone registered for each event" href="/admin/event-signups" />
+          <DashCard title="Booking Requests" description="Training time requests from the site" href="/admin/bookings" />
+          <DashCard title="Messages" description="Contact form submissions" href="/admin/messages" />
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-6">
+          <div className="w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)] flex-1 flex flex-col">
+            <DashCard title="Customers" description="Customer CRM and contact info" href="/admin/customers" />
+          </div>
+          <div className="w-full sm:max-w-[calc(50%-12px)] lg:max-w-[calc(33.333%-16px)] flex-1 flex flex-col">
+            <DashCard title="Events" description="Manage upcoming events and flyers" href="/admin/events" />
+          </div>
         </div>
 
         {/* Recent activity */}
@@ -142,8 +157,8 @@ function StatCard({
   return (
     <Link
       href={href}
-      className={`border p-5 transition hover:border-aio-red ${
-        highlight ? "border-aio-red bg-aio-red/10" : "border-aio-line bg-aio-panel"
+      className={`border p-5 text-center transition hover:border-aio-red bg-transparent ${
+        highlight ? "border-aio-red" : "border-aio-line"
       }`}
     >
       <p className="font-brand-display text-4xl font-black leading-none text-white">
@@ -168,7 +183,7 @@ function DashCard({
   return (
     <Link
       href={href}
-      className="border border-aio-line bg-aio-panel p-6 transition hover:border-aio-red"
+      className="block border border-aio-line bg-transparent p-6 transition hover:border-aio-red"
     >
       <h2 className="font-brand-display text-xl font-black uppercase">{title}</h2>
       <p className="mt-2 text-sm font-semibold text-aio-body">{description}</p>

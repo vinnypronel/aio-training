@@ -56,10 +56,9 @@ export default function CheckoutModal({ formData, onClose }: CheckoutModalProps)
   }, [formData]);
 
   return (
-    /* Backdrop */
-    <div className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto bg-black/85 p-4 pt-10 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto bg-black/85 p-4 pt-[140px] backdrop-blur-sm">
       {/* Modal */}
-      <div className="relative w-full max-w-[640px]">
+      <div className="relative w-full max-w-[540px]">
         {/* Header bar */}
         <div className="flex items-center justify-between bg-aio-black px-6 py-4 border border-aio-line border-b-0">
           <div>

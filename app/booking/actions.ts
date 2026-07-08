@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type BookingFormState = {
   status: "idle" | "success" | "error";
@@ -29,6 +30,15 @@ export async function submitBooking(
 
   if (!name || !email || !type || !date || !startTime || !endTime) {
     return { status: "error", message: "Name, email, training type, date, and time slot are required." };
+  }
+
+  // Throttle spam: 5 booking requests per 10 minutes per IP.
+  const limit = await rateLimit("booking", { max: 5, windowMs: 10 * 60 * 1000 });
+  if (!limit.ok) {
+    return {
+      status: "error",
+      message: "Too many booking requests. Please wait a few minutes and try again.",
+    };
   }
 
   // Parse athlete list
@@ -130,7 +140,6 @@ export async function submitBooking(
   }
 
   revalidatePath("/admin/bookings");
-  revalidatePath("/admin/calendar");
   revalidatePath("/booking");
 
   const athleteWord = athleteCount === 1 ? "athlete" : "athletes";

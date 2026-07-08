@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 type SportPillar = {
   number: string;
-  title: string;
+  title: ReactNode;
   body: string;
 };
 
@@ -90,10 +90,15 @@ export default function SportPage({
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
-          <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mb-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            {sport}
-          </p>
+          <div className="hero-item mb-5 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>{sport}</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="hero-item max-w-[920px] font-brand-display text-balance text-[clamp(3rem,9vw,7.5rem)] font-black uppercase leading-[0.88] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]" style={{ animationDelay: "120ms" }}>
             <span>{heroLineOne}</span>{" "}
             <span className="mt-2 block text-aio-red drop-shadow-[0_10px_28px_rgba(255,0,0,0.22)]">
@@ -120,9 +125,11 @@ export default function SportPage({
           </span>
         </div>
         <div data-reveal-group className="relative mx-auto max-w-[1280px] px-6 lg:-translate-x-[90px]">
-          <div className="mb-6 h-1 w-16 -skew-x-[18deg] bg-aio-red" />
-          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            {introLabel}
+          <p data-reveal className="flex items-center gap-1.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3 w-3 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+            <span>{introLabel}</span>
           </p>
           <h2 data-reveal className="mt-4 max-w-[1000px] lg:max-w-[1050px] font-brand-display text-[clamp(2.5rem,6vw,5.25rem)] font-black uppercase leading-none">
             {introTitle}
@@ -140,19 +147,19 @@ export default function SportPage({
               <article
                 key={p.number}
                 data-reveal
-                className="relative min-h-[290px] overflow-hidden bg-white p-8 md:p-12 text-aio-ink shadow-[var(--aio-shadow-hard)]"
+                className="relative min-h-[340px] overflow-hidden bg-white p-10 md:p-12 text-aio-ink shadow-[var(--aio-shadow-hard)]"
               >
                 <p
-                  className="absolute right-2 top-2 md:right-3 md:top-3 font-brand-display text-5xl md:text-6xl font-black leading-none text-transparent pointer-events-none select-none"
+                  className="absolute right-3 top-3 md:right-3 md:top-3 font-brand-display text-7xl md:text-6xl font-black leading-none text-transparent pointer-events-none select-none"
                   style={{ WebkitTextStroke: "2px #1a1a1a" }}
                 >
                   {p.number}.
                 </p>
-                <div className="relative z-10 translate-x-[-6px] translate-y-[12px]">
-                  <h3 className="mt-14 md:mt-16 font-brand-display text-2xl md:text-[1.85rem] font-black uppercase leading-tight">
+                <div className="relative z-10 translate-x-[-6px] translate-y-[-4px]">
+                  <h3 className="mt-20 md:mt-16 font-brand-display text-3xl md:text-[1.85rem] font-black uppercase leading-tight">
                     {p.title}
                   </h3>
-                  <div className="mt-5 text-sm md:text-base font-semibold leading-7 md:leading-8 text-aio-ink">
+                  <div className="mt-5 text-base md:text-base font-semibold leading-7 md:leading-8 text-aio-ink">
                     {p.body}
                   </div>
                 </div>
@@ -165,8 +172,10 @@ export default function SportPage({
       <section className={`relative overflow-hidden py-20 md:py-24 ${tiersLight ? "bg-aio-paper text-aio-ink" : "bg-aio-black text-white"}`}>
         <div data-reveal-group className="relative z-10 mx-auto max-w-[1280px] px-6">
           <div className="max-w-[760px]">
-            <p data-reveal className="text-sm font-black uppercase tracking-[0.28em] text-aio-red">
-              {tiersLabel ?? `${sport} Path`}
+            <p data-reveal className="text-sm font-black uppercase tracking-[0.28em]">
+              <span className={tiersLight ? "text-black" : "text-white"}>[</span>{" "}
+              <span className="text-aio-red">{tiersLabel ?? `${sport} Path`}</span>{" "}
+              <span className={tiersLight ? "text-black" : "text-white"}>]</span>
             </p>
             <h2 data-reveal className="mt-4 font-brand-display text-[clamp(2.75rem,6vw,5.75rem)] font-black uppercase leading-none">
               {tiersTitle ?? "Athlete Tiers"}
@@ -297,12 +306,12 @@ export default function SportPage({
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <p
           aria-hidden
-          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/23 -translate-y-[34px] lg:translate-y-0 lg:-translate-x-[100px] ${ctaWordmarkClassName || ""}`}
+          className={`pointer-events-none absolute cta-watermark font-brand-display text-[clamp(4rem,15vw,12.5rem)] font-black uppercase leading-none text-white/23 -translate-y-[14px] lg:-translate-y-[15px] lg:-translate-x-[65px] ${ctaWordmarkClassName || ""}`}
         >
           {ctaWordmark}
         </p>
         <div className="relative z-10 mx-auto grid max-w-[1280px] gap-8 px-6 -translate-y-[34px] lg:translate-y-0 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div data-reveal-group className="max-w-5xl lg:-translate-x-[120px] transition-transform duration-500">
+          <div data-reveal-group className="max-w-5xl lg:-translate-x-[170px] transition-transform duration-500">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-white">
               Ready To Level Up Your Game?
             </p>

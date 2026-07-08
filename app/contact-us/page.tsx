@@ -56,10 +56,15 @@ export default function ContactUsPage() {
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
-          <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            Support Online
-          </p>
+          <div className="hero-item mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>Support Online</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Let&apos;s Get <span className="text-aio-red">To Work.</span>
           </h1>
@@ -80,7 +85,7 @@ export default function ContactUsPage() {
       <section className="bg-aio-paper pt-20 pb-8 md:pt-24 md:pb-10">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
           {/* Left — contact info card */}
-          <div data-reveal className="bg-white p-8 text-aio-ink shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:p-10">
+          <div data-reveal className="bg-white p-8 text-aio-ink shadow-[0_20px_60px_rgba(0,0,0,0.22)] md:p-10">
             <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Get In Touch
             </p>
@@ -119,7 +124,7 @@ export default function ContactUsPage() {
           </div>
 
           {/* Right — dark form card */}
-          <div id="contact-form" data-reveal className="bg-aio-black px-6 py-10 text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:px-10 md:py-12">
+          <div id="contact-form" data-reveal className="bg-aio-black px-6 py-10 text-white shadow-[0_20px_60px_rgba(0,0,0,0.55)] md:px-10 md:py-12">
             <h2 className="font-brand-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-black uppercase leading-none">
               Send Us A Message
             </h2>

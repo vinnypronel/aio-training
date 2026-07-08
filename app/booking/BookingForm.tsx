@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useMemo } from "react";
+import { useActionState, useState, useMemo, useRef, useEffect } from "react";
 import { submitBooking, type BookingFormState } from "./actions";
 import HoverButton from "@/components/HoverButton";
 
@@ -61,8 +61,10 @@ function formatDate(year: number, month: number, day: number) {
 }
 
 function formatTime12(time24: string) {
+  if (!time24 || !time24.includes(":")) return time24 || "";
   const [h, m] = time24.split(":");
   const hour = parseInt(h);
+  if (isNaN(hour)) return time24;
   const ampm = hour >= 12 ? "PM" : "AM";
   const h12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
   return `${h12}:${m} ${ampm}`;
@@ -81,9 +83,27 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   const [selectedType, setSelectedType] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [customTime, setCustomTime] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [openAgeDropdownIdx, setOpenAgeDropdownIdx] = useState<number | null>(null);
   const [openSportDropdownIdx, setOpenSportDropdownIdx] = useState<number | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const validationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const parentInfoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (selectedSlot) {
+      const timer = setTimeout(() => {
+        const element = parentInfoRef.current;
+        if (element) {
+          const yOffset = -100; // Offset for sticky header
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedSlot]);
 
   // Multi-athlete state
   const [athletes, setAthletes] = useState<AthleteEntry[]>([emptyAthlete()]);
@@ -125,6 +145,20 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
     setAthletes((prev) =>
       prev.map((a, i) => (i === idx ? { ...a, [field]: value } : a))
     );
+    // Clear errors
+    const errKey =
+      field === "name"
+        ? `athleteName_${idx}`
+        : field === "ageGroup"
+        ? `athleteAge_${idx}`
+        : `athleteSport_${idx}`;
+    if (errors[errKey]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[errKey];
+        return next;
+      });
+    }
   }
 
   function addAthlete() {
@@ -133,16 +167,108 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
 
   function removeAthlete(idx: number) {
     setAthletes((prev) => prev.filter((_, i) => i !== idx));
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[`athleteName_${idx}`];
+      delete next[`athleteAge_${idx}`];
+      delete next[`athleteSport_${idx}`];
+      return next;
+    });
   }
 
   const athleteCount = athletes.length;
 
+  const handleSubmit = (formData: FormData) => {
+    const newErrors: Record<string, string> = {};
+    if (!selectedType) newErrors.type = "Please select a training program";
+    if (!selectedDate) newErrors.date = "Please select a date";
+    if (!selectedSlot) newErrors.slot = "Please select a time slot";
+
+    if (validationTimeoutRef.current) {
+      clearTimeout(validationTimeoutRef.current);
+    }
+
+    const parentName = formData.get("name") as string;
+    const parentEmail = formData.get("email") as string;
+
+    if (!parentName?.trim()) {
+      newErrors.name = "Please fill out this field.";
+    }
+    if (!parentEmail?.trim()) {
+      newErrors.email = "Please fill out this field.";
+    } else if (!parentEmail.includes("@")) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (selectedSlot === "custom") {
+      const timeVal = formData.get("customTime") as string;
+      if (!timeVal?.trim()) {
+        newErrors.customTime = "Please fill out this field.";
+      }
+    }
+    
+    athletes.forEach((athlete, idx) => {
+      if (!athlete.name.trim()) newErrors[`athleteName_${idx}`] = "Please fill out this field.";
+      if (!athlete.ageGroup) newErrors[`athleteAge_${idx}`] = "Please select an option.";
+      if (!athlete.sport) newErrors[`athleteSport_${idx}`] = "Please select an option.";
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Focus first error
+      const firstError = Object.keys(newErrors)[0];
+      if (firstError === "name") {
+        document.getElementById("booking-name")?.focus();
+      } else if (firstError === "email") {
+        document.getElementById("booking-email")?.focus();
+      } else if (firstError === "customTime") {
+        document.getElementById("booking-custom-time")?.focus();
+      } else if (firstError.startsWith("athleteName_")) {
+        const idx = firstError.split("_")[1];
+        document.getElementById(`athlete-name-${idx}`)?.focus();
+      } else if (firstError.startsWith("athleteAge_")) {
+        const idx = firstError.split("_")[1];
+        document.getElementById(`athlete-age-select-trigger-${idx}`)?.focus();
+      } else if (firstError.startsWith("athleteSport_")) {
+        const idx = firstError.split("_")[1];
+        document.getElementById(`athlete-sport-select-trigger-${idx}`)?.focus();
+      }
+
+      // Automatically hide validation alerts after 4 seconds
+      validationTimeoutRef.current = setTimeout(() => {
+        setErrors({});
+      }, 4000);
+      return;
+    }
+
+    // Set dynamic start/end times
+    if (selectedSlot === "custom") {
+      const timeVal = formData.get("customTime") as string;
+      const parts = timeVal.split(/[-–]| to /);
+      if (parts.length >= 2) {
+        formData.set("startTime", parts[0].trim());
+        formData.set("endTime", parts[1].trim());
+      } else {
+        formData.set("startTime", "Custom Time");
+        formData.set("endTime", timeVal.trim());
+      }
+    } else {
+      formData.set("startTime", selectedSlotInfo?.startTime || "");
+      formData.set("endTime", selectedSlotInfo?.endTime || "");
+    }
+
+    formAction(formData);
+  };
+
   // Find selected slot info for summary
   const selectedSlotInfo = useMemo(() => {
     if (!selectedSlot) return null;
+    if (selectedSlot === "custom") {
+      return { startTime: "Custom Time", endTime: customTime || "Request" };
+    }
     const [start, end] = selectedSlot.split("-");
     return { startTime: start, endTime: end };
-  }, [selectedSlot]);
+  }, [selectedSlot, customTime]);
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
         weekday: "long", month: "long", day: "numeric", year: "numeric",
@@ -156,37 +282,91 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
 
   if (state.status === "success") {
     return (
-      <div className="border border-emerald-500/30 p-8 text-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          className="mx-auto h-12 w-12 text-emerald-400"
-        >
-          <path d="M20 6L9 17l-5-5" />
-        </svg>
-        <p className="mt-4 text-lg font-black uppercase text-white">
-          Booking Submitted!
+      <div className="mx-auto flex min-h-[calc(70svh/var(--dz,1))] max-w-[640px] flex-col items-center justify-center py-14 text-center sm:py-20">
+        <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
+        <p className="mt-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+          Reservation Received
         </p>
-        <p className="mt-2 text-sm font-semibold text-aio-body">
+
+        {/* Check mark */}
+        <div className="mt-8 flex h-20 w-20 items-center justify-center border-2 border-aio-red">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            className="h-10 w-10 text-aio-red"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
+          </svg>
+        </div>
+
+        <h1 className="mt-7 font-brand-display text-[clamp(2.5rem,7vw,4.75rem)] font-black uppercase leading-[0.9]">
+          Booking<br />
+          <span className="text-aio-red">Submitted</span>
+        </h1>
+
+        <p className="mt-5 max-w-[480px] text-base font-semibold leading-8 text-aio-body">
           {state.message}
+        </p>
+
+        {/* What happens next */}
+        <div className="mt-9 w-full max-w-[440px] border-y border-aio-line py-6 text-left">
+          <p className="text-[0.65rem] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
+            What Happens Next
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {[
+              "We review your requested training time.",
+              "AIO reaches out by call or text to confirm.",
+              "Payment is handled once your spot is locked in.",
+            ].map((step) => (
+              <li key={step} className="flex gap-3 text-sm font-semibold text-aio-body">
+                <span aria-hidden className="mt-2 h-px w-4 shrink-0 bg-aio-red" />
+                <span>{step}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:justify-center">
+          <HoverButton href="/" className="w-full sm:w-auto">
+            Back to Home
+          </HoverButton>
+          <HoverButton href="/booking" variant="outline" className="w-full sm:w-auto">
+            Book Another Session
+          </HoverButton>
+        </div>
+
+        <p className="mt-7 text-xs font-semibold text-aio-muted">
+          Need to reach us now?{" "}
+          <a
+            href="tel:+17144408053"
+            className="font-black text-white underline decoration-aio-red decoration-2 underline-offset-4 transition hover:text-aio-red"
+          >
+            (714) 440-8053
+          </a>
         </p>
       </div>
     );
   }
 
   return (
-    <form action={formAction}>
+    <form action={handleSubmit} noValidate>
       {/* Top row: Hero text left, Calendar right */}
       <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
         {/* Left: Hero info */}
         <div className="pt-2 lg:-translate-x-[50px]">
-          <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            Reserve Your Spot
-          </p>
+          <div className="mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>Reserve Your Spot</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="mt-4 font-brand-display text-[clamp(2.75rem,7vw,5.5rem)] font-black uppercase leading-[0.9]">
             Book A<br />
             <span className="text-aio-red">Session</span>
@@ -224,7 +404,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                   isDropdownOpen ? "rotate-180" : ""
                 }`}
               >
-                <path d="M6 9l6 6 6-6" />
+                <path d="M6 15l6-6 6 6" />
               </svg>
             </button>
 
@@ -238,7 +418,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
 
             {/* Custom Dropdown Menu */}
             <div
-              className={`absolute top-full left-0 z-30 mt-1 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
+              className={`absolute top-full left-0 z-30 mt-0 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
                 isDropdownOpen
                   ? "visible opacity-100 scale-y-100"
                   : "invisible opacity-0 scale-y-95 pointer-events-none"
@@ -275,9 +455,40 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 {selectedDateFormatted}
               </h2>
               {slotsForDate.length === 0 ? (
-                <p className="mt-4 text-sm font-semibold text-aio-muted">
-                  No available slots on this date.
-                </p>
+                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSlot("custom")}
+                    className={`border py-2 px-3 text-left transition flex items-center justify-between gap-4 ${
+                      selectedSlot === "custom"
+                        ? "border-aio-red bg-aio-red/10"
+                        : "border-aio-line hover:border-aio-red"
+                    }`}
+                  >
+                    <div>
+                      <p className="text-sm font-bold text-white">
+                        Request Custom Time
+                      </p>
+                      <p className="mt-0.5 text-[0.65rem] font-bold text-aio-muted">
+                        Type your preferred time below
+                      </p>
+                    </div>
+                    <svg className="h-5.5 w-5.5 text-white shrink-0 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <defs>
+                        <mask id="pencil-mask-1">
+                          <rect x="0" y="0" width="24" height="24" fill="white" />
+                          <path d="M17.5 6.5l3 3L11.5 18.5H8.5v-3L17.5 6.5Z" fill="black" stroke="black" strokeWidth={3.5} />
+                        </mask>
+                      </defs>
+                      <g mask="url(#pencil-mask-1)">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 5V3.5h4V5a6.5 6.5 0 0 0 1.62.67l1.06-1.06 2.83 2.83-1.06 1.06A6.5 6.5 0 0 0 19 10h1.5v4H19a6.5 6.5 0 0 0-.67 1.62l1.06 1.06-2.83 2.83-1.06-1.06A6.5 6.5 0 0 0 14 19v1.5h-4V19a6.5 6.5 0 0 0-1.62-.67l-1.06 1.06-2.83-2.83 1.06-1.06A6.5 6.5 0 0 0 5 14H3.5v-4H5a6.5 6.5 0 0 0 .67-1.62L4.61 5.32l2.83-2.83 1.06 1.06A6.5 6.5 0 0 0 10 5Z" />
+                      </g>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 6.5l3 3L11.5 18.5H8.5v-3L17.5 6.5Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16 8l3 3M10 16l3 3" />
+                    </svg>
+                  </button>
+                </div>
               ) : (
                 <div className="mt-4 grid gap-2 sm:grid-cols-2">
                   {slotsForDate.map((slot) => {
@@ -288,7 +499,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         key={slotValue}
                         type="button"
                         onClick={() => setSelectedSlot(slotValue)}
-                        className={`border p-4 text-left transition ${
+                        className={`border py-2 px-3 text-left transition ${
                           isSelected
                             ? "border-aio-red bg-aio-red/10"
                             : "border-aio-line hover:border-aio-red"
@@ -297,12 +508,44 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         <p className="text-sm font-bold text-white">
                           {formatTime12(slot.startTime)} – {formatTime12(slot.endTime)}
                         </p>
-                        <p className="mt-1 text-[0.65rem] font-bold text-aio-muted">
+                        <p className="mt-0.5 text-[0.65rem] font-bold text-aio-muted">
                           Request Slot
                         </p>
                       </button>
                     );
                   })}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSlot("custom")}
+                    className={`border py-2 px-3 text-left transition flex items-center justify-between gap-4 ${
+                      selectedSlot === "custom"
+                        ? "border-aio-red bg-aio-red/10"
+                        : "border-aio-line hover:border-aio-red"
+                    }`}
+                  >
+                    <div>
+                      <p className="text-sm font-bold text-white">
+                        Request Custom Time
+                      </p>
+                      <p className="mt-0.5 text-[0.65rem] font-bold text-aio-muted">
+                        Type your preferred time below
+                      </p>
+                    </div>
+                    <svg className="h-5.5 w-5.5 text-white shrink-0 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <defs>
+                        <mask id="pencil-mask-2">
+                          <rect x="0" y="0" width="24" height="24" fill="white" />
+                          <path d="M17.5 6.5l3 3L11.5 18.5H8.5v-3L17.5 6.5Z" fill="black" stroke="black" strokeWidth={3.5} />
+                        </mask>
+                      </defs>
+                      <g mask="url(#pencil-mask-2)">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 5V3.5h4V5a6.5 6.5 0 0 0 1.62.67l1.06-1.06 2.83 2.83-1.06 1.06A6.5 6.5 0 0 0 19 10h1.5v4H19a6.5 6.5 0 0 0-.67 1.62l1.06 1.06-2.83 2.83-1.06-1.06A6.5 6.5 0 0 0 14 19v1.5h-4V19a6.5 6.5 0 0 0-1.62-.67l-1.06 1.06-2.83-2.83 1.06-1.06A6.5 6.5 0 0 0 5 14H3.5v-4H5a6.5 6.5 0 0 0 .67-1.62L4.61 5.32l2.83-2.83 1.06 1.06A6.5 6.5 0 0 0 10 5Z" />
+                      </g>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 6.5l3 3L11.5 18.5H8.5v-3L17.5 6.5Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16 8l3 3M10 16l3 3" />
+                    </svg>
+                  </button>
                 </div>
               )}
               <input type="hidden" name="date" value={selectedDate} />
@@ -315,15 +558,16 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
         {/* Right: Session types + Calendar */}
         <div className="lg:max-w-[650px] lg:justify-self-end w-full lg:translate-x-[110px]">
           {/* Calendar */}
-          <div className="mt-2 lg:mt-[80px] border border-aio-line p-5 sm:p-7">
-            {!selectedType ? (
-              <div className="flex min-h-[340px] flex-col items-center justify-center p-6 text-center">
-                <p className="text-sm font-semibold text-aio-muted">
+          <div className="mt-2 lg:mt-[80px] border border-aio-line p-5 sm:p-7 relative">
+            {!selectedType && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center bg-aio-black/60 backdrop-blur-[1px]">
+                <p className="text-sm font-semibold text-aio-muted max-w-[280px]">
                   Please choose your training path on the left to unlock the calendar.
                 </p>
               </div>
-            ) : (
-              <>
+            )}
+
+            <div className={!selectedType ? "opacity-25 pointer-events-none" : ""}>
                 {/* Month nav */}
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl sm:text-5xl font-black text-white leading-none">
@@ -397,15 +641,14 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                     );
                   })}
                 </div>
-              </>
-            )}
+            </div>
           </div>
         </div>
   </div>
 
       {/* Your Information + Athletes — only show after slot is picked */}
       {selectedSlot && (
-        <div className="mt-12 border-t border-aio-line pt-10">
+        <div ref={parentInfoRef} className="mt-12 border-t border-aio-line pt-10">
 
           {/* ── Parent / Guardian ─────────────────────────── */}
           <h3 className="text-sm font-black uppercase tracking-[0.12em] text-aio-red-on-dark">
@@ -417,40 +660,112 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
               <label htmlFor="booking-name" className={labelClass}>
                 Full Name *
               </label>
-              <input
-                id="booking-name"
-                name="name"
-                required
-                placeholder="Jane Smith"
-                className={`mt-2 ${inputClass}`}
-              />
+              <div className="relative mt-2">
+                <input
+                  id="booking-name"
+                  name="name"
+                  placeholder="Jane Smith"
+                  onChange={() => {
+                    if (errors.name) {
+                      setErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.name;
+                        return next;
+                      });
+                    }
+                  }}
+                  className={`${inputClass} ${errors.name ? "border-aio-red" : ""}`}
+                />
+                {errors.name && (
+                  <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                    <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{errors.name}</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label htmlFor="booking-email" className={labelClass}>
                 Email *
               </label>
-              <input
-                id="booking-email"
-                name="email"
-                type="email"
-                required
-                placeholder="jane@example.com"
-                className={`mt-2 ${inputClass}`}
-              />
+              <div className="relative mt-2">
+                <input
+                  id="booking-email"
+                  name="email"
+                  type="email"
+                  placeholder="jane@example.com"
+                  onChange={() => {
+                    if (errors.email) {
+                      setErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.email;
+                        return next;
+                      });
+                    }
+                  }}
+                  className={`${inputClass} ${errors.email ? "border-aio-red" : ""}`}
+                />
+                {errors.email && (
+                  <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                    <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{errors.email}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <div className="mt-4">
-            <label htmlFor="booking-phone" className={labelClass}>
-              Phone
-            </label>
-            <input
-              id="booking-phone"
-              name="phone"
-              type="tel"
-              placeholder="(555) 123-4567"
-              className={`mt-2 ${inputClass} sm:max-w-[320px]`}
-            />
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="booking-phone" className={labelClass}>
+                Phone (Optional)
+              </label>
+              <input
+                id="booking-phone"
+                name="phone"
+                type="tel"
+                placeholder="(555) 123-4567"
+                className={`mt-2 ${inputClass}`}
+              />
+            </div>
+            {selectedSlot === "custom" && (
+              <div>
+                <label htmlFor="booking-custom-time" className={labelClass}>
+                  Preferred Time Slot *
+                </label>
+                <div className="relative mt-2">
+                  <input
+                    id="booking-custom-time"
+                    name="customTime"
+                    placeholder="e.g. 2:00 PM – 3:30 PM or Morning"
+                    value={customTime}
+                    onChange={(e) => {
+                      setCustomTime(e.target.value);
+                      if (errors.customTime) {
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          delete next.customTime;
+                          return next;
+                        });
+                      }
+                    }}
+                    className={`${inputClass} ${errors.customTime ? "border-aio-red" : ""}`}
+                  />
+                  {errors.customTime && (
+                    <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                      <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span>{errors.customTime}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* ── Athletes ──────────────────────────────────── */}
@@ -505,16 +820,26 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         htmlFor={`athlete-name-${idx}`}
                         className={labelClass}
                       >
-                        Athlete Name
+                        Athlete Name *
                       </label>
-                      <input
-                        id={`athlete-name-${idx}`}
-                        type="text"
-                        placeholder="Athlete's name"
-                        value={athlete.name}
-                        onChange={(e) => updateAthlete(idx, "name", e.target.value)}
-                        className={`mt-2 ${inputClass}`}
-                      />
+                      <div className="relative mt-2">
+                        <input
+                          id={`athlete-name-${idx}`}
+                          type="text"
+                          placeholder="Athlete's name"
+                          value={athlete.name}
+                          onChange={(e) => updateAthlete(idx, "name", e.target.value)}
+                          className={`${inputClass} ${errors[`athleteName_${idx}`] ? "border-aio-red" : ""}`}
+                        />
+                        {errors[`athleteName_${idx}`] && (
+                          <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                            <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span>{errors[`athleteName_${idx}`]}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     {/* Age group */}
                     <div>
@@ -522,7 +847,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         htmlFor={`athlete-age-${idx}`}
                         className={labelClass}
                       >
-                        Age Group
+                        Age Group *
                       </label>
                       <div className="relative mt-2">
                         {/* Custom Dropdown Trigger */}
@@ -533,7 +858,9 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                             setOpenAgeDropdownIdx(openAgeDropdownIdx === idx ? null : idx);
                             setOpenSportDropdownIdx(null);
                           }}
-                          className="flex w-full items-center justify-between border border-aio-line bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-aio-red focus:outline-none"
+                          className={`flex w-full items-center justify-between border bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition focus:outline-none ${
+                            errors[`athleteAge_${idx}`] ? "border-aio-red" : "border-aio-line hover:border-aio-red"
+                          }`}
                         >
                           <span>{athlete.ageGroup || "Select"}</span>
                           <svg
@@ -586,6 +913,15 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                             ))}
                           </div>
                         </div>
+
+                        {errors[`athleteAge_${idx}`] && (
+                          <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                            <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span>{errors[`athleteAge_${idx}`]}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     {/* Sport */}
@@ -594,7 +930,7 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                         htmlFor={`athlete-sport-${idx}`}
                         className={labelClass}
                       >
-                        Sport
+                        Sport *
                       </label>
                       <div className="relative mt-2">
                         {/* Custom Dropdown Trigger */}
@@ -605,7 +941,9 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                             setOpenSportDropdownIdx(openSportDropdownIdx === idx ? null : idx);
                             setOpenAgeDropdownIdx(null);
                           }}
-                          className="flex w-full items-center justify-between border border-aio-line bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-aio-red focus:outline-none"
+                          className={`flex w-full items-center justify-between border bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition focus:outline-none ${
+                            errors[`athleteSport_${idx}`] ? "border-aio-red" : "border-aio-line hover:border-aio-red"
+                          }`}
                         >
                           <span>{athlete.sport || "Select"}</span>
                           <svg
@@ -658,6 +996,15 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                             ))}
                           </div>
                         </div>
+
+                        {errors[`athleteSport_${idx}`] && (
+                          <div className="mt-2.5 flex items-center gap-1.5 text-[0.7rem] font-black uppercase tracking-wider text-aio-red">
+                            <svg className="h-3.5 w-3.5 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span>{errors[`athleteSport_${idx}`]}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -715,8 +1062,11 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                           day: "numeric",
                         })
                       : ""}{" "}
-                    · {formatTime12(selectedSlotInfo.startTime)} –{" "}
-                    {formatTime12(selectedSlotInfo.endTime)}
+                    · {selectedSlot === "custom" ? (
+                      customTime || "Custom Time Request"
+                    ) : (
+                      `${formatTime12(selectedSlotInfo.startTime)} – ${formatTime12(selectedSlotInfo.endTime)}`
+                    )}
                   </span>
                 </div>
               )}

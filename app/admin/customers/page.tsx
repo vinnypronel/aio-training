@@ -26,9 +26,15 @@ export default async function AdminCustomersPage() {
       <div className="mx-auto max-w-[1280px]">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-              Admin Panel
-            </p>
+            <div className="flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+              </svg>
+              <span>Admin Panel</span>
+              <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+              </svg>
+            </div>
             <h1 className="mt-3 font-brand-display text-[clamp(2rem,5vw,3.5rem)] font-black uppercase leading-none">
               Customers
             </h1>
@@ -61,7 +67,7 @@ export default async function AdminCustomersPage() {
                     <p className="text-sm font-black text-white">
                       {customer.name}
                     </p>
-                    <p className="mt-1 text-xs font-semibold text-aio-muted">
+                    <p className="mt-1 text-xs font-semibold text-white/80">
                       {customer.email}
                       {customer.phone && ` · ${customer.phone}`}
                     </p>
@@ -78,7 +84,7 @@ export default async function AdminCustomersPage() {
                       )}
                     </div>
                     {customer.notes && (
-                      <p className="mt-2 text-xs font-semibold text-aio-muted italic">
+                      <p className="mt-2 text-xs font-semibold text-white/80 italic">
                         {customer.notes}
                       </p>
                     )}
@@ -88,7 +94,7 @@ export default async function AdminCustomersPage() {
                       {customer._count.bookings} booking
                       {customer._count.bookings !== 1 && "s"}
                     </p>
-                    <p className="mt-1 text-[0.6rem] text-aio-muted">
+                    <p className="mt-1 text-[0.6rem] text-white/60">
                       Joined{" "}
                       {new Date(customer.createdAt).toLocaleDateString("en-US", {
                         month: "short",

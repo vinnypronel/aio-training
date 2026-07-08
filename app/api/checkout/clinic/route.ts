@@ -85,7 +85,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const origin = req.headers.get("origin") || "http://localhost:3000";
+    const origin =
+      req.headers.get("origin") ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://www.trainingaio.com";
     const priceId = getClinicPriceId();
     const priceCents = getClinicPriceCents();
 

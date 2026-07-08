@@ -1,9 +1,14 @@
-import { PrismaClient } from "../lib/generated/prisma/client.js";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import path from "node:path";
+import { config } from "dotenv";
+config({ path: [".env.local", ".env"] });
 
-const dbPath = path.resolve(import.meta.dirname, "..", "dev.db").replace(/\\/g, "/");
-const adapter = new PrismaBetterSqlite3({ url: "file:" + dbPath });
+import { PrismaClient } from "../lib/generated/prisma/client.js";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL is required to seed.");
+}
+const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {

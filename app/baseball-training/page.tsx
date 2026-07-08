@@ -43,7 +43,7 @@ export default function BaseballTrainingPage() {
         ctaLabel: "Ask About Baseball Training",
       }}
       ctaWordmark="Prospect"
-      ctaWordmarkClassName="md:!right-[-70px] lg:!translate-y-[8px]"
+      ctaWordmarkClassName="md:!right-[-70px] lg:!-translate-y-[50px]"
       ctaTitle={
         <>
           Build Your<br /><span className="text-black">Baseball Plan.</span>

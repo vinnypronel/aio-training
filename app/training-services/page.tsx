@@ -93,10 +93,15 @@ export default function TrainingServicesPage() {
           className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
-          <div className="h-1 w-12 -skew-x-[18deg] bg-aio-red" />
-          <p className="hero-item mt-3 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-            Training And Services Hub
-          </p>
+          <div className="hero-item mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
+            </svg>
+            <span>Training And Services Hub</span>
+            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
+            </svg>
+          </div>
           <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
             Where Athletes <span className="text-aio-red">Are Made.</span>
           </h1>
@@ -186,7 +191,7 @@ export default function TrainingServicesPage() {
                 </span>
 
                 <div>
-                  <p className="translate-y-[10px] text-2xl font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
+                  <p className="translate-y-[20px] text-2xl font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                     {step.label}
                   </p>
                 </div>
@@ -207,6 +212,15 @@ export default function TrainingServicesPage() {
 
       <section className="relative bg-aio-black py-20 text-white md:py-24 overflow-hidden">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-12 px-6 lg:grid-cols-[1.75fr_1fr] lg:items-center">
+          {/* Mobile-only header above image */}
+          <div className="lg:hidden">
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+              Middlesex And Monmouth County
+            </p>
+            <h2 className="mt-3 font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-none">
+              Where We Train.
+            </h2>
+          </div>
           <div className="relative p-6 lg:-translate-x-[136px] lg:scale-[1.3] lg:origin-left transition-transform duration-500">
             <div aria-hidden className="absolute left-0 top-0 h-16 w-16 border-l-4 border-t-4 border-aio-red" />
             <div aria-hidden className="absolute right-0 bottom-0 h-16 w-16 border-b-4 border-r-4 border-aio-red" />
@@ -224,10 +238,10 @@ export default function TrainingServicesPage() {
             </div>
           </div>
           <div className="lg:translate-x-[88px] transition-transform duration-500">
-            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+            <p data-reveal className="hidden lg:block text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
               Middlesex And Monmouth County
             </p>
-            <h2 data-reveal className="mt-3 sm:whitespace-nowrap font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-none">
+            <h2 data-reveal className="hidden lg:block mt-3 sm:whitespace-nowrap font-brand-display text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-none">
               Where We Train.
             </h2>
             <div className="mt-8 space-y-5">

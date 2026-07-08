@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { writeFile, mkdir, unlink } from "node:fs/promises";
 import path from "node:path";
+import { put, del } from "@vercel/blob";
 
 const ALLOWED_FLYER_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 const MAX_FLYER_BYTES = 5 * 1024 * 1024;
@@ -64,14 +65,24 @@ export async function createEvent(
 
   const slug = slugify(title);
   const filename = `${slug}-${Date.now()}${flyerExt}`;
+  const bytes = Buffer.from(await flyer.arrayBuffer());
 
-  const uploadsDir = path.join(process.cwd(), "public", "assets", "uploads");
-  await mkdir(uploadsDir, { recursive: true });
-
-  const bytes = new Uint8Array(await flyer.arrayBuffer());
-  await writeFile(path.join(uploadsDir, filename), bytes);
-
-  const flyerPath = `/assets/uploads/${filename}`;
+  let flyerPath: string;
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    // Production (Vercel): store on Vercel Blob so admin uploads survive
+    // deploys and are shared across serverless instances.
+    const blob = await put(`events/${filename}`, bytes, {
+      access: "public",
+      contentType: flyer.type || undefined,
+    });
+    flyerPath = blob.url;
+  } else {
+    // Local dev fallback: write into the public folder.
+    const uploadsDir = path.join(process.cwd(), "public", "assets", "uploads");
+    await mkdir(uploadsDir, { recursive: true });
+    await writeFile(path.join(uploadsDir, filename), bytes);
+    flyerPath = `/assets/uploads/${filename}`;
+  }
 
   const maxOrder = await prisma.event.aggregate({ _max: { sortOrder: true } });
   const nextOrder = (maxOrder._max.sortOrder ?? -1) + 1;
@@ -105,7 +116,14 @@ export async function deleteEvent(formData: FormData) {
   const event = await prisma.event.findUnique({ where: { id } });
   if (!event) return;
 
-  if (event.flyer.startsWith("/assets/uploads/")) {
+  if (event.flyer.startsWith("http")) {
+    // Vercel Blob URL
+    try {
+      await del(event.flyer);
+    } catch {
+      // blob may already be gone
+    }
+  } else if (event.flyer.startsWith("/assets/uploads/")) {
     const filePath = path.join(process.cwd(), "public", event.flyer);
     try {
       await unlink(filePath);

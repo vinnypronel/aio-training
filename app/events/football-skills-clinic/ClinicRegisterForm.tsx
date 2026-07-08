@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import HoverButton from "@/components/HoverButton";
 
@@ -37,8 +37,11 @@ export default function ClinicRegisterForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [emergencyNotes, setEmergencyNotes] = useState("");
+  const [openAgeDropdownIdx, setOpenAgeDropdownIdx] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [validationError, setValidationError] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const validationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isEarly = isEarlyRegistration();
   const pricePerAthlete = isEarly ? 125 : 150;
@@ -54,11 +57,19 @@ export default function ClinicRegisterForm() {
     email.trim().includes("@") &&
     athleteCount > 0;
 
-
   function updateAthlete(idx: number, field: keyof AthleteEntry, value: string) {
     setAthletes((prev) =>
       prev.map((a, i) => (i === idx ? { ...a, [field]: value } : a))
     );
+    // Clear error on interact
+    const errKey = field === "name" ? `athleteName_${idx}` : `athleteAge_${idx}`;
+    if (errors[errKey]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[errKey];
+        return next;
+      });
+    }
   }
 
   function addAthlete() {
@@ -67,18 +78,63 @@ export default function ClinicRegisterForm() {
 
   function removeAthlete(idx: number) {
     setAthletes((prev) => prev.filter((_, i) => i !== idx));
+    // Clean up corresponding athlete errors
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[`athleteName_${idx}`];
+      delete next[`athleteAge_${idx}`];
+      return next;
+    });
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setValidationError("");
+    const newErrors: Record<string, string> = {};
+
+    if (validationTimeoutRef.current) {
+      clearTimeout(validationTimeoutRef.current);
+    }
 
     if (!parentName.trim()) {
-      setValidationError("Parent name is required.");
-      return;
+      newErrors.parentName = "Please fill out this field.";
     }
-    if (!email.trim() || !email.includes("@")) {
-      setValidationError("A valid email address is required.");
+    if (!email.trim()) {
+      newErrors.email = "Please fill out this field.";
+    } else if (!email.includes("@")) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    // Validate each athlete
+    athletes.forEach((athlete, idx) => {
+      if (!athlete.name.trim()) {
+        newErrors[`athleteName_${idx}`] = "Please fill out this field.";
+      }
+      if (!athlete.ageGroup) {
+        newErrors[`athleteAge_${idx}`] = "Please select an option.";
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Focus first error
+      const firstError = Object.keys(newErrors)[0];
+      if (firstError === "parentName") {
+        document.getElementById("clinic-parent-name")?.focus();
+      } else if (firstError === "email") {
+        document.getElementById("clinic-email")?.focus();
+      } else if (firstError.startsWith("athleteName_")) {
+        const idx = firstError.split("_")[1];
+        document.getElementById(`clinic-athlete-name-${idx}`)?.focus();
+      } else if (firstError.startsWith("athleteAge_")) {
+        const idx = firstError.split("_")[1];
+        document.getElementById(`clinic-athlete-age-trigger-${idx}`)?.focus();
+      }
+
+      // Automatically hide validation alerts after 4 seconds
+      validationTimeoutRef.current = setTimeout(() => {
+        setErrors({});
+      }, 4000);
       return;
     }
 
@@ -87,7 +143,7 @@ export default function ClinicRegisterForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} noValidate className="space-y-6">
         {/* Parent / Guardian */}
         <div>
           <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
@@ -98,28 +154,66 @@ export default function ClinicRegisterForm() {
               <label htmlFor="clinic-parent-name" className={labelClass}>
                 Full Name *
               </label>
-              <input
-                id="clinic-parent-name"
-                required
-                placeholder="Jane Smith"
-                value={parentName}
-                onChange={(e) => setParentName(e.target.value)}
-                className={`mt-2 ${inputClass}`}
-              />
+              <div className="relative mt-2">
+                <input
+                  id="clinic-parent-name"
+                  placeholder="Jane Smith"
+                  value={parentName}
+                  onChange={(e) => {
+                    setParentName(e.target.value);
+                    if (errors.parentName) {
+                      setErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.parentName;
+                        return next;
+                      });
+                    }
+                  }}
+                  className={`${inputClass} ${errors.parentName ? "border-aio-red" : ""}`}
+                />
+                {errors.parentName && (
+                  <div className="absolute left-0 top-[calc(100%+8px)] z-50 flex items-center gap-2 border border-aio-red bg-aio-black px-4 py-2.5 text-[0.68rem] font-black uppercase tracking-wider text-white shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
+                    <div className="absolute -top-[9px] left-6 h-4 w-4 rotate-45 border-l border-t border-aio-red bg-aio-black" />
+                    <svg className="h-4 w-4 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{errors.parentName}</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label htmlFor="clinic-email" className={labelClass}>
                 Email *
               </label>
-              <input
-                id="clinic-email"
-                type="email"
-                required
-                placeholder="jane@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`mt-2 ${inputClass}`}
-              />
+              <div className="relative mt-2">
+                <input
+                  id="clinic-email"
+                  type="email"
+                  placeholder="jane@example.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) {
+                      setErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.email;
+                        return next;
+                      });
+                    }
+                  }}
+                  className={`${inputClass} ${errors.email ? "border-aio-red" : ""}`}
+                />
+                {errors.email && (
+                  <div className="absolute left-0 top-[calc(100%+8px)] z-50 flex items-center gap-2 border border-aio-red bg-aio-black px-4 py-2.5 text-[0.68rem] font-black uppercase tracking-wider text-white shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
+                    <div className="absolute -top-[9px] left-6 h-4 w-4 rotate-45 border-l border-t border-aio-red bg-aio-black" />
+                    <svg className="h-4 w-4 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{errors.email}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="mt-4">
@@ -182,34 +276,103 @@ export default function ClinicRegisterForm() {
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <label htmlFor={`clinic-athlete-name-${idx}`} className={labelClass}>
-                      Athlete Name
+                      Athlete Name *
                     </label>
-                    <input
-                      id={`clinic-athlete-name-${idx}`}
-                      type="text"
-                      placeholder="Athlete's name"
-                      value={athlete.name}
-                      onChange={(e) => updateAthlete(idx, "name", e.target.value)}
-                      className={`mt-2 ${inputClass}`}
-                    />
+                    <div className="relative mt-2">
+                      <input
+                        id={`clinic-athlete-name-${idx}`}
+                        type="text"
+                        placeholder="Athlete's name"
+                        value={athlete.name}
+                        onChange={(e) => updateAthlete(idx, "name", e.target.value)}
+                        className={`${inputClass} ${errors[`athleteName_${idx}`] ? "border-aio-red" : ""}`}
+                      />
+                      {errors[`athleteName_${idx}`] && (
+                        <div className="absolute left-0 top-[calc(100%+8px)] z-50 flex items-center gap-2 border border-aio-red bg-aio-black px-4 py-2.5 text-[0.68rem] font-black uppercase tracking-wider text-white shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
+                          <div className="absolute -top-[9px] left-6 h-4 w-4 rotate-45 border-l border-t border-aio-red bg-aio-black" />
+                          <svg className="h-4 w-4 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                          <span>{errors[`athleteName_${idx}`]}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <label htmlFor={`clinic-athlete-age-${idx}`} className={labelClass}>
-                      Age Group
+                      Age Group *
                     </label>
-                    <select
-                      id={`clinic-athlete-age-${idx}`}
-                      value={athlete.ageGroup}
-                      onChange={(e) => updateAthlete(idx, "ageGroup", e.target.value)}
-                      className={`mt-2 ${inputClass}`}
-                    >
-                      <option value="" className="text-black bg-white">Select</option>
-                      {ageGroups.map((a) => (
-                        <option key={a} value={a} className="text-black bg-white">
-                          {a}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="relative mt-2">
+                      <button
+                        id={`clinic-athlete-age-trigger-${idx}`}
+                        type="button"
+                        onClick={() => {
+                          setOpenAgeDropdownIdx(openAgeDropdownIdx === idx ? null : idx);
+                        }}
+                        className={`flex w-full items-center justify-between border bg-aio-black/60 px-4 py-2.5 text-sm font-black uppercase tracking-[0.08em] text-white transition focus:outline-none ${
+                          errors[`athleteAge_${idx}`] ? "border-aio-red" : "border-aio-line hover:border-aio-red"
+                        }`}
+                      >
+                        <span>{athlete.ageGroup || "Select"}</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={3}
+                          className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                            openAgeDropdownIdx === idx ? "rotate-180" : ""
+                          }`}
+                        >
+                          <path d="M6 9l6 6 6-6" />
+                        </svg>
+                      </button>
+
+                      {openAgeDropdownIdx === idx && (
+                        <div
+                          className="fixed inset-0 z-20"
+                          onClick={() => setOpenAgeDropdownIdx(null)}
+                        />
+                      )}
+
+                      <div
+                        className={`absolute top-full left-0 z-30 mt-1 w-full bg-aio-black border border-aio-line p-2 shadow-[0_18px_40px_rgba(0,0,0,0.65)] transition duration-200 origin-top ${
+                          openAgeDropdownIdx === idx
+                            ? "visible opacity-100 scale-y-100"
+                            : "invisible opacity-0 scale-y-95 pointer-events-none"
+                        }`}
+                      >
+                        <div className="max-h-[200px] overflow-y-auto custom-scrollbar">
+                          {ageGroups.map((a) => (
+                            <button
+                              key={a}
+                              type="button"
+                              onClick={() => {
+                                updateAthlete(idx, "ageGroup", a);
+                                setOpenAgeDropdownIdx(null);
+                              }}
+                              className={`block w-full text-left px-4 py-3 text-xs font-black uppercase tracking-[0.1em] transition-colors hover:bg-aio-panel ${
+                                athlete.ageGroup === a
+                                  ? "text-aio-red bg-aio-panel/40"
+                                  : "text-white/85 hover:text-aio-red"
+                              }`}
+                            >
+                              {a}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {errors[`athleteAge_${idx}`] && (
+                        <div className="absolute left-0 top-[calc(100%+8px)] z-50 flex items-center gap-2 border border-aio-red bg-aio-black px-4 py-2.5 text-[0.68rem] font-black uppercase tracking-wider text-white shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
+                          <div className="absolute -top-[9px] left-6 h-4 w-4 rotate-45 border-l border-t border-aio-red bg-aio-black" />
+                          <svg className="h-4 w-4 text-aio-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                          <span>{errors[`athleteAge_${idx}`]}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
