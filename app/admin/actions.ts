@@ -15,12 +15,12 @@ function safeEqual(a: string, b: string) {
 }
 
 // Admin accounts are configured in pairs. Account 1 uses ADMIN_EMAIL /
-// ADMIN_PASSWORD; add more by numbering the suffix (ADMIN_EMAIL_2, etc.).
+// ADMIN_PASSWORD; Jon's account uses JON_EMAIL / JON_PASSWORD.
 function getAdminAccounts(): { email: string; password: string }[] {
   const accounts: { email: string; password: string }[] = [];
   const pairs: [string | undefined, string | undefined][] = [
     [process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD],
-    [process.env.ADMIN_EMAIL_2, process.env.ADMIN_PASSWORD_2],
+    [process.env.JON_EMAIL, process.env.JON_PASSWORD],
   ];
   for (const [email, password] of pairs) {
     if (email && password) {
