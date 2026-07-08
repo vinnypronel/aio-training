@@ -14,6 +14,22 @@ function safeEqual(a: string, b: string) {
   return ba.length === bb.length && timingSafeEqual(ba, bb);
 }
 
+// Admin accounts are configured in pairs. Account 1 uses ADMIN_EMAIL /
+// ADMIN_PASSWORD; add more by numbering the suffix (ADMIN_EMAIL_2, etc.).
+function getAdminAccounts(): { email: string; password: string }[] {
+  const accounts: { email: string; password: string }[] = [];
+  const pairs: [string | undefined, string | undefined][] = [
+    [process.env.ADMIN_EMAIL, process.env.ADMIN_PASSWORD],
+    [process.env.ADMIN_EMAIL_2, process.env.ADMIN_PASSWORD_2],
+  ];
+  for (const [email, password] of pairs) {
+    if (email && password) {
+      accounts.push({ email, password });
+    }
+  }
+  return accounts;
+}
+
 export async function login(
   _prev: { error: string } | null,
   formData: FormData
@@ -37,9 +53,14 @@ export async function login(
     return { error: "Too many attempts. Try again in 15 minutes." };
   }
 
-  const ok =
-    safeEqual(email, process.env.ADMIN_EMAIL ?? "") &&
-    safeEqual(password, process.env.ADMIN_PASSWORD ?? "");
+  // Check every configured account without short-circuiting, so timing does
+  // not reveal which account (if any) matched the email.
+  let ok = false;
+  for (const account of getAdminAccounts()) {
+    if (safeEqual(email, account.email) && safeEqual(password, account.password)) {
+      ok = true;
+    }
+  }
 
   if (!ok) {
     return { error: "Invalid credentials." };
