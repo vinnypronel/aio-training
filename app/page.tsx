@@ -30,15 +30,6 @@ export default function Home() {
         />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col items-center px-6 pt-20 text-center lg:pt-24">
-          <div className="hero-item mb-4 flex items-center justify-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red sm:text-sm">
-            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 2H2v16h6" />
-            </svg>
-            <span>All In One Training</span>
-            <svg className="h-3.5 w-2 text-white shrink-0" fill="none" viewBox="0 0 10 20" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2 2h6v16H2" />
-            </svg>
-          </div>
           <h1 className="max-w-[18ch] font-brand-display text-balance text-[clamp(3rem,8vw,6.5rem)] font-black uppercase leading-[0.92] drop-shadow-[0_7px_24px_rgba(0,0,0,0.55)]">
             <span>
               {["Build", "Your", "Athlete’s"].map((word, i) => [
@@ -77,14 +68,14 @@ export default function Home() {
       <section className="bg-aio-paper py-20 text-aio-ink md:py-24">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="lg:-translate-x-[70px]">
-            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
-              Train with the best, All In One place
-            </p>
-            <h2 data-reveal className="mt-4 font-brand-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-black uppercase leading-[0.95]">
+            <h2 data-reveal className="font-brand-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-black uppercase leading-[0.95]">
               <span className="block md:whitespace-nowrap">Built For Athletes</span>
               <span className="block md:whitespace-nowrap">And The Families</span>
               <span className="block md:whitespace-nowrap">Backing Them.</span>
             </h2>
+            <p data-reveal className="mt-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
+              Train with the best, All In One place
+            </p>
             <div data-reveal className="mt-6 space-y-5 text-base font-semibold leading-8 text-aio-ink">
               <p>
                 All In One Training works with youth and high school athletes
@@ -104,7 +95,7 @@ export default function Home() {
               </HoverButton>
             </div>
           </div>
-          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden border border-aio-paper-muted bg-aio-field shadow-[var(--aio-shadow-hard)] lg:translate-x-[70px] lg:scale-[1.15]">
+          <div data-reveal="fade" className="relative min-h-[420px] overflow-hidden bg-aio-field shadow-[0_22px_50px_rgba(0,0,0,0.82)] lg:translate-x-[70px] lg:scale-[1.15]">
             <Image
               src="/assets/images/services-football-card.webp"
               alt="Youth football athlete driving a sled on outdoor turf"
@@ -120,11 +111,11 @@ export default function Home() {
         <div data-reveal-group className="mx-auto grid max-w-[1280px] lg:max-w-[1536px] gap-x-10 gap-y-6 px-6 lg:grid-cols-[1.1fr_1.3fr] lg:items-center lg:translate-x-[125px]">
           <div className="lg:order-2 lg:col-start-2 lg:row-start-1">
             <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
-              Where We Train
+              Where do we train?
             </p>
             <h2 data-reveal className="mt-3 font-brand-display text-[clamp(1.5rem,2.8vw,2.5rem)] font-black uppercase leading-[0.95]">
               <span className="block md:whitespace-nowrap">Scheduled Sessions.</span>
-              <span className="block md:whitespace-nowrap">Game Transfer.</span>
+              <span className="block md:whitespace-nowrap">Verified Locations.</span>
             </h2>
           </div>
 
@@ -146,8 +137,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:order-3 lg:col-start-2 lg:row-start-2">
-            <div className="space-y-5">
+          <div className="lg:order-3 lg:col-start-2 lg:row-start-2 mt-6 md:mt-8">
+            <div className="space-y-6">
               <TrainingCard
                 title="Indoor Sessions"
                 tag="Confirmed before each session"
@@ -156,6 +147,15 @@ export default function Home() {
                   "Contact AIO before visiting any training location. Each session is confirmed before arrival.",
                 ]}
               />
+
+              <div className="py-2" data-reveal>
+                <div
+                  aria-hidden
+                  className="h-1 w-full bg-aio-red"
+                  style={{ clipPath: "polygon(0 50%, 50% 0, 100% 50%, 50% 100%)" }}
+                />
+              </div>
+
               <TrainingCard
                 title="Permitted Fields And Courts"
                 tag="Middlesex and Monmouth County"
@@ -187,7 +187,7 @@ function TrainingCard({
   items: string[];
 }) {
   return (
-    <article data-reveal className="border border-aio-line p-5 md:p-6">
+    <article data-reveal className="p-0">
       <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
         {title}
       </h3>

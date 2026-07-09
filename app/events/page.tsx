@@ -72,7 +72,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      <section className="bg-aio-black py-20 md:py-24">
+      <section className="bg-aio-black py-20 md:py-24 overflow-hidden">
         <div data-reveal-group className="mx-auto max-w-[1280px] px-6">
           <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
             Upcoming Events
@@ -80,19 +80,22 @@ export default async function EventsPage() {
           <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Reserve From<br className="lg:hidden" /> The Board.
           </h2>
-          <div aria-hidden className="mt-4 h-px w-full bg-aio-line" />
+          <div aria-hidden className="mt-4 h-px bg-aio-line lg:mx-[-30px]" />
           <p data-reveal className="mt-4 text-sm font-bold uppercase tracking-[0.12em] text-aio-muted">
             Showing {events.length} event{events.length !== 1 ? "s" : ""}
           </p>
 
           {events.length > 0 ? (
-            <div className="mx-auto mt-10 flex max-w-[1120px] flex-col gap-6 lg:gap-8">
-              {events.map((event) => (
-                <div key={event.id} data-reveal>
-                  <EventCard event={event} isAdmin={isAdmin} />
-                </div>
-              ))}
-            </div>
+            <>
+              <div className="mx-auto mt-10 flex w-full flex-col gap-6 lg:gap-8">
+                {events.map((event) => (
+                  <div key={event.id} data-reveal className="pb-8">
+                    <EventCard event={event} isAdmin={isAdmin} />
+                  </div>
+                ))}
+              </div>
+              <div aria-hidden className="mt-12 h-px bg-aio-line lg:mx-[-30px]" />
+            </>
           ) : (
             <p className="mt-10 text-center text-sm font-semibold text-aio-muted">
               No events scheduled at this time.
@@ -105,7 +108,7 @@ export default async function EventsPage() {
 
       <section className="relative overflow-hidden bg-aio-red py-16 text-white md:py-20">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/23 -translate-y-[34px] lg:-translate-y-1/2">
+          <p className="absolute right-[40px] lg:right-[-130px] bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-mt-[75px] text-right font-brand-display text-[clamp(5rem,17vw,14rem)] font-black uppercase leading-none text-white/23 -translate-y-[11px] lg:-translate-y-1/2">
             Events
           </p>
         </div>

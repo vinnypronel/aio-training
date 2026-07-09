@@ -24,13 +24,13 @@ export default function NavLinks() {
       ? matchPaths.some((p) => pathname === p || pathname.startsWith(p + "/"))
       : pathname === href || pathname.startsWith(href + "/");
 
-    return `inline-flex min-h-11 items-center px-3 text-xs font-black tracking-[0.12em] uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black ${
+    return `inline-flex min-h-11 items-center px-3 text-sm font-black tracking-[0.12em] uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black ${
       active ? "text-aio-red" : "text-white/85 hover:text-aio-red"
     }`;
   }
 
   return (
-    <div className="hidden items-center gap-1 lg:flex">
+    <div className="hidden items-center gap-4 xl:gap-6 lg:flex">
       <Link href="/" className={linkClass("/", ["/"])}>
         Home
       </Link>

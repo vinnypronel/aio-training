@@ -118,9 +118,8 @@ export default function SportPage({
 
       <section className="relative overflow-hidden bg-aio-paper py-20 text-aio-ink md:py-24">
         <div aria-hidden className="pointer-events-none absolute inset-0 mx-auto max-w-[1280px]">
-          <span className={`absolute right-6 top-1 select-none font-brand-display text-[clamp(6rem,18vw,8rem)] font-black uppercase leading-none text-aio-black/[0.14] md:right-0 md:top-1/2 md:-translate-y-1/2 md:text-[clamp(8rem,20vw,18rem)] ${
-            sport.toLowerCase().includes("baseball") ? "lg:translate-x-[180px]" : "lg:translate-x-[160px]"
-          }`}>
+          <span className={`absolute right-6 top-1 select-none font-brand-display text-[clamp(6rem,18vw,8rem)] font-black uppercase leading-none text-aio-black/[0.14] md:right-0 md:top-1/2 md:-translate-y-1/2 md:text-[clamp(8rem,20vw,18rem)] ${sport.toLowerCase().includes("baseball") ? "lg:translate-x-[180px]" : "lg:translate-x-[160px]"
+            }`}>
             AIO
           </span>
         </div>
@@ -171,7 +170,7 @@ export default function SportPage({
 
       <section className={`relative overflow-hidden py-20 md:py-24 ${tiersLight ? "bg-aio-paper text-aio-ink" : "bg-aio-black text-white"}`}>
         <div data-reveal-group className="relative z-10 mx-auto max-w-[1280px] px-6">
-          <div className="max-w-[760px]">
+          <div className="max-w-[760px] -translate-x-[50px]">
             <p data-reveal className="text-sm font-black uppercase tracking-[0.28em]">
               <span className={tiersLight ? "text-black" : "text-white"}>[</span>{" "}
               <span className="text-aio-red">{tiersLabel ?? `${sport} Path`}</span>{" "}
@@ -184,32 +183,34 @@ export default function SportPage({
               {tiersIntro}
             </p>
           </div>
-          <ol className="relative mt-14 grid gap-5 md:grid-cols-3">
+          <ol className="relative mt-14 grid gap-5 md:grid-cols-3 md:divide-x md:divide-aio-line md:gap-0 translate-x-[50px]">
             {tiers.map((t) => (
               <li
                 key={t.number}
                 data-reveal
-                className={`flex flex-col p-8 py-6 ${tiersLight ? "bg-white shadow-[0_16px_40px_rgba(0,0,0,0.24)]" : "border border-aio-line bg-transparent"}`}
+                className={`flex flex-col p-8 py-6 ${tiersLight ? "bg-white shadow-[0_16px_40px_rgba(0,0,0,0.24)]" : "bg-transparent"}`}
               >
-                <div className="flex items-start justify-end gap-4">
+                <div className="flex items-start justify-start gap-4">
                   <span
                     aria-hidden
-                    className={`shrink-0 font-brand-display text-7xl font-black leading-none ${tiersLight ? "text-aio-red" : "text-aio-red-on-dark"}`}
+                    className={`-translate-x-[15px] -translate-y-[20px] shrink-0 font-brand-display text-7xl font-black leading-none ${tiersLight ? "text-aio-red" : "text-aio-red-on-dark"}`}
                   >
                     {t.number}.
                   </span>
                 </div>
-                <h3 className="mt-4 font-brand-display text-3xl font-black uppercase leading-tight">
-                  {t.title}
-                </h3>
-                <p className={`mt-4 text-base font-semibold leading-7 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
-                  {t.body}
-                </p>
-                {t.callout && (
-                  <p className="mt-5 border-l-2 border-aio-red pl-3 text-sm font-black uppercase tracking-[0.12em]">
-                    {t.callout}
+                <div className="translate-y-[20px]">
+                  <h3 className="mt-4 font-brand-display text-3xl font-black uppercase leading-tight">
+                    {t.title}
+                  </h3>
+                  <p className={`mt-4 text-base font-semibold leading-7 ${tiersLight ? "text-aio-ink" : "text-aio-body"}`}>
+                    {t.body}
                   </p>
-                )}
+                  {t.callout && (
+                    <p className="mt-5 border-l-2 border-aio-red pl-3 text-sm font-black uppercase tracking-[0.12em]">
+                      {t.callout}
+                    </p>
+                  )}
+                </div>
               </li>
             ))}
           </ol>

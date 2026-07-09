@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteEventButton from "./DeleteEventButton";
+import HoverButton from "@/components/HoverButton";
 
 export interface EventSession {
   label: string;
@@ -90,7 +91,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
 
   return (
     <>
-      <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden border border-aio-line bg-transparent transition hover:border-aio-red lg:max-w-none lg:flex-row lg:items-stretch lg:overflow-visible lg:border-0 lg:hover:border-0">
+      <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden bg-transparent transition lg:max-w-none lg:flex-row lg:items-stretch lg:overflow-visible">
         {/* Full-card link overlay — keeps sibling buttons out of an anchor */}
         <Link
           href={`/events/${event.slug}`}
@@ -114,88 +115,114 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             Limited Spots
           </span>
         </div>
-        <div className="flex flex-1 flex-col gap-2.5 px-5 py-4 transition lg:justify-center lg:gap-4 lg:border lg:border-aio-line lg:px-9 lg:py-8 lg:group-hover:border-aio-red">
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none lg:text-xs">
+        <div className="flex flex-1 flex-col gap-6 px-5 py-4 transition lg:justify-between lg:gap-0 lg:px-12 lg:py-10">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none lg:text-[14px]">
               {event.badge}
             </p>
-            <span className="fill-red-on-hover text-[9px] font-black uppercase tracking-[0.16em] lg:text-[10px]">
-              Details
-            </span>
+            <h3 className="font-brand-display text-xl font-black uppercase leading-tight text-white lg:text-5xl lg:whitespace-nowrap mt-2.5">
+              {event.title}
+            </h3>
           </div>
 
-          <h3 className="font-brand-display text-xl font-black uppercase leading-tight text-white lg:text-4xl">
-            {event.title}
-          </h3>
-
-          <div className="mt-1 space-y-1.5 lg:mt-0 lg:flex lg:space-y-0 lg:gap-10">
-            <div className="border-l-2 border-aio-red pl-2 lg:pl-3">
-              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
-                Date
-              </span>
-              <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-base">
-                {event.date}
-              </span>
-            </div>
-            <div className="border-l-2 border-aio-red pl-2 lg:pl-3">
-              <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
-                Location
-              </span>
-              <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-base">
-                {event.location}
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 mt-2 lg:mt-1 lg:gap-3">
-            {sessions.map((s) => {
-              const { group, age } = parseSessionLabel(s.label);
-              return (
-                <div
-                  key={s.label}
-                  className="border border-aio-line px-2.5 py-1.5 bg-transparent lg:px-4 lg:py-3"
+          <div className="flex flex-col gap-2.5 lg:gap-6">
+            <div className="grid grid-cols-2 gap-1.5 lg:grid-cols-2 lg:gap-x-14">
+              <div>
+                <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
+                  Location
+                </span>
+                <a
+                  href={event.location.toLowerCase().includes("heavenly farms")
+                    ? "https://www.google.com/maps/place/heavenly+farms+park+east+brunswick/data=!4m2!3m1!1s0x89c3c53d822a9291:0x85ea3f9097a22d41?sa=X&ved=1t:155783&ictx=111"
+                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-20 mt-0.5 inline-flex items-start gap-1.5 text-xs font-semibold text-white hover:text-aio-red transition lg:mt-1 lg:text-[1.45rem] leading-snug group/loc"
                 >
-                  <div className="text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[10px]">
-                    {group}
-                  </div>
-                  {age && (
-                    <div className="mt-0.5 text-xs font-black uppercase leading-none text-white lg:mt-1 lg:text-base">
-                      {age}
-                    </div>
+                  <span className="leading-snug">
+                    {event.location.includes(",") ? (
+                      <>
+                        {event.location.split(",")[0]},
+                        <span className="block text-[0.85em] opacity-85 mt-0.5 font-normal">
+                          {event.location.split(",").slice(1).join(",").trim()}
+                        </span>
+                      </>
+                    ) : (
+                      event.location
+                    )}
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="mt-[0.2em] shrink-0 w-[0.75em] h-[0.75em] opacity-60 group-hover/loc:opacity-100 transition"
+                    aria-hidden="true"
+                  >
+                    <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
+                    <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
+                  </svg>
+                </a>
+              </div>
+              <div>
+                <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
+                  Date &amp; Time
+                </span>
+                <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-[1.45rem] leading-snug">
+                  {event.date}
+                  {sessions[0] && (
+                    <span className="block text-[0.85em] opacity-85 mt-0.5 font-normal">
+                      @ {sessions[0].time}
+                    </span>
                   )}
-                  <div className="mt-1 text-[9px] font-semibold text-aio-body leading-none lg:mt-1.5 lg:text-xs">
-                    {s.time}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-2 lg:mt-0 lg:gap-x-14">
+              {sessions.map((s) => {
+                const { group, age } = parseSessionLabel(s.label);
+                return (
+                  <div key={s.label}>
+                    <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
+                      {group}
+                    </span>
+                    {age && (
+                      <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-[1.45rem]">
+                        {age}
+                      </span>
+                    )}
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
-          <div className="mt-3 flex items-end justify-between pt-2 border-t border-aio-line lg:mt-2 lg:pt-4">
+          <div className="flex items-end justify-between">
             <div>
-              <div className="font-brand-display text-2xl font-black leading-none text-white uppercase lg:text-4xl">
+              <div className="font-brand-display text-2xl font-black leading-none text-white uppercase lg:text-5xl">
                 {priceInfo.main}
               </div>
               {priceInfo.sub && (
-                <div className="mt-0.5 text-[8px] font-black uppercase tracking-[0.12em] text-aio-muted leading-tight max-w-[160px] lg:mt-1.5 lg:text-[10px] lg:max-w-[220px]">
+                <div className="mt-0.5 text-[8px] font-black uppercase tracking-[0.12em] text-aio-muted leading-tight max-w-[160px] lg:mt-1.5 lg:text-[12px] lg:max-w-[280px]">
                   {priceInfo.sub}
                 </div>
               )}
             </div>
             <div className="relative z-20 flex gap-2 lg:gap-3">
-              <button
-                type="button"
+              <HoverButton
+                variant="outline"
                 onClick={() => setIsFlyerOpen(true)}
-                className="inline-flex min-h-11 items-center justify-center border border-aio-line px-4 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red lg:min-h-12 lg:px-6 lg:text-xs"
+                className="min-h-11 px-4 text-[10px] lg:min-h-14 lg:px-8 lg:text-[14px]"
               >
                 View Flyer
-              </button>
-              <Link
+              </HoverButton>
+              <HoverButton
+                variant="red"
                 href={`/events/${event.slug}`}
-                className="inline-flex min-h-11 items-center justify-center bg-aio-red px-5 text-[10px] font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white lg:min-h-12 lg:px-7 lg:text-xs"
+                className="min-h-11 px-5 text-[10px] lg:min-h-14 lg:px-9 lg:text-[14px]"
               >
                 More Info
-              </Link>
+              </HoverButton>
             </div>
           </div>
         </div>

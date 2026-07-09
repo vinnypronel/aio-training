@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import HoverButton from "@/components/HoverButton";
 
@@ -28,7 +27,7 @@ const CURTAIN_EASE = "ease-[cubic-bezier(0.77,0,0.18,1)]";
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function MobileMenu() {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
+    dialogRef.current?.focus();
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
@@ -67,11 +66,13 @@ export default function MobileMenu() {
 
   const overlay = (
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
       inert={!open}
-      className={`fixed inset-0 z-[60] lg:hidden ${open ? "" : "pointer-events-none"}`}
+      className={`fixed inset-x-0 bottom-0 top-20 z-40 outline-none lg:top-24 lg:hidden ${open ? "" : "pointer-events-none"}`}
     >
       {/* Red flash curtain — leads the reveal, trails the exit */}
       <div
@@ -96,33 +97,6 @@ export default function MobileMenu() {
           aria-hidden
           className="pointer-events-none absolute -left-40 -top-40 h-[26rem] w-[26rem] rounded-full bg-aio-red/20 blur-[130px]"
         />
-
-        {/* Header row — mirrors the site nav so the logo doesn't jump */}
-        <div className="mx-auto flex h-20 w-full max-w-[1280px] shrink-0 items-center justify-between border-b border-aio-line px-5 md:px-6 lg:h-24">
-          <Link
-            href="/"
-            onClick={close}
-            aria-label="All In One Training, home"
-            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
-          >
-            <Image
-              src="/assets/images/aio-logo-reverse.png"
-              alt="All In One Training"
-              width={600}
-              height={270}
-              className="h-auto w-[132px] sm:w-[150px]"
-            />
-          </Link>
-          <button
-            ref={closeButtonRef}
-            type="button"
-            onClick={close}
-            aria-label="Close menu"
-            className="grid h-11 w-11 place-items-center border border-aio-line-strong text-white transition hover:border-aio-red hover:text-aio-red-on-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red focus-visible:ring-offset-2 focus-visible:ring-offset-aio-black"
-          >
-            <MenuIcon isOpen={open} />
-          </button>
-        </div>
 
         {/* Scrollable body */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-2 [-ms-overflow-style:none] [scrollbar-width:none] md:px-6 [&::-webkit-scrollbar]:hidden">

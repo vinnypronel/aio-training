@@ -57,7 +57,18 @@ export default async function EventDetailPage({
                 <dt className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                   {k}
                 </dt>
-                <dd className="mt-1 text-sm font-semibold">{v}</dd>
+                <dd className="mt-1 text-sm font-semibold leading-snug">
+                  {k === "Location" && v.includes(",") ? (
+                    <>
+                      {v.split(",")[0]},
+                      <span className="block text-[0.85em] opacity-85 mt-0.5 font-normal">
+                        {v.split(",").slice(1).join(",").trim()}
+                      </span>
+                    </>
+                  ) : (
+                    v
+                  )}
+                </dd>
               </div>
             ))}
           </dl>

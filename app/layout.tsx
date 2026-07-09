@@ -21,9 +21,10 @@ export const metadata: Metadata = {
       "Sport-specific training for baseball, football, basketball, soccer, and private athlete development in Central NJ.",
     images: [
       {
-        url: "/assets/images/home-hero-poster.webp",
-        width: 1200,
-        height: 675,
+        url: "/assets/images/og-image.png",
+        width: 1024,
+        height: 1024,
+        alt: "AIO Training | Athlete Development in Central NJ",
       },
     ],
   },
