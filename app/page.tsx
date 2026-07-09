@@ -110,12 +110,9 @@ export default function Home() {
       <section className="bg-aio-black py-16 text-white md:py-20">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] lg:max-w-[1536px] gap-x-10 gap-y-6 px-6 lg:grid-cols-[1.1fr_1.3fr] lg:items-center lg:translate-x-[125px]">
           <div className="lg:order-2 lg:col-start-2 lg:row-start-1">
-            <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
-              Where do we train?
-            </p>
-            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(1.5rem,2.8vw,2.5rem)] font-black uppercase leading-[0.95]">
-              <span className="block md:whitespace-nowrap">Scheduled Sessions.</span>
-              <span className="block md:whitespace-nowrap">Verified Locations.</span>
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(1.75rem,3.2vw,3rem)] font-black uppercase leading-[0.95]">
+              <span className="block md:whitespace-nowrap">Verified Courts &amp; Fields.</span>
+              <span className="block md:whitespace-nowrap">Primed For Training.</span>
             </h2>
           </div>
 
@@ -188,7 +185,7 @@ function TrainingCard({
 }) {
   return (
     <article data-reveal className="p-0">
-      <h3 className="font-brand-display text-2xl font-black uppercase leading-none">
+      <h3 className="font-brand-display text-3xl font-black uppercase leading-none">
         {title}
       </h3>
       <div className="mt-2.5 text-[13px] font-black uppercase tracking-[0.08em] text-aio-red-on-dark">

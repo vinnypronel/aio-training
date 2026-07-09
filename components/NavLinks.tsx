@@ -46,7 +46,7 @@ export default function NavLinks() {
           Training &amp; Services
           <span
             aria-hidden
-            className="h-2 w-2 rotate-[225deg] border-r-2 border-b-2 border-current transition-transform group-hover:rotate-45 group-focus-within:rotate-45"
+            className="h-2 w-2 rotate-45 border-r-2 border-b-2 border-current transition-transform group-hover:rotate-[225deg] group-focus-within:rotate-[225deg]"
           />
         </Link>
         <div className="invisible absolute top-full left-0 w-[260px] opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">

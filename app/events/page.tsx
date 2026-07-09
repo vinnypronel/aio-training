@@ -74,10 +74,7 @@ export default async function EventsPage() {
 
       <section className="bg-aio-black py-20 md:py-24 overflow-hidden">
         <div data-reveal-group className="mx-auto max-w-[1280px] px-6">
-          <p data-reveal className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
-            Upcoming Events
-          </p>
-          <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+          <h2 data-reveal className="font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Reserve From<br className="lg:hidden" /> The Board.
           </h2>
           <div aria-hidden className="mt-4 h-px bg-aio-line lg:mx-[-30px]" />
@@ -87,14 +84,13 @@ export default async function EventsPage() {
 
           {events.length > 0 ? (
             <>
-              <div className="mx-auto mt-10 flex w-full flex-col gap-6 lg:gap-8">
+              <div className="mx-auto -mt-2 flex w-full flex-col gap-6 lg:gap-8">
                 {events.map((event) => (
-                  <div key={event.id} data-reveal className="pb-8">
+                  <div key={event.id} data-reveal className="border-b border-aio-line pb-12 lg:mx-[-30px] lg:px-[30px]">
                     <EventCard event={event} isAdmin={isAdmin} />
                   </div>
                 ))}
               </div>
-              <div aria-hidden className="mt-12 h-px bg-aio-line lg:mx-[-30px]" />
             </>
           ) : (
             <p className="mt-10 text-center text-sm font-semibold text-aio-muted">

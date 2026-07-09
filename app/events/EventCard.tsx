@@ -28,11 +28,14 @@ interface EventCardProps {
 }
 
 function parseSessionLabel(label: string) {
-  const parts = label.split("—");
+  // Split "Group — Ages X-Y" on an em dash, en dash, or spaced hyphen so the
+  // age reads cleanly regardless of how the label is punctuated. The regex
+  // requires surrounding whitespace so the internal hyphen in "8-12" is kept.
+  const parts = label.split(/\s+[—–-]\s+/);
   if (parts.length > 1) {
     return {
       group: parts[0].trim(),
-      age: parts[1].trim(),
+      age: parts.slice(1).join(" ").trim(),
     };
   }
   return {
@@ -111,118 +114,190 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             sizes="(min-width: 1024px) 540px, 90vw"
             className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
           />
-          <span className="absolute top-0 left-0 bg-aio-red px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.16em] text-white">
-            Limited Spots
-          </span>
         </div>
-        <div className="flex flex-1 flex-col gap-6 px-5 py-4 transition lg:justify-between lg:gap-0 lg:px-12 lg:py-10">
+        <div className="flex flex-1 flex-col gap-7 px-5 py-6 transition lg:justify-between lg:gap-8 lg:px-12 lg:py-11">
+          {/* Title + subtitle (badge folded in as a red-tick subtitle, no eyebrow) */}
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none lg:text-[14px]">
-              {event.badge}
-            </p>
-            <h3 className="font-brand-display text-xl font-black uppercase leading-tight text-white lg:text-5xl lg:whitespace-nowrap mt-2.5">
-              {event.title}
+            <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white lg:text-[3.4rem] lg:leading-[0.9]">
+              {event.title.includes("Skills Clinic") ? (
+                <>
+                  {event.title.replace("Skills Clinic", "").trim()}
+                  <span className="block">Skills Clinic</span>
+                </>
+              ) : (
+                event.title
+              )}
             </h3>
           </div>
 
-          <div className="flex flex-col gap-2.5 lg:gap-6">
-            <div className="grid grid-cols-2 gap-1.5 lg:grid-cols-2 lg:gap-x-14">
-              <div>
-                <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
-                  Location
-                </span>
-                <a
-                  href={event.location.toLowerCase().includes("heavenly farms")
-                    ? "https://www.google.com/maps/place/heavenly+farms+park+east+brunswick/data=!4m2!3m1!1s0x89c3c53d822a9291:0x85ea3f9097a22d41?sa=X&ved=1t:155783&ictx=111"
-                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-20 mt-0.5 inline-flex items-start gap-1.5 text-xs font-semibold text-white hover:text-aio-red transition lg:mt-1 lg:text-[1.45rem] leading-snug group/loc"
+          {/* Date + location as clean icon rows, no labels */}
+          <div className="flex flex-col gap-3.5 lg:gap-4">
+            <div className="flex items-center gap-3 text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden
+                className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 8.25h18M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v12A1.5 1.5 0 0 1 19.5 20.25h-15A1.5 1.5 0 0 1 3 18.75v-12A1.5 1.5 0 0 1 4.5 5.25Z" />
+              </svg>
+              <span className="text-sm font-semibold lg:text-xl">
+                {event.date}
+              </span>
+            </div>
+            {sessions[0] && (
+              <div className="flex items-center gap-3 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden
+                  className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
                 >
-                  <span className="leading-snug">
-                    {event.location.includes(",") ? (
-                      <>
-                        {event.location.split(",")[0]},
-                        <span className="block text-[0.85em] opacity-85 mt-0.5 font-normal">
-                          {event.location.split(",").slice(1).join(",").trim()}
-                        </span>
-                      </>
-                    ) : (
-                      event.location
-                    )}
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="mt-[0.2em] shrink-0 w-[0.75em] h-[0.75em] opacity-60 group-hover/loc:opacity-100 transition"
-                    aria-hidden="true"
-                  >
-                    <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
-                    <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
-                  </svg>
-                </a>
-              </div>
-              <div>
-                <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
-                  Date &amp; Time
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <span className="text-sm font-semibold lg:text-xl">
+                  {sessions[0].time}
                 </span>
-                <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-[1.45rem] leading-snug">
-                  {event.date}
-                  {sessions[0] && (
-                    <span className="block text-[0.85em] opacity-85 mt-0.5 font-normal">
-                      @ {sessions[0].time}
-                    </span>
+              </div>
+            )}
+            <a
+              href={
+                event.location.toLowerCase().includes("heavenly farms")
+                  ? "https://www.google.com/maps/place/heavenly+farms+park+east+brunswick/data=!4m2!3m1!1s0x89c3c53d822a9291:0x85ea3f9097a22d41?sa=X&ved=1t:155783&ictx=111"
+                  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/loc relative z-20 inline-flex w-fit items-start gap-3 text-white transition hover:text-aio-red"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden
+                className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6 mt-0.5 lg:mt-1"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+              </svg>
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold lg:text-xl leading-tight">
+                  {event.location.includes(",") ? (
+                    <>
+                      {event.location.split(",")[0]}
+                      <span className="block text-sm font-semibold text-white lg:text-xl mt-0.5 leading-normal">
+                        {event.location.split(",").slice(1).join(",").trim()}
+                      </span>
+                    </>
+                  ) : (
+                    event.location
                   )}
                 </span>
               </div>
-            </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                aria-hidden
+                className="h-3 w-3 shrink-0 opacity-40 transition group-hover/loc:opacity-100 mt-1 lg:mt-2"
+              >
+                <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
+                <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
+              </svg>
+            </a>
+          </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-2 lg:mt-0 lg:gap-x-14">
+          {/* Age groups with custom icons matching other rows */}
+          {sessions.length > 0 && (
+            <div className="flex flex-col gap-3.5 lg:gap-4">
               {sessions.map((s) => {
-                const { group, age } = parseSessionLabel(s.label);
+                const { age } = parseSessionLabel(s.label);
+                const isTeen = (age || s.label).toLowerCase().includes("13") || (age || s.label).toLowerCase().includes("teen");
                 return (
-                  <div key={s.label}>
-                    <span className="block text-[9px] font-black uppercase tracking-[0.16em] text-aio-red-on-dark leading-none lg:text-[15px]">
-                      {group}
-                    </span>
-                    {age && (
-                      <span className="mt-0.5 block text-xs font-semibold text-white lg:mt-1 lg:text-[1.45rem]">
-                        {age}
-                      </span>
+                  <div key={s.label} className="flex items-center gap-3 text-white">
+                    {isTeen ? (
+                      /* Bigger person icon for older kids / teens */
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                        className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                      >
+                        <circle cx="12" cy="7" r="4.2" />
+                        <path d="M4.5 19.5a7.5 7.5 0 0 1 15 0" />
+                      </svg>
+                    ) : (
+                      /* Smaller person icon for younger kids */
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden
+                        className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                      >
+                        <circle cx="12" cy="8.5" r="3" />
+                        <path d="M7 18.5a5 5 0 0 1 10 0" />
+                      </svg>
                     )}
+                    <span className="text-sm font-semibold lg:text-xl">
+                      {age || s.label}
+                    </span>
                   </div>
                 );
               })}
             </div>
-          </div>
+          )}
 
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="font-brand-display text-2xl font-black leading-none text-white uppercase lg:text-5xl">
-                {priceInfo.main}
-              </div>
-              {priceInfo.sub && (
-                <div className="mt-0.5 text-[8px] font-black uppercase tracking-[0.12em] text-aio-muted leading-tight max-w-[160px] lg:mt-1.5 lg:text-[12px] lg:max-w-[280px]">
-                  {priceInfo.sub}
+          {/* Footer: price + actions, split off by a single rule */}
+          <div className="-translate-y-[10px]">
+            <div className="h-px bg-aio-line w-full lg:max-w-[calc(100%-150px)]" />
+            <div className="flex flex-wrap items-end justify-between gap-4 pt-6 lg:pt-8">
+              <div>
+                <span className="inline-block bg-aio-red px-2.5 py-1 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white mb-2.5">
+                  Limited Spots
+                </span>
+                <div className="font-brand-display text-3xl font-black uppercase leading-none text-white lg:text-5xl">
+                  {priceInfo.main}
                 </div>
-              )}
-            </div>
-            <div className="relative z-20 flex gap-2 lg:gap-3">
-              <HoverButton
-                variant="outline"
-                onClick={() => setIsFlyerOpen(true)}
-                className="min-h-11 px-4 text-[10px] lg:min-h-14 lg:px-8 lg:text-[14px]"
-              >
-                View Flyer
-              </HoverButton>
-              <HoverButton
-                variant="red"
-                href={`/events/${event.slug}`}
-                className="min-h-11 px-5 text-[10px] lg:min-h-14 lg:px-9 lg:text-[14px]"
-              >
-                More Info
-              </HoverButton>
+                {priceInfo.sub && (
+                  <div className="mt-1.5 max-w-[220px] text-[0.6rem] font-semibold uppercase tracking-[0.12em] leading-tight text-aio-muted lg:max-w-[300px] lg:text-xs">
+                    {priceInfo.sub}
+                  </div>
+                )}
+              </div>
+              <div className="relative z-20 flex flex-col gap-2 lg:-translate-x-[150px]">
+                <HoverButton
+                  variant="red"
+                  href={`/events/${event.slug}`}
+                  className="min-h-9 px-3 text-[9px] w-[115px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                >
+                  More Info
+                </HoverButton>
+                <HoverButton
+                  variant="outline"
+                  onClick={() => setIsFlyerOpen(true)}
+                  className="min-h-9 px-3 text-[9px] w-[115px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                >
+                  View Flyer
+                </HoverButton>
+              </div>
             </div>
           </div>
         </div>
