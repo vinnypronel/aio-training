@@ -27,9 +27,8 @@ export default function FootballSkillsClinicPage() {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-top opacity-[0.24]"
+            className="object-cover object-top opacity-[0.28]"
           />
-          <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-85 mix-blend-multiply" />
           <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent to-aio-black" />
         </div>

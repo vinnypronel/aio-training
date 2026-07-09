@@ -28,7 +28,7 @@ const legalLinks = [
 export default function Footer() {
   const pathname = usePathname();
   return (
-    <footer className="border-t border-aio-line bg-aio-black text-white">
+    <footer className="relative z-10 border-t border-aio-line bg-aio-black text-white">
       <div className="mx-auto max-w-[1280px] px-6 py-10 md:py-16">
         <div data-reveal-group className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-3 md:justify-items-center">
           <div data-reveal="fade" className="col-span-2 space-y-5 md:col-span-1">
