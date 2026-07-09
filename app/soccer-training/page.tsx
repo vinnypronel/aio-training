@@ -12,7 +12,7 @@ export default function SoccerTrainingPage() {
       heroImageAlt="Youth soccer player on the field"
       heroImagePosition="object-[60%_center]"
       heroLineOne="Win The"
-      heroLineTwo="First Touch."
+      heroLineTwo="First Touch"
       heroBlurb="Technical and athletic development for players who want a cleaner touch, sharper footwork, and the speed to take over on the ball."
       introLabel="Our Soccer Program"
       introTitle="Cleaner Touch, Sharper Decisions."

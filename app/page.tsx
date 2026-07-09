@@ -45,7 +45,7 @@ export default function Home() {
             </span>{" "}
             <span className="mt-1 block text-aio-red drop-shadow-[0_10px_28px_rgba(255,0,0,0.22)]">
               <span className="hero-word" style={{ animationDelay: "420ms" }}>
-                Next Level.
+                Next Level
               </span>
             </span>
           </h1>
@@ -71,7 +71,7 @@ export default function Home() {
             <h2 data-reveal className="font-brand-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-black uppercase leading-[0.95]">
               <span className="block md:whitespace-nowrap">Built For Athletes</span>
               <span className="block md:whitespace-nowrap">And The Families</span>
-              <span className="block md:whitespace-nowrap">Backing Them.</span>
+              <span className="block md:whitespace-nowrap">Backing Them</span>
             </h2>
             <p data-reveal className="mt-5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Train with the best, All In One place

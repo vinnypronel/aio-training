@@ -12,7 +12,7 @@ export default function FootballTrainingPage() {
       heroImageAlt="Youth football athlete sprinting on outdoor turf"
       heroImagePosition="object-[20%_center]"
       heroLineOne="Own The"
-      heroLineTwo="Gridiron."
+      heroLineTwo="Gridiron"
       heroBlurb="Position-specific football development for athletes building speed, power, body control, and confidence inside the lines."
       introLabel="The Methodology"
       introTitle="Build The Total Player."

@@ -103,7 +103,7 @@ export default function TrainingServicesPage() {
             </svg>
           </div>
           <h1 className="hero-item mt-4 max-w-[920px] font-brand-display text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.9]" style={{ animationDelay: "120ms" }}>
-            Where Athletes <span className="text-aio-red">Are Made.</span>
+            Where Athletes <span className="text-aio-red">Are Made</span>
           </h1>
           <p className="hero-item mt-7 max-w-[680px] text-base font-semibold leading-8 text-white md:text-lg" style={{ animationDelay: "260ms" }}>
             Sport-specific developmental programs for youth and high school athletes. Choose the path that matches your athlete&apos;s season and goals.

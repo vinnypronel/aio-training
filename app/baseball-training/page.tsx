@@ -12,7 +12,7 @@ export default function BaseballTrainingPage() {
       heroImageAlt="Youth baseball player swinging a bat in an outdoor batting cage"
       heroImagePosition="object-[65%_center]"
       heroLineOne="Built For The"
-      heroLineTwo="Diamond."
+      heroLineTwo="Diamond"
       heroBlurb="Precision and power development for hitters, pitchers, fielders, and baseball athletes building mechanics that hold up in games."
       introLabel="Our Baseball Program"
       introTitle={

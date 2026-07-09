@@ -12,7 +12,7 @@ export default function BasketballTrainingPage() {
       heroImageAlt="Youth basketball player shooting on an outdoor court"
       heroImagePosition="object-[65%_center]"
       heroLineOne="Take Over"
-      heroLineTwo="The Court."
+      heroLineTwo="The Court"
       heroBlurb="Basketball development for athletes building handle confidence, shooting consistency, lateral quickness, and two-way habits."
       introLabel="Core Philosophy"
       introTitle={

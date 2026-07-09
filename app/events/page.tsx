@@ -72,7 +72,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      <section className="bg-aio-black py-20 md:py-24 overflow-hidden">
+      <section className="bg-aio-black pt-10 pb-20 md:pt-14 md:pb-24 overflow-hidden">
         <div data-reveal-group className="mx-auto max-w-[1280px] px-6">
           <h2 data-reveal className="font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Reserve From<br className="lg:hidden" /> The Board.
@@ -84,9 +84,9 @@ export default async function EventsPage() {
 
           {events.length > 0 ? (
             <>
-              <div className="mx-auto -mt-2 flex w-full flex-col gap-6 lg:gap-8">
+              <div className="mx-auto mt-6 lg:mt-8 flex w-full flex-col gap-6 lg:gap-8">
                 {events.map((event) => (
-                  <div key={event.id} data-reveal className="border-b border-aio-line pb-12 lg:mx-[-30px] lg:px-[30px]">
+                  <div key={event.id} data-reveal className="border-b border-aio-line pb-5 lg:pb-12 lg:mx-[-30px] lg:px-[30px]">
                     <EventCard event={event} isAdmin={isAdmin} />
                   </div>
                 ))}

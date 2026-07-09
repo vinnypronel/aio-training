@@ -20,15 +20,16 @@ export default function FootballSkillsClinicPage() {
   return (
     <>
       <section className="relative max-w-full overflow-x-clip bg-aio-black pt-28 pb-20 text-white md:pt-32">
-        {/* Dimmed photographic underlay, faded into black below the header */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[calc(85vh/var(--dz,1))] min-h-[560px]">
+        {/* Dimmed photographic underlay, pinned fixed behind the page contents */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
           <Image
             src="/assets/images/clinic-bg.webp"
             alt=""
             fill
             sizes="100vw"
-            className="object-cover object-top opacity-[0.28]"
+            className="object-cover object-top opacity-[0.24]"
           />
+          <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-85 mix-blend-multiply" />
           <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent to-aio-black" />
         </div>

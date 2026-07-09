@@ -11,7 +11,7 @@ export default function PersonalTrainingPage() {
       heroImage="/assets/images/personal-training-hero.webp"
       heroImageAlt="Coach working one on one with a youth athlete"
       heroLineOne="Built One Rep"
-      heroLineTwo="At A Time."
+      heroLineTwo="At A Time"
       heroBlurb="Private coaching for athletes who need focused attention, custom programming, and a training block built around one athlete at a time."
       introLabel="Precision Over Protocol"
       introTitle="One Athlete. One Focused Plan."
