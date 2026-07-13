@@ -24,7 +24,7 @@ export default async function EventsPage() {
     <>
       <section className="relative flex h-[calc(90svh/var(--dz,1))] items-center overflow-hidden bg-aio-black pt-24 text-white">
         <Image
-          src="/assets/images/home-field-drills-aio-white.png"
+          src="/assets/images/combine_images/IMG_3862.JPG"
           alt="Athletes doing cone drills on turf"
           fill
           priority

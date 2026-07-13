@@ -8,7 +8,7 @@ import HoverButton from "@/components/HoverButton";
 const CheckoutModal = dynamic(() => import("./CheckoutModal"), { ssr: false });
 
 // Inline early-registration check (safe to run client-side)
-const EARLY_DEADLINE = new Date("2026-07-15T23:59:59-04:00");
+const EARLY_DEADLINE = new Date("2026-07-18T23:59:59-04:00");
 function isEarlyRegistration() {
   return new Date() <= EARLY_DEADLINE;
 }
@@ -44,7 +44,7 @@ export default function ClinicRegisterForm() {
   const validationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isEarly = isEarlyRegistration();
-  const pricePerAthlete = isEarly ? 125 : 150;
+  const pricePerAthlete = isEarly ? 100 : 150;
   const completeAthletes = athletes.filter(
     (a) => a.name.trim().length > 0 && a.ageGroup.length > 0 && a.sport.length > 0
   );

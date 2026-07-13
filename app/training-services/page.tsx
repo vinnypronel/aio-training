@@ -176,34 +176,33 @@ export default function TrainingServicesPage() {
           <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
             Three-Step Method.
           </h2>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {process.map((step) => (
+          <div className="mt-12 grid gap-6 md:grid-cols-3 lg:items-start">
+            {process.map((step, i) => (
               <article
                 key={step.number}
                 data-reveal
-                className="relative flex min-h-[300px] flex-col justify-between overflow-hidden border border-aio-line p-8 pt-8"
+                className={`flex flex-col p-8 transition-colors duration-300 md:min-h-[340px] md:p-9 ${
+                  i === 0
+                    ? "bg-aio-red text-white hover:bg-aio-red-hover"
+                    : "bg-[#141414] hover:bg-[#1c1c1c]"
+                } ${i === 1 ? "lg:translate-y-10" : ""}`}
               >
                 <span
-                  aria-hidden
-                  className="absolute top-2 right-4 text-[9rem] font-black leading-none text-white/[0.06]"
+                  className={`font-brand-display text-5xl font-black leading-none md:text-6xl ${i === 0 ? "text-black" : "text-aio-red-on-dark"}`}
                 >
-                  {step.number}
+                  {step.number}.
                 </span>
-
-                <div>
-                  <p className="translate-y-[20px] text-2xl font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
-                    {step.label}
-                  </p>
-                </div>
-
-                <div className="mt-auto space-y-3">
-                  <h3 className="font-brand-display text-3xl font-black uppercase leading-none text-white">
-                    {step.title}
-                  </h3>
-                  <p className="text-base font-semibold leading-7 text-aio-body">
-                    {step.body}
-                  </p>
-                </div>
+                <p
+                  className={`mt-8 text-xs font-black uppercase tracking-[0.2em] md:mt-auto md:pt-10 ${i === 0 ? "text-black" : "text-aio-red-on-dark"}`}
+                >
+                  {step.label}
+                </p>
+                <h3 className="mt-2 font-brand-display text-3xl font-black uppercase leading-none text-white">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-base font-semibold leading-7 text-aio-body">
+                  {step.body}
+                </p>
               </article>
             ))}
           </div>

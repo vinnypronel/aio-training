@@ -7,7 +7,7 @@ export default function FlyerDropdown() {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="border border-aio-line">
+    <div className="border-l-4 border-aio-red">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -39,9 +39,9 @@ export default function FlyerDropdown() {
         }}
       >
         <div style={{ overflow: "hidden" }}>
-          <div className="border-t border-aio-line bg-aio-black p-2">
+          <div className="px-5 pb-5">
             <Image
-              src="/assets/images/football-skills-clinic-flyer.webp"
+              src="/assets/images/clinic_flyer.png"
               alt="AIO Football Skills Clinic flyer"
               width={600}
               height={750}

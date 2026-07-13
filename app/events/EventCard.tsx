@@ -121,7 +121,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
           </h3>
         </div>
 
-        <div className="relative h-[260px] w-full shrink-0 overflow-hidden bg-aio-black sm:h-[300px] lg:h-auto lg:aspect-[4/5] lg:w-[460px] lg:bg-transparent">
+        <div className="relative h-[260px] w-full shrink-0 overflow-hidden bg-aio-black sm:h-[300px] lg:h-auto lg:aspect-[2/3] lg:w-[440px] lg:bg-transparent">
           <Image
             src={event.flyer}
             alt={`${event.title} flyer`}
@@ -162,7 +162,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 8.25h18M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v12A1.5 1.5 0 0 1 19.5 20.25h-15A1.5 1.5 0 0 1 3 18.75v-12A1.5 1.5 0 0 1 4.5 5.25Z" />
                 </svg>
-                <span className="text-sm font-semibold lg:text-xl">
+                <span className="text-base font-semibold lg:text-xl">
                   {event.date}
                 </span>
               </div>
@@ -179,7 +179,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
-                  <span className="text-sm font-semibold lg:text-xl">
+                  <span className="text-base font-semibold lg:text-xl">
                     {sessions[0].time}
                   </span>
                 </div>
@@ -207,11 +207,11 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-sm font-semibold lg:text-xl leading-tight">
+                  <span className="text-base font-semibold lg:text-xl leading-tight">
                     {event.location.includes(",") ? (
                       <>
                         {event.location.split(",")[0]}
-                        <span className="block text-sm font-semibold text-white lg:text-xl mt-0.5 leading-normal">
+                        <span className="block text-base font-semibold text-white lg:text-xl mt-0.5 leading-normal">
                           {event.location.split(",").slice(1).join(",").trim()}
                         </span>
                       </>
@@ -273,7 +273,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                             <path d="M7 18.5a5 5 0 0 1 10 0" />
                           </svg>
                         )}
-                        <span className="text-sm font-semibold lg:text-xl">
+                        <span className="text-base font-semibold lg:text-xl">
                           {age || s.label}
                         </span>
                       </div>
@@ -284,8 +284,8 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             </div>
 
             {/* Right Column: Price and Buttons block (stacks vertically on mobile, side-by-side on desktop) */}
-            <div className="flex flex-col gap-4 w-[115px] lg:w-full lg:flex-row lg:items-end lg:justify-between lg:gap-4 lg:border-t lg:border-aio-line lg:pt-8 lg:-translate-y-[10px]">
-              <div>
+            <div className="flex flex-col gap-4 w-[104px] lg:w-full lg:flex-row lg:items-end lg:justify-between lg:gap-4 lg:-translate-y-[10px]">
+              <div className="lg:border-t lg:border-aio-line lg:pt-8">
                 <span className="inline-block bg-aio-red px-2.5 py-1 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white mb-2.5">
                   Limited Spots
                 </span>
@@ -302,14 +302,14 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 <HoverButton
                   variant="red"
                   href={`/events/${event.slug}`}
-                  className="min-h-9 px-3 text-[9px] w-[115px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                  className="min-h-8 px-2.5 text-[8px] w-[104px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
                 >
                   More Info
                 </HoverButton>
                 <HoverButton
                   variant="outline"
                   onClick={() => setIsFlyerOpen(true)}
-                  className="min-h-9 px-3 text-[9px] w-[115px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                  className="min-h-8 px-2.5 text-[8px] w-[104px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
                 >
                   View Flyer
                 </HoverButton>

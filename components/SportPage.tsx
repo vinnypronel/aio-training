@@ -40,6 +40,8 @@ export default function SportPage({
   introTitle,
   introBody,
   pillars,
+  pillarsLabel,
+  pillarsTitle,
   tiers,
   tiersIntro,
   tiersLabel,
@@ -62,6 +64,8 @@ export default function SportPage({
   introTitle: ReactNode;
   introBody: string;
   pillars: SportPillar[];
+  pillarsLabel?: string;
+  pillarsTitle?: ReactNode;
   tiers: SportTier[];
   tiersIntro: string;
   tiersLabel?: string;
@@ -141,36 +145,48 @@ export default function SportPage({
 
       <section className="bg-aio-black py-20 text-white md:py-28">
         <div className="mx-auto max-w-[1536px] px-6 md:px-10">
-          <div data-reveal-group className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {pillars.map((p) => (
-              <article
-                key={p.number}
-                data-reveal
-                className="relative min-h-[340px] overflow-hidden bg-white p-10 md:p-12 text-aio-ink shadow-[var(--aio-shadow-hard)]"
-              >
-                <p
-                  className="absolute right-3 top-3 md:right-3 md:top-3 font-brand-display text-7xl md:text-6xl font-black leading-none text-transparent pointer-events-none select-none"
-                  style={{ WebkitTextStroke: "2px #1a1a1a" }}
+          <div data-reveal-group>
+            <p data-reveal className="flex items-center gap-1.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
+              <svg className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+              <span>{pillarsLabel ?? "Training Pillars"}</span>
+            </p>
+            <h2 data-reveal className="mt-3 font-brand-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-none">
+              {pillarsTitle ?? "The Core Four."}
+            </h2>
+            <div className="mt-12 grid gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-4 lg:items-start">
+              {pillars.map((p, i) => (
+                <article
+                  key={p.number}
+                  data-reveal
+                  className={`flex flex-col p-8 transition-colors duration-300 md:min-h-[360px] md:p-9 ${
+                    i === 0
+                      ? "bg-aio-red text-white hover:bg-aio-red-hover"
+                      : "bg-[#141414] hover:bg-[#1c1c1c]"
+                  } ${i % 2 === 1 ? "lg:translate-y-10" : ""}`}
                 >
-                  {p.number}.
-                </p>
-                <div className="relative z-10 translate-x-[-6px] translate-y-[-4px]">
-                  <h3 className="mt-20 md:mt-16 font-brand-display text-3xl md:text-[1.85rem] font-black uppercase leading-tight">
+                  <span
+                    className={`font-brand-display text-5xl font-black leading-none md:text-6xl ${i === 0 ? "text-black" : "text-aio-red-on-dark"}`}
+                  >
+                    {p.number}.
+                  </span>
+                  <h3 className="mt-8 font-brand-display text-3xl font-black uppercase leading-tight md:mt-auto md:pt-10 md:text-[1.85rem]">
                     {p.title}
                   </h3>
-                  <div className="mt-5 text-base md:text-base font-semibold leading-7 md:leading-8 text-aio-ink">
+                  <p className="mt-4 text-base font-semibold leading-7 text-aio-body">
                     {p.body}
-                  </div>
-                </div>
-              </article>
-            ))}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <section className={`relative overflow-hidden py-20 md:py-24 ${tiersLight ? "bg-aio-paper text-aio-ink" : "bg-aio-black text-white"}`}>
         <div data-reveal-group className="relative z-10 mx-auto max-w-[1280px] px-6">
-          <div className="max-w-[760px] -translate-x-[50px]">
+          <div className="max-w-[760px] md:-translate-x-[50px] -translate-y-[40px] md:translate-y-0">
             <p data-reveal className="text-sm font-black uppercase tracking-[0.28em]">
               <span className={tiersLight ? "text-black" : "text-white"}>[</span>{" "}
               <span className="text-aio-red">{tiersLabel ?? `${sport} Path`}</span>{" "}
@@ -183,12 +199,12 @@ export default function SportPage({
               {tiersIntro}
             </p>
           </div>
-          <ol className="relative mt-14 grid gap-5 md:grid-cols-3 md:divide-x md:divide-aio-line md:gap-0 translate-x-[50px]">
+          <ol className="relative mt-14 grid gap-5 divide-y divide-aio-line md:grid-cols-3 md:divide-x md:divide-y-0 md:divide-aio-line md:gap-0 md:translate-x-[50px]">
             {tiers.map((t) => (
               <li
                 key={t.number}
                 data-reveal
-                className={`flex flex-col p-8 py-6 ${tiersLight ? "bg-white shadow-[0_16px_40px_rgba(0,0,0,0.24)]" : "bg-transparent"}`}
+                className={`flex flex-col p-8 py-10 md:py-6 mb-[7px] md:mb-0 ${tiersLight ? "bg-white shadow-[0_16px_40px_rgba(0,0,0,0.24)]" : "bg-transparent"}`}
               >
                 <div className="flex items-start justify-start gap-4">
                   <span
@@ -198,7 +214,7 @@ export default function SportPage({
                     {t.number}.
                   </span>
                 </div>
-                <div className="translate-y-[20px]">
+                <div className="translate-y-[20px] mb-8 md:mb-0">
                   <h3 className="mt-4 font-brand-display text-3xl font-black uppercase leading-tight">
                     {t.title}
                   </h3>
@@ -217,11 +233,11 @@ export default function SportPage({
         </div>
       </section>
 
-      <section className="bg-aio-black py-20 text-white md:py-24">
+      <section className="bg-aio-black py-8 text-white md:py-20 lg:py-24">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div data-reveal-group className="grid gap-0 border border-aio-line lg:grid-cols-[0.9fr_1.1fr]">
+          <div data-reveal-group className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
             {/* Mobile-only label above image */}
-            <div className="border-l-4 border-b border-l-aio-red border-b-aio-line p-6 lg:hidden">
+            <div className="mb-6 border-l-4 border-aio-red pl-5 lg:hidden">
               <div data-reveal>
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
                   {program.programName || "AIO Training"}
@@ -231,7 +247,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="relative min-w-0 w-full aspect-[4/3] overflow-hidden border-b lg:border-b-0 lg:border-r border-aio-line bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
+            <div className="relative min-w-0 w-full aspect-[4/3] overflow-hidden bg-aio-black lg:aspect-auto lg:min-h-[560px] isolate webkit-clip-fix">
               <div data-reveal="fade" className="absolute inset-0 h-full w-full">
                 <Image
                   src={program.programImage || heroImage}
@@ -254,7 +270,7 @@ export default function SportPage({
                 </h3>
               </div>
             </div>
-            <div className="min-w-0 p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
+            <div className="min-w-0 bg-[#141414] p-6 md:p-10 lg:py-12 lg:pl-12 lg:pr-12">
               <div data-reveal className="h-full w-full">
                 <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red-on-dark">
                   {program.tagLabel || "Program Coaching"}
@@ -265,8 +281,8 @@ export default function SportPage({
                 <p className="mt-6 text-base font-semibold leading-8 text-aio-body">
                   {program.description}
                 </p>
-                <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-                  <div className="border border-aio-line bg-aio-black p-4">
+                <dl className="mt-8 grid gap-6 sm:grid-cols-2 sm:gap-4">
+                  <div className="border-l-2 border-aio-red pl-4">
                     <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
                       Program Scope
                     </dt>
@@ -274,7 +290,7 @@ export default function SportPage({
                       {program.scope}
                     </dd>
                   </div>
-                  <div className="border border-aio-line bg-aio-black p-4">
+                  <div className="border-l-2 border-aio-red pl-4">
                     <dt className="text-xs font-black uppercase tracking-[0.16em] text-aio-red-on-dark">
                       Service Area
                     </dt>
@@ -283,16 +299,14 @@ export default function SportPage({
                     </dd>
                   </div>
                 </dl>
-                <div className="mt-8 flex flex-wrap gap-1.5 sm:gap-2">
-                  {program.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="border border-aio-line-strong px-2 py-1.5 text-[10px] sm:px-3 sm:py-2 sm:text-xs font-black uppercase whitespace-nowrap"
-                    >
+                <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-black uppercase tracking-[0.14em] text-white">
+                  {program.tags.map((tag, i) => (
+                    <span key={tag} className="flex items-center gap-x-3 whitespace-nowrap">
+                      {i > 0 && <span aria-hidden className="text-aio-red-on-dark">-</span>}
                       {tag}
                     </span>
                   ))}
-                </div>
+                </p>
                 <div className="mt-8 flex justify-center lg:justify-start">
                   <HoverButton href="/booking" className="w-full whitespace-normal! py-3 text-center sm:w-auto">
                     {program.ctaLabel}

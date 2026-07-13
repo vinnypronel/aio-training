@@ -121,7 +121,7 @@ export default function Home() {
             <div className="absolute -bottom-4 -right-4 h-24 w-24 border-b-4 border-r-4 border-aio-red" />
             <div data-reveal="fade" className="relative aspect-[3/2] w-full overflow-hidden border border-aio-line bg-aio-panel shadow-[var(--aio-shadow-hard)]">
               <Image
-                src="/assets/images/events-hero-aio-white.png"
+                src="/assets/images/combine_images/IMG_3218.JPG"
                 alt="Youth football athletes running cone drills on an outdoor field"
                 fill
                 sizes="(min-width: 1024px) 52vw, 100vw"

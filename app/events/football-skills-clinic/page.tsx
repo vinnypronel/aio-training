@@ -42,7 +42,7 @@ export default function FootballSkillsClinicPage() {
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6">
           {/* Header Grid */}
-          <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end border-b border-aio-line pb-10">
+          <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end pb-10">
             <div>
               <p className="hero-item text-xs font-black uppercase tracking-[0.24em] text-aio-red">
                 2-Day Summer Clinic
@@ -69,41 +69,100 @@ export default function FootballSkillsClinicPage() {
             {/* Left Column */}
             <div className="space-y-10">
               {/* Event Details Grid */}
-              <div data-reveal className="border border-aio-line p-6 sm:p-8 bg-transparent">
+              <div data-reveal className="border-l-4 border-aio-red pl-6 sm:pl-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-                  <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Dates
-                    </span>
-                    <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
-                      July 25-26, 2026
-                    </span>
+                  <div className="flex items-start gap-3 text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      aria-hidden
+                      className="h-5 w-5 shrink-0 text-aio-red mt-0.5"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 8.25h18M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v12A1.5 1.5 0 0 1 19.5 20.25h-15A1.5 1.5 0 0 1 3 18.75v-12A1.5 1.5 0 0 1 4.5 5.25Z" />
+                    </svg>
+                    <div>
+                      <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
+                        Dates
+                      </span>
+                      <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
+                        July 25-26, 2026
+                      </span>
+                    </div>
                   </div>
-                  <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Time
-                    </span>
-                    <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
-                      6:00 PM - 8:00 PM both days
-                    </span>
+
+                  <div className="flex items-start gap-3 text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      aria-hidden
+                      className="h-5 w-5 shrink-0 text-aio-red mt-0.5"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <div>
+                      <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
+                        Time
+                      </span>
+                      <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
+                        6:00 PM - 8:00 PM both days
+                      </span>
+                    </div>
                   </div>
-                  <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Location
-                    </span>
-                    <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
-                      Heavenly Farms Park, East Brunswick, NJ
-                    </span>
+
+                  <div className="flex items-start gap-3 text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      aria-hidden
+                      className="h-5 w-5 shrink-0 text-aio-red mt-0.5"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                    <div>
+                      <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
+                        Location
+                      </span>
+                      <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
+                        Heavenly Farms Park, East Brunswick, NJ
+                      </span>
+                    </div>
                   </div>
-                  <div className="border-l-2 border-aio-red pl-4">
-                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Age Groups
-                    </span>
-                    <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
-                      Ages 8-12 and Ages 13-18. Groups separated by age.
-                    </span>
+
+                  <div className="flex items-start gap-3 text-white">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                      className="h-5 w-5 shrink-0 text-aio-red mt-0.5"
+                    >
+                      <circle cx="12" cy="7" r="4.2" />
+                      <path d="M4.5 19.5a7.5 7.5 0 0 1 15 0" />
+                    </svg>
+                    <div>
+                      <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
+                        Age Groups
+                      </span>
+                      <span className="mt-2 block text-sm font-semibold text-white leading-relaxed">
+                        Ages 8-12 and Ages 13-18. Groups separated by age.
+                      </span>
+                    </div>
                   </div>
-                  <div className="mt-4 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-aio-line">
+                  <div className="mt-4 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <HoverButton href="#register" className="text-xs tracking-[0.14em]">
                       Register Now
                     </HoverButton>
@@ -115,23 +174,23 @@ export default function FootballSkillsClinicPage() {
               </div>
 
               {/* Pricing Grid */}
-              <div data-reveal className="border border-aio-line p-5">
+              <div data-reveal className="border-l-4 border-aio-red pl-6 sm:pl-8">
                 <h3 className="text-xs font-black uppercase tracking-[0.24em] text-aio-red-on-dark">
                   Pricing
                 </h3>
-                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="border border-aio-red bg-transparent p-6">
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
                     <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Early Registration
                     </span>
-                    <span className="mt-3 block font-brand-display text-4xl font-black text-white leading-none">
-                      $125
+                    <span className="mt-3 block font-brand-display text-4xl font-black text-aio-red-on-dark leading-none">
+                      $100
                     </span>
                     <span className="mt-3 block text-xs font-semibold text-aio-muted leading-none">
-                      Through July 15, 2026.
+                      Through July 18, 2026.
                     </span>
                   </div>
-                  <div className="border border-aio-line bg-transparent p-6">
+                  <div>
                     <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
                       Standard Registration
                     </span>
@@ -139,22 +198,22 @@ export default function FootballSkillsClinicPage() {
                       $150
                     </span>
                     <span className="mt-3 block text-xs font-semibold text-aio-muted leading-none">
-                      From July 16, 2026.
+                      From July 19, 2026.
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* What Athletes Work On */}
-              <div data-reveal-group className="border border-aio-line p-5">
+              <div data-reveal-group className="border-l-4 border-aio-red pl-6 sm:pl-8">
                 <h3 data-reveal className="text-xs font-black uppercase tracking-[0.24em] text-aio-red-on-dark">
                   What Athletes Work On
                 </h3>
-                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2">
                   {skills.map((s, idx) => (
-                    <div key={s.title} data-reveal className="border border-aio-line bg-transparent p-6">
+                    <div key={s.title} data-reveal>
                       <h4 className="font-brand-display text-lg font-black uppercase text-white leading-none">
-                        {String(idx + 1).padStart(2, "0")}. {s.title}
+                        <span className="text-aio-red-on-dark">{String(idx + 1).padStart(2, "0")}.</span> {s.title}
                       </h4>
                       <p className="mt-3 text-xs font-semibold leading-relaxed text-aio-body">
                         {s.body}
@@ -173,7 +232,7 @@ export default function FootballSkillsClinicPage() {
               </div>
 
               {/* Good To Know List (Wider Horizontally, Shorter Vertically) */}
-              <div data-reveal className="border border-aio-line p-5 bg-transparent">
+              <div data-reveal className="border-l-4 border-aio-red pl-5">
                 <h3 className="text-xs font-black uppercase tracking-[0.24em] text-aio-red-on-dark">
                   Good To Know
                 </h3>
@@ -216,14 +275,14 @@ export default function FootballSkillsClinicPage() {
           </div>
 
           {/* Reserve A Spot — sits below the pinned area so the flyer releases here */}
-          <div id="register" data-reveal className="relative mt-10 border border-aio-line p-6 sm:p-8 bg-transparent scroll-mt-28">
+          <div id="register" data-reveal className="relative mt-10 border-l-4 border-aio-red py-2 pl-6 sm:pl-8 scroll-mt-28">
             {/* Early rate badge (scaled down for compactness) */}
             <div className="mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
               <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Early Rate Active</span>
               <span className="font-brand-display text-sm font-black text-white leading-none">
-                $125<span className="ml-0.5 text-[9px] font-semibold text-white">/athlete</span>
+                $100<span className="ml-0.5 text-[9px] font-semibold text-white">/athlete</span>
               </span>
-              <span className="text-[7.5px] font-semibold text-white leading-none">Through July 15</span>
+              <span className="text-[7.5px] font-semibold text-white leading-none">Through July 18</span>
             </div>
             <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
               Registration
@@ -232,7 +291,7 @@ export default function FootballSkillsClinicPage() {
               Reserve A Spot.
             </h3>
             <p className="mt-4 text-xs font-semibold leading-relaxed text-aio-body">
-              $125 early through July 15, 2026, then $150. Fill in parent info and add each athlete below. AIO will confirm and collect payment.
+              $100 early through July 18, 2026, then $150. Fill in parent info and add each athlete below. AIO will confirm and collect payment.
             </p>
             <div className="mt-8">
               <ClinicRegisterForm />

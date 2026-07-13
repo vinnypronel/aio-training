@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, getClinicPriceId, getClinicPriceCents, isEarlyRegistration } from "@/lib/stripe";
+import { stripe, getClinicPriceCents, isEarlyRegistration } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 
 type AthleteEntry = {
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const athleteCount = athletes.length;
     const primaryAthlete = athletes[0];
     const isEarly = isEarlyRegistration();
-    const priceLabel = isEarly ? "$125 Early" : "$150 Standard";
+    const priceLabel = isEarly ? "$100 Early" : "$150 Standard";
 
     const athleteSummaryLines = athletes.map((a, i) => {
       const parts: string[] = [];
@@ -89,21 +89,20 @@ export async function POST(req: NextRequest) {
       req.headers.get("origin") ||
       process.env.NEXT_PUBLIC_SITE_URL ||
       "https://www.trainingaio.com";
-    const priceId = getClinicPriceId();
     const priceCents = getClinicPriceCents();
 
-    // Build line items — use Price ID if configured, else fallback to raw amount
+    // Charge the raw amount so the price shown on the site always matches what
+    // Stripe charges. This intentionally bypasses the Stripe Price IDs so the
+    // amount is controlled in one place (getClinicPriceCents).
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
-      priceId && !priceId.includes("PASTE")
-        ? [{ price: priceId, quantity: athleteCount }]
-        : [
+      [
             {
               quantity: athleteCount,
               price_data: {
                 currency: "usd",
                 unit_amount: priceCents,
                 product_data: {
-                  name: `AIO Football Skills Clinic — ${isEarly ? "Early Registration" : "Standard Registration"}`,
+                  name: `AIO Football Skills Clinic - ${isEarly ? "Early Registration" : "Standard Registration"}`,
                   description: `July 25-26, 2026 · Heavenly Farms Park · ${athleteCount} athlete${athleteCount > 1 ? "s" : ""}`,
                 },
               },

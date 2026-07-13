@@ -19,7 +19,7 @@ async function main() {
     },
     create: {
       slug: "football-skills-clinic",
-      flyer: "/assets/images/football-skills-clinic-flyer.webp",
+      flyer: "/assets/images/clinic_flyer.png",
       tag: "Open — Limited Spots",
       badge: "2-Day Summer Clinic",
       title: "AIO Football Skills Clinic",
@@ -29,7 +29,7 @@ async function main() {
         { label: "Younger athletes — Ages 8-12", time: "6:00 PM - 8:00 PM" },
         { label: "Teen athletes — Ages 13-18", time: "6:00 PM - 8:00 PM" },
       ]),
-      price: "$125 early through July 15, 2026, then $150",
+      price: "$100 early through July 18, 2026, then $150",
       sortOrder: 0,
     },
   });

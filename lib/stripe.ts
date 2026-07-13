@@ -25,7 +25,7 @@ export const stripe = new Proxy({} as Stripe, {
 });
 
 // Football Clinic pricing config
-const EARLY_DEADLINE = new Date("2026-07-15T23:59:59-04:00");
+const EARLY_DEADLINE = new Date("2026-07-18T23:59:59-04:00");
 
 export function getClinicPriceId(): string {
   const now = new Date();
@@ -37,7 +37,7 @@ export function getClinicPriceId(): string {
 
 export function getClinicPriceCents(): number {
   const now = new Date();
-  return now <= EARLY_DEADLINE ? 12500 : 15000; // $125 or $150
+  return now <= EARLY_DEADLINE ? 10000 : 15000; // $100 or $150
 }
 
 export function isEarlyRegistration(): boolean {
