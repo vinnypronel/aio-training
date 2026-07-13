@@ -284,9 +284,9 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             </div>
 
             {/* Right Column: Price and Buttons block (stacks vertically on mobile, side-by-side on desktop) */}
-            <div className="flex flex-col gap-4 w-[104px] lg:w-full lg:flex-row lg:items-end lg:justify-between lg:gap-4 lg:-translate-y-[10px]">
+            <div className="flex w-[96px] flex-col gap-3 lg:w-full lg:flex-row lg:items-end lg:justify-between lg:gap-4 lg:-translate-y-[10px]">
               <div className="lg:border-t lg:border-aio-line lg:pt-8">
-                <span className="inline-block bg-aio-red px-2.5 py-1 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white mb-2.5">
+                <span className="mb-2.5 flex w-full justify-center bg-aio-red px-2 py-1 text-center text-[0.55rem] font-black uppercase tracking-[0.14em] text-white lg:inline-block lg:w-auto lg:px-2.5 lg:text-left lg:text-[0.6rem] lg:tracking-[0.16em]">
                   Limited Spots
                 </span>
                 <div className="font-brand-display text-3xl font-black uppercase leading-none text-white lg:text-5xl">
@@ -302,14 +302,14 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 <HoverButton
                   variant="red"
                   href={`/events/${event.slug}`}
-                  className="min-h-8 px-2.5 text-[8px] w-[104px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                  className="!min-h-7 w-[92px] px-2 text-[7px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
                 >
                   More Info
                 </HoverButton>
                 <HoverButton
                   variant="outline"
                   onClick={() => setIsFlyerOpen(true)}
-                  className="min-h-8 px-2.5 text-[8px] w-[104px] lg:min-h-11 lg:px-5 lg:text-[12px] lg:w-[145px]"
+                  className="!min-h-7 w-[92px] px-2 text-[7px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
                 >
                   View Flyer
                 </HoverButton>

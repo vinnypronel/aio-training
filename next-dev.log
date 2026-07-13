@@ -1,0 +1,26 @@
+
+> training-aio-rebuild@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://169.254.83.107:3002
+- Environments: .env.local
+✓ Ready in 1153ms
+- Experiments (use with caution):
+  · serverActions
+
+○ Compiling /events ...
+ GET /events 200 in 5.4s (next.js: 4.4s, application-code: 956ms)
+ GET /api/admin/status 200 in 724ms (next.js: 686ms, application-code: 38ms)
+✓ Compiled in 623ms
+ GET /events 200 in 488ms (next.js: 253ms, application-code: 236ms)
+ GET /events 200 in 321ms (next.js: 19ms, application-code: 302ms)
+ GET /api/admin/status 200 in 62ms (next.js: 48ms, application-code: 14ms)
+ GET /events 200 in 292ms (next.js: 8ms, application-code: 284ms)
+ GET /api/admin/status 200 in 19ms (next.js: 6ms, application-code: 14ms)
+✓ Compiled in 306ms
+ GET /events 200 in 669ms (next.js: 348ms, application-code: 321ms)
+ GET /events 200 in 201ms (next.js: 11ms, application-code: 190ms)
+ GET /events 200 in 304ms (next.js: 8ms, application-code: 295ms)
+ GET /api/admin/status 200 in 43ms (next.js: 33ms, application-code: 10ms)
