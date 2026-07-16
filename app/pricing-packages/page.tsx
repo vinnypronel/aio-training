@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import HoverButton from "@/components/HoverButton";
+import PricingScrollBackdrops from "./PricingScrollBackdrops";
 
 export const metadata = {
   title: "Pricing & Packages | AIO Training",
@@ -92,6 +93,7 @@ const subscriptions: Plan[] = [
 export default function PricingPackagesPage() {
   return (
     <>
+      <PricingScrollBackdrops />
       <section className="relative -mt-20 flex h-[calc(100svh/var(--dz,1))] min-h-[560px] items-center overflow-hidden bg-aio-black text-white lg:-mt-24">
         <Image
           src="/assets/images/pricing-hero-athlete-huddle.webp"
@@ -103,7 +105,7 @@ export default function PricingPackagesPage() {
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-95 mix-blend-multiply"
+          className="absolute inset-0 bg-[image:var(--aio-hero-gradient)] opacity-[0.82] mix-blend-multiply"
         />
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 pt-24 lg:pt-32">
           <div className="hero-item mt-3 flex items-center gap-2.5 text-xs font-black uppercase tracking-[0.28em] text-aio-red">
@@ -146,6 +148,7 @@ export default function PricingPackagesPage() {
         cardText="text-black"
         accent="text-aio-red"
         bodyText="text-black"
+        scrollBg="huddle"
       />
 
       <PlanGroup
@@ -160,7 +163,7 @@ export default function PricingPackagesPage() {
         cardText="text-black"
         accent="text-aio-red"
         bodyText="text-white"
-        parallaxImg="/assets/images/pricing-parallax-baseball.webp"
+        scrollBg="baseball"
       />
 
       <PlanGroup
@@ -175,18 +178,14 @@ export default function PricingPackagesPage() {
         cardText="text-black"
         accent="text-aio-red"
         bodyText="text-black"
-        parallaxImg="/assets/images/pricing-parallax-basketball.webp"
+        scrollBg="basketball"
       />
 
-      <section className="relative overflow-hidden bg-aio-black py-14 text-white md:py-16">
-        <Image
-          src="/assets/images/pricing-parallax-football.webp"
-          alt=""
-          fill
-          sizes="100vw"
-          className="pointer-events-none object-cover opacity-[0.15]"
-        />
-        <div className="relative mx-auto max-w-[1280px] px-6">
+      <section
+        data-pricing-bg="football"
+        className="relative isolate overflow-hidden bg-[rgba(10,10,10,0.74)] py-14 text-white md:py-16"
+      >
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6">
           <div data-reveal-group className="grid md:grid-cols-2">
             <div data-reveal className="flex flex-col justify-center border border-aio-line bg-aio-black p-8 md:p-10">
               <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
@@ -278,7 +277,7 @@ function PlanGroup({
   cardText,
   accent,
   bodyText,
-  parallaxImg,
+  scrollBg,
 }: {
   id?: string;
   label: string;
@@ -292,23 +291,19 @@ function PlanGroup({
   cardText: string;
   accent: string;
   bodyText: string;
-  parallaxImg?: string;
+  scrollBg?: string;
 }) {
+  const sectionBgClass = bgClass.includes("paper")
+    ? "bg-[rgba(244,241,234,0.74)]"
+    : "bg-[rgba(10,10,10,0.74)]";
+
   return (
     <section
       id={id}
-      className={`relative overflow-hidden ${bgClass} py-14 ${textClass} md:py-16 scroll-mt-20 lg:scroll-mt-24`}
+      data-pricing-bg={scrollBg}
+      className={`relative isolate overflow-hidden ${sectionBgClass} py-14 ${textClass} md:py-16 scroll-mt-20 lg:scroll-mt-24`}
     >
-      {parallaxImg && (
-        <Image
-          src={parallaxImg}
-          alt=""
-          fill
-          sizes="100vw"
-          className="pointer-events-none absolute inset-0 object-cover opacity-[0.18]"
-        />
-      )}
-      <div data-reveal-group className="relative mx-auto max-w-[1440px] px-6">
+      <div data-reveal-group className="relative z-10 mx-auto max-w-[1440px] px-6">
         <p data-reveal className={`text-xs font-black uppercase tracking-[0.28em] ${accent} ${plans.length <= 2 ? "text-center" : ""}`}>
           {label}
         </p>
