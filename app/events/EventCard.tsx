@@ -260,7 +260,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 </svg>
               </button>
 
-              <div className="flex items-end justify-between gap-4 lg:mt-1 lg:block">
+              <div className="flex items-start justify-between gap-4 lg:mt-1 lg:block">
                 {/* Age groups as child items */}
                 {sessions.length > 0 && (
                   <div className="flex min-w-0 flex-col gap-3.5 lg:gap-4">
