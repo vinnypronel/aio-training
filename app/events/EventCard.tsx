@@ -76,10 +76,13 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
   const displayPrice = isFootballGroupSession
     ? "$20 per day - $40 both days per athlete"
     : event.price;
+  const displayLocation = isFootballGroupSession
+    ? "Heavenly Farms Park, East Brunswick, NJ"
+    : event.location;
   const flyerSrc = isFootballGroupSession
     ? "/assets/images/group_session_flyer.png"
     : event.flyer;
-  const locationQuery = encodeURIComponent(event.location);
+  const locationQuery = encodeURIComponent(displayLocation);
   const defaultMapsHref = `geo:0,0?q=${locationQuery}`;
   const appleMapsHref = `https://maps.apple.com/?q=${locationQuery}`;
 
@@ -233,19 +236,17 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
-                <div className="flex flex-col">
-                  <span className="text-lg font-semibold leading-tight lg:text-xl">
-                    {event.location.includes(",") ? (
+                <div className="flex flex-col text-left text-lg font-semibold leading-tight lg:text-xl">
+                    {displayLocation.includes(",") ? (
                       <>
-                        {event.location.split(",")[0]}
-                        <span className="mt-0.5 block text-lg font-semibold leading-normal lg:text-xl">
-                          {event.location.split(",").slice(1).join(",").trim()}
+                        <span className="block">{displayLocation.split(",")[0]}</span>
+                        <span className="mt-0.5 block leading-normal">
+                          {displayLocation.split(",").slice(1).join(",").trim()}
                         </span>
                       </>
                     ) : (
-                      event.location
+                      <span>{displayLocation}</span>
                     )}
-                  </span>
                 </div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -435,7 +436,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   Open Address
                 </p>
                 <p className="mt-2 text-sm font-black leading-snug text-white">
-                  {event.location}
+                  {displayLocation}
                 </p>
               </div>
               <button
