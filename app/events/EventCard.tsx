@@ -68,6 +68,7 @@ function parsePrice(price: string) {
 
 export default function EventCard({ event, isAdmin }: EventCardProps) {
   const [isFlyerOpen, setIsFlyerOpen] = useState(false);
+  const [isMapsOpen, setIsMapsOpen] = useState(false);
   const isFootballGroupSession = event.slug === "football-skills-clinic";
   const displayTitle = isFootballGroupSession
     ? "AIO Football Skills Group Session"
@@ -78,6 +79,9 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
   const flyerSrc = isFootballGroupSession
     ? "/assets/images/group_session_flyer.png"
     : event.flyer;
+  const locationQuery = encodeURIComponent(event.location);
+  const defaultMapsHref = `geo:0,0?q=${locationQuery}`;
+  const appleMapsHref = `https://maps.apple.com/?q=${locationQuery}`;
 
   let sessions: EventSession[] = [];
   try {
@@ -102,6 +106,15 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
       window.removeEventListener("keydown", onKey);
     };
   }, [isFlyerOpen]);
+
+  useEffect(() => {
+    if (!isMapsOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMapsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMapsOpen]);
 
   return (
     <>
@@ -203,14 +216,9 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   </span>
                 </div>
               )}
-              <a
-                href={
-                  event.location.toLowerCase().includes("heavenly farms")
-                    ? "https://www.google.com/maps/place/heavenly+farms+park+east+brunswick/data=!4m2!3m1!1s0x89c3c53d822a9291:0x85ea3f9097a22d41?sa=X&ved=1t:155783&ictx=111"
-                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`
-                }
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => setIsMapsOpen(true)}
                 className="group/loc relative z-20 inline-flex w-fit items-start gap-3 text-white transition hover:text-aio-red"
               >
                 <svg
@@ -249,61 +257,82 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
                   <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
                 </svg>
-              </a>
+              </button>
 
-              {/* Age groups as child items */}
-              {sessions.length > 0 && (
-                <div className="mt-1 flex flex-col gap-3.5 lg:gap-4">
-                  {sessions.map((s) => {
-                    const { age } = parseSessionLabel(s.label);
-                    const isTeen = (age || s.label).toLowerCase().includes("13") || (age || s.label).toLowerCase().includes("teen");
-                    return (
-                      <div key={s.label} className="flex items-center gap-3 text-white">
-                        {isTeen ? (
-                          /* Bigger person icon for older kids / teens */
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden
-                            className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
-                          >
-                            <circle cx="12" cy="7" r="4.2" />
-                            <path d="M4.5 19.5a7.5 7.5 0 0 1 15 0" />
-                          </svg>
-                        ) : (
-                          /* Smaller person icon for younger kids */
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden
-                            className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
-                          >
-                            <circle cx="12" cy="8.5" r="3" />
-                            <path d="M7 18.5a5 5 0 0 1 10 0" />
-                          </svg>
-                        )}
-                        <span className="text-lg font-semibold leading-tight lg:text-xl">
-                          {age || s.label}
-                        </span>
-                      </div>
-                    );
-                  })}
+              <div className="mt-1 flex items-end justify-between gap-4 lg:block">
+                {/* Age groups as child items */}
+                {sessions.length > 0 && (
+                  <div className="flex min-w-0 flex-col gap-3.5 lg:gap-4">
+                    {sessions.map((s) => {
+                      const { age } = parseSessionLabel(s.label);
+                      const isTeen = (age || s.label).toLowerCase().includes("13") || (age || s.label).toLowerCase().includes("teen");
+                      return (
+                        <div key={s.label} className="flex items-center gap-3 text-white">
+                          {isTeen ? (
+                            /* Bigger person icon for older kids / teens */
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden
+                              className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                            >
+                              <circle cx="12" cy="7" r="4.2" />
+                              <path d="M4.5 19.5a7.5 7.5 0 0 1 15 0" />
+                            </svg>
+                          ) : (
+                            /* Smaller person icon for younger kids */
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden
+                              className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                            >
+                              <circle cx="12" cy="8.5" r="3" />
+                              <path d="M7 18.5a5 5 0 0 1 10 0" />
+                            </svg>
+                          )}
+                          <span className="text-lg font-semibold leading-tight lg:text-xl">
+                            {age || s.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                <div className="relative z-20 flex shrink-0 flex-col gap-2 lg:hidden">
+                  <HoverButton
+                    variant="red"
+                    href={`/events/${event.slug}`}
+                    className="!min-h-9 w-[112px] px-2.5 text-[8px]"
+                  >
+                    More Info
+                  </HoverButton>
+                  <HoverButton
+                    variant="outline"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsFlyerOpen(true);
+                    }}
+                    className="!min-h-9 w-[112px] px-2.5 text-[8px]"
+                  >
+                    View Flyer
+                  </HoverButton>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Right Column: Price and Buttons block (stacks vertically on mobile, side-by-side on desktop) */}
-            <div className="flex items-end justify-between gap-3 lg:w-full lg:flex-row lg:gap-4 lg:-translate-y-[10px]">
+            <div className="order-first flex items-start justify-between gap-3 lg:order-none lg:w-full lg:flex-row lg:items-end lg:gap-4 lg:-translate-y-[10px]">
               <div className="min-w-0 lg:border-t lg:border-aio-line lg:pt-8">
                 <span className="mb-2.5 inline-flex justify-center bg-aio-red px-2.5 py-1 text-center text-[0.6rem] font-black uppercase tracking-[0.16em] text-white lg:inline-block lg:w-auto lg:text-left">
                   Limited Spots
@@ -317,7 +346,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   </div>
                 )}
               </div>
-              <div className="relative z-20 flex shrink-0 flex-col gap-2 lg:-translate-x-[40px]">
+              <div className="relative z-20 hidden shrink-0 flex-col gap-2 lg:flex lg:-translate-x-[40px]">
                 <HoverButton
                   variant="red"
                   href={`/events/${event.slug}`}
@@ -381,6 +410,71 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 alt={`${displayTitle} flyer fullscreen`}
                 className="max-h-[calc(80vh/var(--dz,1))] max-w-[calc(85vw/var(--dz,1))] object-contain shadow-lg"
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isMapsOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Choose maps app"
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-black/75 p-4 backdrop-blur-sm sm:items-center"
+        >
+          <button
+            type="button"
+            aria-label="Close maps options"
+            className="absolute inset-0 cursor-default"
+            onClick={() => setIsMapsOpen(false)}
+          />
+          <div className="relative z-10 w-full max-w-[360px] border border-aio-line bg-aio-black p-5 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-red">
+                  Open Address
+                </p>
+                <p className="mt-2 text-sm font-black leading-snug text-white">
+                  {event.location}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMapsOpen(false)}
+                aria-label="Close maps options"
+                className="-mr-2 -mt-2 flex h-9 w-9 items-center justify-center text-white/60 transition hover:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                  className="h-4 w-4"
+                >
+                  <line x1={18} y1={6} x2={6} y2={18} />
+                  <line x1={6} y1={6} x2={18} y2={18} />
+                </svg>
+              </button>
+            </div>
+
+            <div className="mt-5 grid gap-3">
+              <a
+                href={defaultMapsHref}
+                onClick={() => setIsMapsOpen(false)}
+                className="flex min-h-12 items-center justify-center bg-aio-red px-5 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:bg-aio-red-hover"
+              >
+                Default Maps App
+              </a>
+              <a
+                href={appleMapsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMapsOpen(false)}
+                className="flex min-h-12 items-center justify-center border border-white/35 px-5 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:border-white hover:bg-white hover:text-aio-black"
+              >
+                Apple Maps
+              </a>
             </div>
           </div>
         </div>
