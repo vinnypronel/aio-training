@@ -68,6 +68,16 @@ function parsePrice(price: string) {
 
 export default function EventCard({ event, isAdmin }: EventCardProps) {
   const [isFlyerOpen, setIsFlyerOpen] = useState(false);
+  const isFootballGroupSession = event.slug === "football-skills-clinic";
+  const displayTitle = isFootballGroupSession
+    ? "AIO Football Skills Group Session"
+    : event.title;
+  const displayPrice = isFootballGroupSession
+    ? "$20 per day - $40 both days per athlete"
+    : event.price;
+  const flyerSrc = isFootballGroupSession
+    ? "/assets/images/group_session_flyer.png"
+    : event.flyer;
 
   let sessions: EventSession[] = [];
   try {
@@ -77,11 +87,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
     // malformed session data — render the card without the session grid
   }
 
-  const priceInfo = parsePrice(event.price);
-  const flyerSrc =
-    event.slug === "football-skills-clinic"
-      ? "/assets/images/group_session_flyer.png"
-      : event.flyer;
+  const priceInfo = parsePrice(displayPrice);
 
   useEffect(() => {
     if (!isFlyerOpen) return;
@@ -109,30 +115,30 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
         {/* Title shown above flyer on mobile only */}
         <div className="lg:hidden px-5 mb-4">
           <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white">
-            {event.title.includes("Group Session") ? (
+            {displayTitle.includes("Group Session") ? (
               <>
-                {event.title.replace("Group Session", "").trim()}
+                {displayTitle.replace("Group Session", "").trim()}
                 <span className="block">Group Session</span>
               </>
-            ) : event.title.includes("Skills Clinic") ? (
+            ) : displayTitle.includes("Skills Clinic") ? (
               <>
-                {event.title.replace("Skills Clinic", "").trim()}
+                {displayTitle.replace("Skills Clinic", "").trim()}
                 <span className="block">Skills Clinic</span>
               </>
             ) : (
-              event.title
+              displayTitle
             )}
           </h3>
         </div>
 
         <Link
           href={`/events/${event.slug}`}
-          aria-label={`${event.title} - view event details`}
+          aria-label={`${displayTitle} - view event details`}
           className="relative z-20 block h-[260px] w-full shrink-0 overflow-hidden bg-aio-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red sm:h-[300px] lg:h-auto lg:aspect-[2/3] lg:w-[440px] lg:bg-transparent"
         >
           <Image
             src={flyerSrc}
-            alt={`${event.title} flyer`}
+            alt={`${displayTitle} flyer`}
             fill
             sizes="(min-width: 1024px) 540px, 90vw"
             className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
@@ -142,18 +148,18 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
           {/* Title + subtitle (badge folded in as a red-tick subtitle, no eyebrow) */}
           <div className="hidden lg:block">
             <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white lg:text-[3.4rem] lg:leading-[0.9]">
-              {event.title.includes("Group Session") ? (
+              {displayTitle.includes("Group Session") ? (
                 <>
-                  {event.title.replace("Group Session", "").trim()}
+                  {displayTitle.replace("Group Session", "").trim()}
                   <span className="block">Group Session</span>
                 </>
-              ) : event.title.includes("Skills Clinic") ? (
+              ) : displayTitle.includes("Skills Clinic") ? (
                 <>
-                  {event.title.replace("Skills Clinic", "").trim()}
+                  {displayTitle.replace("Skills Clinic", "").trim()}
                   <span className="block">Skills Clinic</span>
                 </>
               ) : (
-                event.title
+                displayTitle
               )}
             </h3>
           </div>
@@ -224,7 +230,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                     {event.location.includes(",") ? (
                       <>
                         {event.location.split(",")[0]}
-                        <span className="block text-base font-semibold text-white lg:text-xl mt-0.5 leading-normal">
+                        <span className="block text-base font-semibold lg:text-xl mt-0.5 leading-normal">
                           {event.location.split(",").slice(1).join(",").trim()}
                         </span>
                       </>
@@ -340,7 +346,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${event.title} flyer`}
+          aria-label={`${displayTitle} flyer`}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm transition-all duration-300"
         >
           {/* Backdrop Click */}
@@ -372,7 +378,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             <div className="relative border border-aio-line bg-aio-black p-2 shadow-2xl">
               <img
                 src={flyerSrc}
-                alt={`${event.title} flyer fullscreen`}
+                alt={`${displayTitle} flyer fullscreen`}
                 className="max-h-[calc(80vh/var(--dz,1))] max-w-[calc(85vw/var(--dz,1))] object-contain shadow-lg"
               />
             </div>
