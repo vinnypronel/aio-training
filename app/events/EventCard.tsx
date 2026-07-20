@@ -52,11 +52,12 @@ function parsePrice(price: string) {
       sub: price.substring(throughIdx).trim(),
     };
   }
-  const dashIdx = price.indexOf("—");
-  if (dashIdx !== -1) {
+  const dashMatch = price.match(/\s+(?:-|[\u2013\u2014])\s+/);
+  if (dashMatch?.index !== undefined) {
+    const dashIdx = dashMatch.index;
     return {
       main: price.substring(0, dashIdx).trim(),
-      sub: price.substring(dashIdx + 1).trim(),
+      sub: price.substring(dashIdx + dashMatch[0].length).trim(),
     };
   }
   return {
@@ -110,7 +111,12 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
         {/* Title shown above flyer on mobile only */}
         <div className="lg:hidden px-5 mb-4">
           <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white">
-            {event.title.includes("Skills Clinic") ? (
+            {event.title.includes("Group Session") ? (
+              <>
+                {event.title.replace("Group Session", "").trim()}
+                <span className="block">Group Session</span>
+              </>
+            ) : event.title.includes("Skills Clinic") ? (
               <>
                 {event.title.replace("Skills Clinic", "").trim()}
                 <span className="block">Skills Clinic</span>
@@ -134,7 +140,12 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
           {/* Title + subtitle (badge folded in as a red-tick subtitle, no eyebrow) */}
           <div className="hidden lg:block">
             <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white lg:text-[3.4rem] lg:leading-[0.9]">
-              {event.title.includes("Skills Clinic") ? (
+              {event.title.includes("Group Session") ? (
+                <>
+                  {event.title.replace("Group Session", "").trim()}
+                  <span className="block">Group Session</span>
+                </>
+              ) : event.title.includes("Skills Clinic") ? (
                 <>
                   {event.title.replace("Skills Clinic", "").trim()}
                   <span className="block">Skills Clinic</span>
@@ -225,7 +236,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   viewBox="0 0 16 16"
                   fill="currentColor"
                   aria-hidden
-                  className="h-3 w-3 shrink-0 opacity-40 transition group-hover/loc:opacity-100 mt-1 lg:mt-2"
+                  className="h-4 w-4 shrink-0 opacity-50 transition group-hover/loc:opacity-100 mt-0.5 lg:mt-1.5 lg:h-[18px] lg:w-[18px]"
                 >
                   <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
                   <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
@@ -298,7 +309,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   </div>
                 )}
               </div>
-              <div className="relative z-20 flex flex-col gap-2 lg:-translate-x-[150px]">
+              <div className="relative z-20 flex flex-col gap-2 lg:-translate-x-[40px]">
                 <HoverButton
                   variant="red"
                   href={`/events/${event.slug}`}

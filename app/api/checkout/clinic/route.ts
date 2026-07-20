@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
-import { stripe, getClinicPriceCents, isEarlyRegistration } from "@/lib/stripe";
+import { stripe, getClinicPriceCents } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 
 type AthleteEntry = {
@@ -9,10 +9,19 @@ type AthleteEntry = {
   sport: string;
 };
 
+const allowedSessionDays = new Set(["2026-07-25", "2026-07-26"]);
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { parentName, email, phone, athletes: athletesRaw, emergencyNotes } = body;
+    const {
+      parentName,
+      email,
+      phone,
+      athletes: athletesRaw,
+      selectedDays: selectedDaysRaw,
+      emergencyNotes,
+    } = body;
 
     if (!parentName || !email) {
       return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
@@ -28,8 +37,18 @@ export async function POST(req: NextRequest) {
 
     const athleteCount = athletes.length;
     const primaryAthlete = athletes[0];
-    const isEarly = isEarlyRegistration();
-    const priceLabel = isEarly ? "$100 Early" : "$150 Standard";
+    let selectedDays = Array.isArray(selectedDaysRaw)
+      ? selectedDaysRaw.filter(
+          (day: unknown): day is string =>
+            typeof day === "string" && allowedSessionDays.has(day),
+        )
+      : [];
+    if (selectedDays.length === 0) {
+      selectedDays = ["2026-07-25", "2026-07-26"];
+    }
+    selectedDays = Array.from(new Set(selectedDays)).sort();
+    const dayCount = selectedDays.length;
+    const priceLabel = "$20 per athlete per day";
 
     const athleteSummaryLines = athletes.map((a, i) => {
       const parts: string[] = [];
@@ -39,9 +58,11 @@ export async function POST(req: NextRequest) {
       return `Athlete ${i + 1}: ${parts.length ? parts.join(", ") : "No details provided"}`;
     });
     const notesLines = [
-      `Event: AIO Football Skills Clinic — July 25-26, 2026`,
-      `Pricing: ${priceLabel}/athlete`,
+      `Event: AIO Football Skills Group Session - July 25-26, 2026`,
+      `Pricing: ${priceLabel}`,
       `Athletes: ${athleteCount}`,
+      `Selected Days: ${selectedDays.join(", ")}`,
+      `Day Count: ${dayCount}`,
       ...athleteSummaryLines,
     ];
     if (emergencyNotes && String(emergencyNotes).trim().length > 0) {
@@ -70,7 +91,7 @@ export async function POST(req: NextRequest) {
 
     // Find event
     const event = await prisma.event.findUnique({
-      where: { slug: "aio-football-skills-clinic" },
+      where: { slug: "football-skills-clinic" },
     });
 
     // Save booking with pending_payment status
@@ -97,13 +118,13 @@ export async function POST(req: NextRequest) {
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
       [
             {
-              quantity: athleteCount,
+              quantity: athleteCount * dayCount,
               price_data: {
                 currency: "usd",
                 unit_amount: priceCents,
                 product_data: {
-                  name: `AIO Football Skills Clinic - ${isEarly ? "Early Registration" : "Standard Registration"}`,
-                  description: `July 25-26, 2026 · Heavenly Farms Park · ${athleteCount} athlete${athleteCount > 1 ? "s" : ""}`,
+                  name: "AIO Football Skills Group Session Registration",
+                  description: `July 25-26, 2026 - Heavenly Farms Park - ${athleteCount} athlete${athleteCount > 1 ? "s" : ""} - ${dayCount} day${dayCount > 1 ? "s" : ""}`,
                 },
               },
             },
@@ -120,7 +141,9 @@ export async function POST(req: NextRequest) {
         bookingId: booking.id,
         customerId: customer.id,
         athleteCount: String(athleteCount),
-        eventSlug: "aio-football-skills-clinic",
+        dayCount: String(dayCount),
+        selectedDays: selectedDays.join(","),
+        eventSlug: "football-skills-clinic",
       },
       customer_email: email,
     });

@@ -7,20 +7,18 @@ import HoverButton from "@/components/HoverButton";
 // Load modal only when needed (avoids SSR issues with Stripe.js)
 const CheckoutModal = dynamic(() => import("./CheckoutModal"), { ssr: false });
 
-// Inline early-registration check (safe to run client-side)
-const EARLY_DEADLINE = new Date("2026-07-18T23:59:59-04:00");
-function isEarlyRegistration() {
-  return new Date() <= EARLY_DEADLINE;
-}
-
 type AthleteEntry = {
   name: string;
   ageGroup: string;
   sport: string;
 };
 
+const sessionDays = [
+  { value: "2026-07-25", label: "Saturday, July 25" },
+  { value: "2026-07-26", label: "Sunday, July 26" },
+];
+
 const ageGroups = ["8-12", "13-18"];
-const sports = ["Football", "Baseball", "Basketball", "Soccer", "Personal Training", "Not Sure Yet"];
 
 const inputClass =
   "w-full border border-aio-line bg-transparent px-4 py-2.5 text-sm font-semibold text-white placeholder:text-aio-muted/50 transition focus:border-aio-red focus:outline-none";
@@ -37,19 +35,20 @@ export default function ClinicRegisterForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [emergencyNotes, setEmergencyNotes] = useState("");
+  const [selectedDays, setSelectedDays] = useState(sessionDays.map((day) => day.value));
   const [openAgeDropdownIdx, setOpenAgeDropdownIdx] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [validationError, setValidationError] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const validationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const isEarly = isEarlyRegistration();
-  const pricePerAthlete = isEarly ? 100 : 150;
+  const pricePerAthletePerDay = 20;
+  const dayCount = selectedDays.length;
   const completeAthletes = athletes.filter(
     (a) => a.name.trim().length > 0 && a.ageGroup.length > 0 && a.sport.length > 0
   );
   const athleteCount = completeAthletes.length;
-  const total = pricePerAthlete * athleteCount;
+  const total = pricePerAthletePerDay * athleteCount * dayCount;
 
   // Show summary only when parent info + at least one fully-filled athlete
   const showSummary =
@@ -87,6 +86,22 @@ export default function ClinicRegisterForm() {
     });
   }
 
+  function toggleDay(value: string) {
+    setSelectedDays((prev) => {
+      const next = prev.includes(value)
+        ? prev.filter((day) => day !== value)
+        : [...prev, value];
+      return next.sort();
+    });
+    if (errors.days) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.days;
+        return next;
+      });
+    }
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setValidationError("");
@@ -103,6 +118,9 @@ export default function ClinicRegisterForm() {
       newErrors.email = "Please fill out this field.";
     } else if (!email.includes("@")) {
       newErrors.email = "Please enter a valid email address.";
+    }
+    if (selectedDays.length === 0) {
+      newErrors.days = "Please select at least one session day.";
     }
 
     // Validate each athlete
@@ -399,6 +417,60 @@ export default function ClinicRegisterForm() {
           </button>
         </div>
 
+        {/* Session Days */}
+        <div className="border-t border-aio-line pt-6">
+          <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
+            Session Days *
+          </p>
+          <p className="mt-2 text-xs font-semibold leading-relaxed text-aio-muted">
+            $20 per athlete per day. Select both days for the full 2-day group session.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {sessionDays.map((day) => {
+              const checked = selectedDays.includes(day.value);
+              return (
+                <button
+                  key={day.value}
+                  type="button"
+                  onClick={() => toggleDay(day.value)}
+                  className={`flex items-center justify-between border px-4 py-3 text-left transition ${
+                    checked
+                      ? "border-aio-red bg-aio-red/10 text-white"
+                      : "border-aio-line text-aio-muted hover:border-aio-red hover:text-white"
+                  }`}
+                >
+                  <span className="text-xs font-black uppercase tracking-[0.12em]">
+                    {day.label}
+                  </span>
+                  <span
+                    className={`flex h-5 w-5 items-center justify-center border ${
+                      checked ? "border-aio-red bg-aio-red" : "border-aio-line"
+                    }`}
+                  >
+                    {checked && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                        className="h-3 w-3 text-white"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
+                      </svg>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          {errors.days && (
+            <p className="mt-2 text-[0.68rem] font-black uppercase tracking-wider text-aio-red">
+              {errors.days}
+            </p>
+          )}
+        </div>
+
         {/* Emergency Info & Medical Notes */}
         <div className="border-t border-aio-line pt-6">
           <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
@@ -428,7 +500,7 @@ export default function ClinicRegisterForm() {
             <div className="mt-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-aio-body">
-                  {athleteCount} Athlete{athleteCount > 1 ? "s" : ""} × ${pricePerAthlete}
+                  {athleteCount} Athlete{athleteCount > 1 ? "s" : ""} x {dayCount} Day{dayCount > 1 ? "s" : ""} x ${pricePerAthletePerDay}
                 </span>
                 <span className="text-sm font-black text-white">${total}</span>
               </div>
@@ -437,11 +509,6 @@ export default function ClinicRegisterForm() {
                 <span className="font-brand-display text-xl font-black text-white">${total}</span>
               </div>
             </div>
-            {isEarly && (
-              <p className="mt-2 text-[0.58rem] font-semibold text-aio-red">
-                ✓ Early registration rate locked in at checkout
-              </p>
-            )}
           </div>
         )}
 
@@ -454,8 +521,8 @@ export default function ClinicRegisterForm() {
 
         <HoverButton type="submit" className="w-full py-4 sm:w-auto sm:px-12 sm:py-3.5">
           {athleteCount === 1
-            ? `Pay $${total} · Secure Checkout`
-            : `Pay $${total} · ${athleteCount} Athletes`}
+            ? `Pay $${total} - Secure Checkout`
+            : `Pay $${total} - ${athleteCount} Athletes`}
         </HoverButton>
 
         <p className="flex items-center gap-1.5 text-[0.6rem] font-semibold text-aio-muted">
@@ -470,14 +537,14 @@ export default function ClinicRegisterForm() {
             <rect x={3} y={11} width={18} height={11} rx={2} ry={2} />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
-          Payments secured by Stripe · SSL encrypted · No account needed
+          Payments secured by Stripe - SSL encrypted - No account needed
         </p>
       </form>
 
       {/* Embedded Stripe Checkout Modal */}
       {showModal && (
         <CheckoutModal
-          formData={{ parentName, email, phone, athletes, emergencyNotes }}
+          formData={{ parentName, email, phone, athletes, selectedDays, emergencyNotes }}
           onClose={() => setShowModal(false)}
         />
       )}

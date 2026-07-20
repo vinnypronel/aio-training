@@ -24,22 +24,8 @@ export const stripe = new Proxy({} as Stripe, {
   },
 });
 
-// Football Clinic pricing config
-const EARLY_DEADLINE = new Date("2026-07-18T23:59:59-04:00");
-
-export function getClinicPriceId(): string {
-  const now = new Date();
-  if (now <= EARLY_DEADLINE) {
-    return process.env.STRIPE_CLINIC_EARLY_PRICE_ID!;
-  }
-  return process.env.STRIPE_CLINIC_STANDARD_PRICE_ID!;
-}
+// Football skills group session pricing config
 
 export function getClinicPriceCents(): number {
-  const now = new Date();
-  return now <= EARLY_DEADLINE ? 10000 : 15000; // $100 or $150
-}
-
-export function isEarlyRegistration(): boolean {
-  return new Date() <= EARLY_DEADLINE;
+  return 2000; // $20
 }

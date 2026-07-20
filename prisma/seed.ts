@@ -15,25 +15,29 @@ async function main() {
   await prisma.event.upsert({
     where: { slug: "football-skills-clinic" },
     update: {
+      flyer: "/assets/images/group_session_flyer.png",
+      badge: "2-Day Group Session",
+      title: "AIO Football Skills Group Session",
       location: "Heavenly Farms Park, East Brunswick, NJ",
+      price: "$20 per day - $40 both days per athlete",
     },
     create: {
       slug: "football-skills-clinic",
-      flyer: "/assets/images/clinic_flyer.png",
+      flyer: "/assets/images/group_session_flyer.png",
       tag: "Open — Limited Spots",
-      badge: "2-Day Summer Clinic",
-      title: "AIO Football Skills Clinic",
+      badge: "2-Day Group Session",
+      title: "AIO Football Skills Group Session",
       date: "July 25-26, 2026",
       location: "Heavenly Farms Park, East Brunswick, NJ",
       sessions: JSON.stringify([
         { label: "Younger athletes — Ages 8-12", time: "6:00 PM - 8:00 PM" },
         { label: "Teen athletes — Ages 13-18", time: "6:00 PM - 8:00 PM" },
       ]),
-      price: "$100 early through July 18, 2026, then $150",
+      price: "$20 per day - $40 both days per athlete",
       sortOrder: 0,
     },
   });
-  console.log("Seeded/updated football skills clinic event");
+  console.log("Seeded/updated football skills group session event");
 }
 
 main().finally(() => prisma.$disconnect());

@@ -1,7 +1,7 @@
 # AIO Training — Production Deployment Guide
 
 This app is a Next.js 16 site with a SQLite database (via Prisma), admin portal,
-public booking, and Stripe checkout for the Football Skills Clinic.
+public booking, and Stripe checkout for the Football Skills Group Session.
 
 ## Important: how data works
 
@@ -35,15 +35,13 @@ Railway/Render with a persistent disk, etc.
    ADMIN_EMAIL="<login email for the admin portal>"
    ADMIN_PASSWORD="<strong password>"
    STRIPE_SECRET_KEY="sk_live_..."
-   STRIPE_CLINIC_EARLY_PRICE_ID="price_..."
-   STRIPE_CLINIC_STANDARD_PRICE_ID="price_..."
    ```
 
    - `SESSION_SECRET` must be at least 32 chars — the app refuses to start without it.
-   - Stripe live keys come from <https://dashboard.stripe.com/apikeys>; the two
-     price IDs are Products in Stripe for the $125 early / $150 standard clinic fees.
+   - Stripe live keys come from <https://dashboard.stripe.com/apikeys>; the group session
+     checkout charges the app's configured flat registration amount.
 
-3. **Create the database and seed the clinic event:**
+3. **Create the database and seed the group session event:**
 
    ```bash
    npm install

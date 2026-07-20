@@ -17,6 +17,7 @@ interface CheckoutModalProps {
     email: string;
     phone: string;
     athletes: Array<{ name: string; ageGroup: string; sport: string }>;
+    selectedDays: string[];
     emergencyNotes: string;
   };
   onClose: () => void;
@@ -66,7 +67,7 @@ export default function CheckoutModal({ formData, onClose }: CheckoutModalProps)
               Secure Checkout
             </p>
             <p className="mt-0.5 text-sm font-black text-white">
-              AIO Football Skills Clinic
+              AIO Football Skills Group Session
             </p>
           </div>
           <button

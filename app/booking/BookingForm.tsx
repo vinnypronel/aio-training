@@ -74,7 +74,9 @@ function emptyAthlete(): AthleteEntry {
   return { name: "", ageGroup: "", sport: "" };
 }
 
-export default function BookingForm({ slots }: { slots: Slot[] }) {
+export default function BookingForm({ slots: _slots }: { slots: Slot[] }) {
+  void _slots;
+
   const [state, formAction, pending] = useActionState(submitBooking, {
     status: "idle" as const,
     message: "",
@@ -261,14 +263,14 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
   };
 
   // Find selected slot info for summary
-  const selectedSlotInfo = useMemo(() => {
-    if (!selectedSlot) return null;
-    if (selectedSlot === "custom") {
-      return { startTime: "Custom Time", endTime: customTime || "Request" };
-    }
-    const [start, end] = selectedSlot.split("-");
-    return { startTime: start, endTime: end };
-  }, [selectedSlot, customTime]);
+  const selectedSlotInfo = selectedSlot
+    ? selectedSlot === "custom"
+      ? { startTime: "Custom Time", endTime: customTime || "Request" }
+      : (() => {
+          const [start, end] = selectedSlot.split("-");
+          return { startTime: start, endTime: end };
+        })()
+    : null;
   const selectedDateFormatted = selectedDate
     ? new Date(selectedDate + "T12:00:00").toLocaleDateString("en-US", {
         weekday: "long", month: "long", day: "numeric", year: "numeric",
@@ -564,6 +566,21 @@ export default function BookingForm({ slots }: { slots: Slot[] }) {
                 <p className="text-sm font-semibold text-aio-muted max-w-[280px]">
                   Please choose your training path on the left to unlock the calendar.
                 </p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.8}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                  className="mt-5 h-12 w-12 text-aio-muted/55"
+                >
+                  <rect x={4.5} y={10.5} width={15} height={10} rx={2} />
+                  <path d="M8 10.5V7.75a4 4 0 0 1 8 0v2.75" />
+                  <path d="M12 15v2" />
+                </svg>
               </div>
             )}
 

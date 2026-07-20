@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 
 export const metadata = {
-  title: "Registration Confirmed | AIO Football Skills Clinic",
+  title: "Registration Confirmed | AIO Football Skills Group Session",
 };
 
 export default async function ClinicSuccessPage({
@@ -81,7 +81,7 @@ export default async function ClinicSuccessPage({
             <div className="mt-4 space-y-3">
               <div className="flex justify-between">
                 <span className="text-sm font-semibold text-aio-body">Event</span>
-                <span className="text-sm font-black text-white">AIO Football Skills Clinic</span>
+                <span className="text-sm font-black text-white">AIO Football Skills Group Session</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm font-semibold text-aio-body">Dates</span>
@@ -115,7 +115,7 @@ export default async function ClinicSuccessPage({
             <ul className="mt-4 space-y-3">
               {[
                 "AIO will reach out to confirm your spot and share check-in details.",
-                "Bring cleats, athletic wear, and a water bottle both days.",
+                "Bring cleats, athletic wear, and a water bottle for each day attending.",
                 "Check in 15 minutes before the start time each evening.",
                 "Questions? Call (714) 440-8053.",
               ].map((item) => (

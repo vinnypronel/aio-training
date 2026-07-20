@@ -15,7 +15,7 @@ export default function FlyerDropdown() {
         aria-expanded={open}
       >
         <span className="text-xs font-black uppercase tracking-[0.16em] text-white">
-          View Clinic Flyer
+          View Group Session Flyer
         </span>
         <span
           className="text-lg font-black text-aio-red transition-transform duration-300"
@@ -41,8 +41,8 @@ export default function FlyerDropdown() {
         <div style={{ overflow: "hidden" }}>
           <div className="px-5 pb-5">
             <Image
-              src="/assets/images/clinic_flyer.png"
-              alt="AIO Football Skills Clinic flyer"
+              src="/assets/images/group_session_flyer.png"
+              alt="AIO Football Skills Group Session flyer"
               width={600}
               height={750}
               className="h-auto max-h-[500px] w-full object-contain mx-auto"

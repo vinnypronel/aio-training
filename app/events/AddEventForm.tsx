@@ -130,7 +130,7 @@ export default function AddEventForm() {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="AIO Football Skills Clinic"
+              placeholder="AIO Football Skills Group Session"
               className={`mt-2 ${inputClass}`}
             />
           </div>
@@ -142,7 +142,7 @@ export default function AddEventForm() {
               required
               value={badge}
               onChange={(e) => setBadge(e.target.value)}
-              placeholder="2-Day Summer Clinic"
+              placeholder="2-Day Group Session"
               className={`mt-2 ${inputClass}`}
             />
           </div>

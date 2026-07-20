@@ -4,7 +4,7 @@ import FlyerDropdown from "./FlyerDropdown";
 import ClinicRegisterForm from "./ClinicRegisterForm";
 
 export const metadata = {
-  title: "Football Skills Clinic | AIO Training",
+  title: "Football Skills Group Session | AIO Training",
 };
 
 const skills = [
@@ -36,7 +36,7 @@ export default function FootballSkillsClinicPage() {
         {/* Ghost typography */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-full max-w-[1280px]">
           <p className="absolute right-5 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[200px]">
-            Clinic
+            Session
           </p>
         </div>
 
@@ -45,13 +45,13 @@ export default function FootballSkillsClinicPage() {
           <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end pb-10">
             <div>
               <p className="hero-item text-xs font-black uppercase tracking-[0.24em] text-aio-red">
-                2-Day Summer Clinic
+                2-Day Group Session
               </p>
               <h1 className="hero-item mt-4 font-brand-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.95] text-white" style={{ animationDelay: "120ms" }}>
-                AIO Football<br />Skills Clinic
+                AIO Football<br />Skills Group Session
               </h1>
               <p className="hero-item mt-6 max-w-[680px] text-sm font-semibold leading-relaxed text-aio-body" style={{ animationDelay: "260ms" }}>
-                July 25-26, 2026 at Heavenly Farms Park. Speed, agility, footwork, route running, catching, and live competition across two evenings. Limited Spots: Register Now.
+                July 25-26, 2026 at Heavenly Farms Park. Speed, agility, footwork, route running, catching, and live competition across two group-session evenings. $20 per day, or $40 per athlete for both days.
               </p>
             </div>
             <div className="hero-item flex flex-col gap-3 sm:flex-row lg:flex-col lg:w-full lg:max-w-[260px] lg:justify-self-end" style={{ animationDelay: "400ms" }}>
@@ -178,27 +178,16 @@ export default function FootballSkillsClinicPage() {
                 <h3 className="text-xs font-black uppercase tracking-[0.24em] text-aio-red-on-dark">
                   Pricing
                 </h3>
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="mt-6">
                   <div>
                     <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Early Registration
+                      Registration
                     </span>
                     <span className="mt-3 block font-brand-display text-4xl font-black text-aio-red-on-dark leading-none">
-                      $100
+                      $20
                     </span>
                     <span className="mt-3 block text-xs font-semibold text-aio-muted leading-none">
-                      Through July 18, 2026.
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] font-black uppercase tracking-[0.25em] text-aio-red-on-dark leading-none">
-                      Standard Registration
-                    </span>
-                    <span className="mt-3 block font-brand-display text-4xl font-black text-white leading-none">
-                      $150
-                    </span>
-                    <span className="mt-3 block text-xs font-semibold text-aio-muted leading-none">
-                      From July 19, 2026.
+                      Per athlete, per day. Both days are $40 per athlete.
                     </span>
                   </div>
                 </div>
@@ -242,7 +231,7 @@ export default function FootballSkillsClinicPage() {
                       Format
                     </span>
                     <span className="mt-1.5 block text-xs font-semibold text-white leading-normal">
-                      2-day summer clinic, both evenings.
+                      2-day group session. Athletes can attend one or both evenings.
                     </span>
                   </div>
                   <div>
@@ -276,13 +265,11 @@ export default function FootballSkillsClinicPage() {
 
           {/* Reserve A Spot — sits below the pinned area so the flyer releases here */}
           <div id="register" data-reveal className="relative mt-10 border-l-4 border-aio-red py-2 pl-6 sm:pl-8 scroll-mt-28">
-            {/* Early rate badge (scaled down for compactness) */}
             <div className="mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
-              <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Early Rate Active</span>
+              <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Group Session Registration</span>
               <span className="font-brand-display text-sm font-black text-white leading-none">
-                $100<span className="ml-0.5 text-[9px] font-semibold text-white">/athlete</span>
+                $20<span className="ml-0.5 text-[9px] font-semibold text-white">/day</span>
               </span>
-              <span className="text-[7.5px] font-semibold text-white leading-none">Through July 18</span>
             </div>
             <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
               Registration
@@ -291,7 +278,7 @@ export default function FootballSkillsClinicPage() {
               Reserve A Spot.
             </h3>
             <p className="mt-4 text-xs font-semibold leading-relaxed text-aio-body">
-              $100 early through July 18, 2026, then $150. Fill in parent info and add each athlete below. AIO will confirm and collect payment.
+              $20 per athlete per day. Select one or both session days below to complete registration.
             </p>
             <div className="mt-8">
               <ClinicRegisterForm />

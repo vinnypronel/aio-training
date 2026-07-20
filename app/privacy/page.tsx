@@ -23,7 +23,7 @@ export default function PrivacyPage() {
         {
           heading: "How We Use Information",
           paragraphs: [
-            "We use the information you share to respond to a training inquiry, register a youth athlete for an event such as the AIO Football Skills Clinic, and process a one-time event registration payment.",
+            "We use the information you share to respond to a training inquiry, register a youth athlete for an event such as the AIO Football Skills Group Session, and process a one-time event registration payment.",
             "We do not sell personal information.",
           ],
         },
