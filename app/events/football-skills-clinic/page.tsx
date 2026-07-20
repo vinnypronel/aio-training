@@ -35,7 +35,7 @@ export default function FootballSkillsClinicPage() {
 
         {/* Ghost typography */}
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-full max-w-[1280px]">
-          <p className="absolute right-5 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[200px]">
+          <p className="absolute right-5 top-6 select-none whitespace-nowrap text-right font-brand-display text-[clamp(5rem,15vw,13rem)] font-black uppercase leading-none text-white/[0.18] md:top-4 lg:translate-x-[265px]">
             Session
           </p>
         </div>
@@ -265,12 +265,6 @@ export default function FootballSkillsClinicPage() {
 
           {/* Reserve A Spot — sits below the pinned area so the flyer releases here */}
           <div id="register" data-reveal className="relative mt-10 border-l-4 border-aio-red py-2 pl-6 sm:pl-8 scroll-mt-28">
-            <div className="mb-4 sm:absolute sm:top-4 sm:right-4 sm:mb-0 inline-flex items-center gap-2.5 border border-aio-red/80 px-3.5 py-1.5">
-              <span className="text-[7.5px] font-black uppercase tracking-[0.2em] text-aio-red leading-none">Group Session Registration</span>
-              <span className="font-brand-display text-sm font-black text-white leading-none">
-                $20<span className="ml-0.5 text-[9px] font-semibold text-white">/day</span>
-              </span>
-            </div>
             <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
               Registration
             </span>

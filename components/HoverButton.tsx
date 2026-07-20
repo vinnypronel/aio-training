@@ -22,7 +22,7 @@ type ButtonProps = BaseProps & {
   href?: never;
   type?: "submit" | "button";
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 type Props = LinkProps | ButtonProps;

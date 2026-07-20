@@ -18,6 +18,27 @@ const sessionDays = [
   { value: "2026-07-26", label: "Sunday, July 26" },
 ];
 
+const attendanceOptions = [
+  {
+    label: "Both Days",
+    description: "Saturday and Sunday",
+    days: ["2026-07-25", "2026-07-26"],
+    price: "$40 per athlete",
+  },
+  {
+    label: "Saturday Only",
+    description: "July 25",
+    days: ["2026-07-25"],
+    price: "$20 per athlete",
+  },
+  {
+    label: "Sunday Only",
+    description: "July 26",
+    days: ["2026-07-26"],
+    price: "$20 per athlete",
+  },
+];
+
 const ageGroups = ["8-12", "13-18"];
 
 const inputClass =
@@ -86,13 +107,8 @@ export default function ClinicRegisterForm() {
     });
   }
 
-  function toggleDay(value: string) {
-    setSelectedDays((prev) => {
-      const next = prev.includes(value)
-        ? prev.filter((day) => day !== value)
-        : [...prev, value];
-      return next.sort();
-    });
+  function selectAttendanceDays(days: string[]) {
+    setSelectedDays([...days].sort());
     if (errors.days) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -417,48 +433,60 @@ export default function ClinicRegisterForm() {
           </button>
         </div>
 
-        {/* Session Days */}
+        {/* Attendance */}
         <div className="border-t border-aio-line pt-6">
           <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-aio-red-on-dark">
-            Session Days *
+            Attendance *
           </p>
           <p className="mt-2 text-xs font-semibold leading-relaxed text-aio-muted">
-            $20 per athlete per day. Select both days for the full 2-day group session.
+            Choose whether each athlete is signing up for both days or just one day.
           </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {sessionDays.map((day) => {
-              const checked = selectedDays.includes(day.value);
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {attendanceOptions.map((option) => {
+              const checked =
+                option.days.length === selectedDays.length &&
+                option.days.every((day) => selectedDays.includes(day));
               return (
                 <button
-                  key={day.value}
+                  key={option.label}
                   type="button"
-                  onClick={() => toggleDay(day.value)}
-                  className={`flex items-center justify-between border px-4 py-3 text-left transition ${
+                  onClick={() => selectAttendanceDays(option.days)}
+                  className={`flex min-h-[106px] flex-col justify-between border px-4 py-3 text-left transition ${
                     checked
                       ? "border-aio-red bg-aio-red/10 text-white"
                       : "border-aio-line text-aio-muted hover:border-aio-red hover:text-white"
                   }`}
                 >
-                  <span className="text-xs font-black uppercase tracking-[0.12em]">
-                    {day.label}
+                  <span>
+                    <span className="block text-xs font-black uppercase tracking-[0.12em]">
+                      {option.label}
+                    </span>
+                    <span className="mt-1 block text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-aio-muted">
+                      {option.description}
+                    </span>
                   </span>
-                  <span
-                    className={`flex h-5 w-5 items-center justify-center border ${
-                      checked ? "border-aio-red bg-aio-red" : "border-aio-line"
-                    }`}
-                  >
-                    {checked && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                        className="h-3 w-3 text-white"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
-                      </svg>
-                    )}
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-[0.68rem] font-black uppercase tracking-[0.1em] text-white">
+                      {option.price}
+                    </span>
+                    <span
+                      className={`flex h-5 w-5 items-center justify-center border ${
+                        checked ? "border-aio-red bg-aio-red" : "border-aio-line"
+                      }`}
+                    >
+                      {checked && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={3}
+                          className="h-3 w-3 text-white"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
+                        </svg>
+                      )}
+                    </span>
                   </span>
                 </button>
               );

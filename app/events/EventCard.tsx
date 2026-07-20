@@ -78,6 +78,10 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
   }
 
   const priceInfo = parsePrice(event.price);
+  const flyerSrc =
+    event.slug === "football-skills-clinic"
+      ? "/assets/images/group_session_flyer.png"
+      : event.flyer;
 
   useEffect(() => {
     if (!isFlyerOpen) return;
@@ -96,12 +100,6 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
   return (
     <>
       <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden bg-transparent transition lg:max-w-none lg:flex-row lg:items-stretch lg:overflow-visible">
-        {/* Full-card link overlay — keeps sibling buttons out of an anchor */}
-        <Link
-          href={`/events/${event.slug}`}
-          aria-label={`${event.title} — view event details`}
-          className="absolute inset-0 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red"
-        />
         {isAdmin && (
           <div className="relative z-20">
             <DeleteEventButton eventId={event.id} />
@@ -127,15 +125,19 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
           </h3>
         </div>
 
-        <div className="relative h-[260px] w-full shrink-0 overflow-hidden bg-aio-black sm:h-[300px] lg:h-auto lg:aspect-[2/3] lg:w-[440px] lg:bg-transparent">
+        <Link
+          href={`/events/${event.slug}`}
+          aria-label={`${event.title} - view event details`}
+          className="relative z-20 block h-[260px] w-full shrink-0 overflow-hidden bg-aio-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red sm:h-[300px] lg:h-auto lg:aspect-[2/3] lg:w-[440px] lg:bg-transparent"
+        >
           <Image
-            src={event.flyer}
+            src={flyerSrc}
             alt={`${event.title} flyer`}
             fill
             sizes="(min-width: 1024px) 540px, 90vw"
             className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
           />
-        </div>
+        </Link>
         <div className="flex flex-1 flex-col gap-7 px-5 py-6 transition lg:justify-between lg:gap-8 lg:px-12 lg:py-11">
           {/* Title + subtitle (badge folded in as a red-tick subtitle, no eyebrow) */}
           <div className="hidden lg:block">
@@ -319,7 +321,10 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 </HoverButton>
                 <HoverButton
                   variant="outline"
-                  onClick={() => setIsFlyerOpen(true)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setIsFlyerOpen(true);
+                  }}
                   className="!min-h-7 w-[92px] px-2 text-[7px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
                 >
                   View Flyer
@@ -366,7 +371,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             {/* Modal Image Wrapper */}
             <div className="relative border border-aio-line bg-aio-black p-2 shadow-2xl">
               <img
-                src={event.flyer}
+                src={flyerSrc}
                 alt={`${event.title} flyer fullscreen`}
                 className="max-h-[calc(80vh/var(--dz,1))] max-w-[calc(85vw/var(--dz,1))] object-contain shadow-lg"
               />
