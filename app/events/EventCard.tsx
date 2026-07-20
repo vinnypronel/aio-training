@@ -168,8 +168,8 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
           <div className="flex flex-col gap-7 lg:gap-8">
             
             {/* Left Column: Event details (Date, Time, Location, Ages) */}
-            <div className="flex flex-col gap-5 lg:gap-4">
-              <div className="flex items-center gap-4 text-white lg:gap-3">
+            <div className="flex flex-col gap-3.5 lg:gap-4">
+              <div className="flex items-center gap-3 text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -177,16 +177,16 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   stroke="currentColor"
                   strokeWidth={2}
                   aria-hidden
-                  className="h-7 w-7 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                  className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 8.25h18M4.5 5.25h15A1.5 1.5 0 0 1 21 6.75v12A1.5 1.5 0 0 1 19.5 20.25h-15A1.5 1.5 0 0 1 3 18.75v-12A1.5 1.5 0 0 1 4.5 5.25Z" />
                 </svg>
-                <span className="text-[1.55rem] font-semibold leading-tight lg:text-xl">
+                <span className="text-lg font-semibold leading-tight lg:text-xl">
                   {event.date}
                 </span>
               </div>
               {sessions[0] && (
-                <div className="flex items-center gap-4 text-white lg:gap-3">
+                <div className="flex items-center gap-3 text-white">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -194,11 +194,11 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                     stroke="currentColor"
                     strokeWidth={2}
                     aria-hidden
-                    className="h-7 w-7 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                    className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
-                  <span className="text-[1.55rem] font-semibold leading-tight lg:text-xl">
+                  <span className="text-lg font-semibold leading-tight lg:text-xl">
                     {sessions[0].time}
                   </span>
                 </div>
@@ -211,7 +211,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/loc relative z-20 inline-flex w-fit items-start gap-4 text-white transition hover:text-aio-red lg:gap-3"
+                className="group/loc relative z-20 inline-flex w-fit items-start gap-3 text-white transition hover:text-aio-red"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -220,17 +220,17 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   stroke="currentColor"
                   strokeWidth={2}
                   aria-hidden
-                  className="mt-1 h-7 w-7 shrink-0 text-aio-red lg:mt-1 lg:h-6 lg:w-6"
+                  className="mt-0.5 h-5 w-5 shrink-0 text-aio-red lg:mt-1 lg:h-6 lg:w-6"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
                 <div className="flex flex-col">
-                  <span className="text-[1.55rem] font-semibold leading-tight lg:text-xl">
+                  <span className="text-lg font-semibold leading-tight lg:text-xl">
                     {event.location.includes(",") ? (
                       <>
                         {event.location.split(",")[0]}
-                        <span className="mt-0.5 block text-[1.55rem] font-semibold leading-normal lg:text-xl">
+                        <span className="mt-0.5 block text-lg font-semibold leading-normal lg:text-xl">
                           {event.location.split(",").slice(1).join(",").trim()}
                         </span>
                       </>
@@ -244,7 +244,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                   viewBox="0 0 16 16"
                   fill="currentColor"
                   aria-hidden
-                  className="mt-1.5 h-5 w-5 shrink-0 opacity-50 transition group-hover/loc:opacity-100 lg:mt-1.5 lg:h-[18px] lg:w-[18px]"
+                  className="mt-1 h-4 w-4 shrink-0 opacity-50 transition group-hover/loc:opacity-100 lg:mt-1.5 lg:h-[18px] lg:w-[18px]"
                 >
                   <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z" />
                   <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z" />
@@ -253,7 +253,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
 
               {/* Age groups as child items */}
               {sessions.length > 0 && (
-                <div className="mt-1 flex flex-col gap-5 lg:gap-4">
+                <div className="mt-1 flex flex-col gap-3.5 lg:gap-4">
                   {sessions.map((s) => {
                     const { age } = parseSessionLabel(s.label);
                     const isTeen = (age || s.label).toLowerCase().includes("13") || (age || s.label).toLowerCase().includes("teen");
@@ -270,7 +270,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             aria-hidden
-                            className="h-7 w-7 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                            className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
                           >
                             <circle cx="12" cy="7" r="4.2" />
                             <path d="M4.5 19.5a7.5 7.5 0 0 1 15 0" />
@@ -286,13 +286,13 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             aria-hidden
-                            className="h-7 w-7 shrink-0 text-aio-red lg:h-6 lg:w-6"
+                            className="h-5 w-5 shrink-0 text-aio-red lg:h-6 lg:w-6"
                           >
                             <circle cx="12" cy="8.5" r="3" />
                             <path d="M7 18.5a5 5 0 0 1 10 0" />
                           </svg>
                         )}
-                        <span className="text-[1.55rem] font-semibold leading-tight lg:text-xl">
+                        <span className="text-lg font-semibold leading-tight lg:text-xl">
                           {age || s.label}
                         </span>
                       </div>
@@ -303,16 +303,16 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             </div>
 
             {/* Right Column: Price and Buttons block (stacks vertically on mobile, side-by-side on desktop) */}
-            <div className="flex items-end justify-between gap-4 lg:w-full lg:flex-row lg:gap-4 lg:-translate-y-[10px]">
+            <div className="flex items-end justify-between gap-3 lg:w-full lg:flex-row lg:gap-4 lg:-translate-y-[10px]">
               <div className="min-w-0 lg:border-t lg:border-aio-line lg:pt-8">
                 <span className="mb-2.5 inline-flex justify-center bg-aio-red px-2.5 py-1 text-center text-[0.6rem] font-black uppercase tracking-[0.16em] text-white lg:inline-block lg:w-auto lg:text-left">
                   Limited Spots
                 </span>
-                <div className="font-brand-display text-[2.65rem] font-black uppercase leading-none text-white lg:text-5xl">
+                <div className="whitespace-nowrap font-brand-display text-[2.15rem] font-black uppercase leading-none text-white lg:text-5xl">
                   {priceInfo.main}
                 </div>
                 {priceInfo.sub && (
-                  <div className="mt-1.5 max-w-[170px] text-[0.64rem] font-semibold uppercase tracking-[0.12em] leading-tight text-aio-muted lg:max-w-[300px] lg:text-xs">
+                  <div className="mt-1.5 max-w-[190px] text-[0.58rem] font-semibold uppercase tracking-[0.12em] leading-tight text-aio-muted lg:max-w-[300px] lg:text-xs">
                     {priceInfo.sub}
                   </div>
                 )}
@@ -321,7 +321,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                 <HoverButton
                   variant="red"
                   href={`/events/${event.slug}`}
-                  className="!min-h-10 w-[132px] px-3 text-[10px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
+                  className="!min-h-9 w-[112px] px-2.5 text-[8px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
                 >
                   More Info
                 </HoverButton>
@@ -331,7 +331,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
                     event.stopPropagation();
                     setIsFlyerOpen(true);
                   }}
-                  className="!min-h-10 w-[132px] px-3 text-[10px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
+                  className="!min-h-9 w-[112px] px-2.5 text-[8px] lg:!min-h-11 lg:w-[145px] lg:px-5 lg:text-[12px]"
                 >
                   View Flyer
                 </HoverButton>
