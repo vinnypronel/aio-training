@@ -49,7 +49,7 @@ export default function Home() {
               </span>
             </span>
           </h1>
-          <p className="hero-item mt-6 max-w-[680px] text-base font-semibold leading-7 text-white sm:text-lg md:leading-8" style={{ animationDelay: "560ms" }}>
+          <p className="hero-item mx-auto mt-6 max-w-[34ch] text-center text-base font-semibold leading-7 text-white text-balance sm:mx-0 sm:max-w-[680px] sm:text-left sm:text-lg md:leading-8" style={{ animationDelay: "560ms" }}>
             Sport-specific training for baseball, football, basketball, soccer,
             and private athlete development. Parents get a clear plan. Athletes
             get focused reps that carry into the season.
