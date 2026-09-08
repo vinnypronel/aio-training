@@ -136,3 +136,28 @@ export async function deleteEvent(formData: FormData) {
 
   revalidatePath("/events");
 }
+
+export async function toggleArchiveEvent(formData: FormData) {
+  const session = await getSession();
+  if (!session) redirect("/admin");
+
+  const id = formData.get("id") as string;
+  if (!id) return;
+
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event) return;
+
+  const isCurrentlyArchived =
+    event.tag.toLowerCase().includes("past") ||
+    event.tag.toLowerCase().includes("archive");
+
+  const newTag = isCurrentlyArchived ? "Open — Limited Spots" : "Past Event";
+
+  await prisma.event.update({
+    where: { id },
+    data: { tag: newTag },
+  });
+
+  revalidatePath("/events");
+}
+

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteEventButton from "./DeleteEventButton";
+import ArchiveEventButton from "./ArchiveEventButton";
 import HoverButton from "@/components/HoverButton";
 
 export interface EventSession {
@@ -66,6 +67,34 @@ function parsePrice(price: string) {
   };
 }
 
+function renderEventTitle(title: string) {
+  if (title.includes("Group Session")) {
+    return (
+      <>
+        {title.replace("Group Session", "").trim()}
+        <span className="block">Group Session</span>
+      </>
+    );
+  }
+  if (title.includes("Skills Clinic")) {
+    return (
+      <>
+        {title.replace("Skills Clinic", "").trim()}
+        <span className="block">Skills Clinic</span>
+      </>
+    );
+  }
+  if (title.includes("Combine Event")) {
+    return (
+      <>
+        {title.replace("Combine Event", "").trim()}
+        <span className="block text-aio-red">Combine Event</span>
+      </>
+    );
+  }
+  return title;
+}
+
 export default function EventCard({ event, isAdmin }: EventCardProps) {
   const [isFlyerOpen, setIsFlyerOpen] = useState(false);
   const [isMapsOpen, setIsMapsOpen] = useState(false);
@@ -82,6 +111,9 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
   const flyerSrc = isFootballGroupSession
     ? "/assets/images/group_session_flyer.png"
     : event.flyer;
+  const isArchived =
+    event.tag?.toLowerCase().includes("past") ||
+    event.tag?.toLowerCase().includes("archive");
   const locationQuery = encodeURIComponent(displayLocation);
   const defaultMapsHref = `geo:0,0?q=${locationQuery}`;
   const appleMapsHref = `https://maps.apple.com/?q=${locationQuery}`;
@@ -124,6 +156,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
       <div className="group relative mx-auto flex w-full max-w-[460px] flex-col overflow-hidden bg-transparent transition lg:max-w-none lg:flex-row lg:items-stretch lg:overflow-visible">
         {isAdmin && (
           <div className="relative z-20">
+            <ArchiveEventButton eventId={event.id} isArchived={isArchived} />
             <DeleteEventButton eventId={event.id} />
           </div>
         )}
@@ -131,52 +164,29 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
         {/* Title shown above flyer on mobile only */}
         <div className="lg:hidden px-5 mb-4">
           <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white">
-            {displayTitle.includes("Group Session") ? (
-              <>
-                {displayTitle.replace("Group Session", "").trim()}
-                <span className="block">Group Session</span>
-              </>
-            ) : displayTitle.includes("Skills Clinic") ? (
-              <>
-                {displayTitle.replace("Skills Clinic", "").trim()}
-                <span className="block">Skills Clinic</span>
-              </>
-            ) : (
-              displayTitle
-            )}
+            {renderEventTitle(displayTitle)}
           </h3>
         </div>
 
         <Link
           href={`/events/${event.slug}`}
           aria-label={`${displayTitle} - view event details`}
-          className="relative z-20 block h-[260px] w-full shrink-0 overflow-hidden bg-aio-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red sm:h-[300px] lg:h-auto lg:aspect-[2/3] lg:w-[440px] lg:bg-transparent"
+          className="relative z-20 mx-auto block w-full max-w-[380px] shrink-0 bg-transparent px-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aio-red sm:max-w-[420px] sm:px-0 lg:mx-0 lg:w-[440px] lg:max-w-none lg:px-0"
         >
           <Image
             src={flyerSrc}
             alt={`${displayTitle} flyer`}
-            fill
-            sizes="(min-width: 1024px) 540px, 90vw"
-            className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
+            width={600}
+            height={900}
+            sizes="(min-width: 1024px) 440px, (min-width: 640px) 420px, 90vw"
+            className="h-auto w-full object-contain transition duration-500 group-hover:scale-[1.02]"
           />
         </Link>
         <div className="flex flex-1 flex-col gap-7 px-5 py-6 transition lg:justify-between lg:gap-8 lg:px-12 lg:py-11">
           {/* Title + subtitle (badge folded in as a red-tick subtitle, no eyebrow) */}
           <div className="hidden lg:block">
             <h3 className="font-brand-display text-2xl font-black uppercase leading-[0.95] text-white lg:text-[3.4rem] lg:leading-[0.9]">
-              {displayTitle.includes("Group Session") ? (
-                <>
-                  {displayTitle.replace("Group Session", "").trim()}
-                  <span className="block">Group Session</span>
-                </>
-              ) : displayTitle.includes("Skills Clinic") ? (
-                <>
-                  {displayTitle.replace("Skills Clinic", "").trim()}
-                  <span className="block">Skills Clinic</span>
-                </>
-              ) : (
-                displayTitle
-              )}
+              {renderEventTitle(displayTitle)}
             </h3>
           </div>
 
@@ -335,15 +345,20 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
             {/* Right Column: Price and Buttons block (stacks vertically on mobile, side-by-side on desktop) */}
             <div className="order-first flex items-start justify-between gap-3 lg:order-none lg:w-full lg:flex-row lg:items-end lg:gap-4 lg:-translate-y-[10px]">
               <div className="min-w-0 lg:border-t lg:border-aio-line lg:pt-8">
-                <span className="mb-2.5 inline-flex justify-center bg-aio-red px-2.5 py-1 text-center text-[0.6rem] font-black uppercase tracking-[0.16em] text-white lg:inline-block lg:w-auto lg:text-left">
-                  Limited Spots
-                </span>
+                {isArchived ? (
+                  <span className="mb-2.5 inline-flex justify-center border border-neutral-700 bg-neutral-800/90 px-2.5 py-1 text-center text-[0.6rem] font-black uppercase tracking-[0.16em] text-neutral-300 lg:inline-block lg:w-auto lg:text-left">
+                    Past Event
+                  </span>
+                ) : (
+                  <span className="mb-2.5 inline-flex justify-center bg-aio-red px-2.5 py-1 text-center text-[0.6rem] font-black uppercase tracking-[0.16em] text-white lg:inline-block lg:w-auto lg:text-left">
+                    Limited Spots
+                  </span>
+                )}
                 <div className="whitespace-nowrap font-brand-display text-[2.15rem] font-black uppercase leading-none text-white lg:text-5xl">
                   {priceInfo.main}
                 </div>
                 {priceInfo.sub && (
                   <div className="mt-1.5 max-w-[190px] text-[0.58rem] font-semibold uppercase tracking-[0.12em] leading-tight text-aio-muted lg:max-w-[300px] lg:text-xs">
-                    {priceInfo.sub}
                   </div>
                 )}
               </div>

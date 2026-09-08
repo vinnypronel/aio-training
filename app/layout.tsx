@@ -7,6 +7,7 @@ import AdminBadge from "@/components/AdminBadge";
 import ScrollReveal from "@/components/ScrollReveal";
 import MetaPixel from "@/components/MetaPixel";
 import ConsentBanner from "@/components/ConsentBanner";
+import SmoothScroll from "@/components/SmoothScroll";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
@@ -54,6 +55,7 @@ export default function RootLayout({
         <Footer />
         <RouteTransition />
         <AdminBadge />
+        <SmoothScroll />
         <ScrollReveal />
         <MetaPixel />
         <ConsentBanner />

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import HoverButton from "@/components/HoverButton";
 import FlyerDropdown from "./FlyerDropdown";
-import ClinicRegisterForm from "./ClinicRegisterForm";
 
 export const metadata = {
   title: "Football Skills Group Session | AIO Training",
@@ -44,9 +43,14 @@ export default function FootballSkillsClinicPage() {
           {/* Header Grid */}
           <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-end pb-10">
             <div>
-              <p className="hero-item text-xs font-black uppercase tracking-[0.24em] text-aio-red">
-                2-Day Group Session
-              </p>
+              <div className="hero-item flex items-center gap-3">
+                <span className="text-xs font-black uppercase tracking-[0.24em] text-aio-red">
+                  2-Day Group Session
+                </span>
+                <span className="border border-neutral-700 bg-neutral-800/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-neutral-300">
+                  Past Event — Concluded
+                </span>
+              </div>
               <h1 className="hero-item mt-4 font-brand-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.95] text-white" style={{ animationDelay: "120ms" }}>
                 AIO Football<br />Skills Group Session
               </h1>
@@ -55,10 +59,10 @@ export default function FootballSkillsClinicPage() {
               </p>
             </div>
             <div className="hero-item flex flex-col gap-3 sm:flex-row lg:flex-col lg:w-full lg:max-w-[260px] lg:justify-self-end" style={{ animationDelay: "400ms" }}>
-              <HoverButton href="#register" className="text-xs tracking-[0.14em]">
-                Register Now
+              <HoverButton href="/booking" className="text-xs tracking-[0.14em]">
+                Book Private Training
               </HoverButton>
-              <HoverButton href="/events" variant="outline" className="text-xs tracking-[0.14em]">
+              <HoverButton href="/events#past-events" variant="outline" className="text-xs tracking-[0.14em]">
                 Back to Events
               </HoverButton>
             </div>
@@ -263,22 +267,27 @@ export default function FootballSkillsClinicPage() {
             </div>
           </div>
 
-          {/* Reserve A Spot — sits below the pinned area so the flyer releases here */}
-          <div id="register" data-reveal className="relative mt-10 border-l-4 border-aio-red py-2 pl-6 sm:pl-8 scroll-mt-28">
-            <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-aio-red-on-dark leading-none">
-              Registration
+          {/* Registration Section — Concluded Event */}
+          <div id="register" data-reveal className="relative mt-10 border-l-4 border-neutral-600 bg-neutral-900/60 p-6 sm:p-8 scroll-mt-28">
+            <span className="inline-block border border-neutral-700 bg-neutral-800/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-neutral-300">
+              Registration Closed — Past Event
             </span>
-            <h3 className="mt-3 font-brand-display text-4xl sm:text-5xl font-black uppercase text-white leading-none">
-              Reserve A Spot.
+            <h3 className="mt-3 font-brand-display text-3xl sm:text-4xl font-black uppercase text-white leading-none">
+              This Session Has Concluded.
             </h3>
-            <p className="mt-4 text-xs font-semibold leading-relaxed text-aio-body">
-              $20 per athlete per day. Select one or both session days below to complete registration.
+            <p className="mt-3 max-w-xl text-sm font-semibold leading-relaxed text-aio-muted">
+              The AIO Football Skills Group Session took place on July 25-26, 2026. Online registration is now closed. Check our events board for future sessions or get in touch to schedule private 1-on-1 and small-group training.
             </p>
-            <div className="mt-8">
-              <ClinicRegisterForm />
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <HoverButton href="/booking">
+                Book Private Training
+              </HoverButton>
+              <HoverButton href="/events#past-events" variant="outline">
+                Back To Events Archive
+              </HoverButton>
             </div>
             <p className="mt-6 text-[10px] font-bold text-aio-muted">
-              Prefer to reserve by phone?{" "}
+              Have questions about future dates?{" "}
               <a
                 href="tel:+17144408053"
                 className="text-aio-red-on-dark hover:text-white transition"
