@@ -74,7 +74,7 @@ export default function MobileMenu() {
       inert={!open}
       className={`fixed inset-x-0 bottom-0 top-20 z-40 outline-none lg:top-24 lg:hidden ${open ? "" : "pointer-events-none"}`}
     >
-      {/* Red flash curtain — leads the reveal, trails the exit */}
+      {/* Red flash curtain - leads the reveal, trails the exit */}
       <div
         aria-hidden
         className={`absolute inset-0 origin-top transform-gpu bg-aio-red transition-transform will-change-transform ${CURTAIN_EASE} motion-reduce:transition-none ${

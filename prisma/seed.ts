@@ -22,8 +22,8 @@ async function main() {
       date: "July 25-26, 2026",
       location: "Heavenly Farms Park, East Brunswick, NJ",
       sessions: JSON.stringify([
-        { label: "Younger athletes — Ages 8-12", time: "6:00 PM - 8:00 PM" },
-        { label: "Teen athletes — Ages 13-18", time: "6:00 PM - 8:00 PM" },
+        { label: "Younger athletes - Ages 8-12", time: "6:00 PM - 8:00 PM" },
+        { label: "Teen athletes - Ages 13-18", time: "6:00 PM - 8:00 PM" },
       ]),
       price: "$20 per day - $40 both days per athlete",
       sortOrder: 1,
@@ -37,8 +37,8 @@ async function main() {
       date: "July 25-26, 2026",
       location: "Heavenly Farms Park, East Brunswick, NJ",
       sessions: JSON.stringify([
-        { label: "Younger athletes — Ages 8-12", time: "6:00 PM - 8:00 PM" },
-        { label: "Teen athletes — Ages 13-18", time: "6:00 PM - 8:00 PM" },
+        { label: "Younger athletes - Ages 8-12", time: "6:00 PM - 8:00 PM" },
+        { label: "Teen athletes - Ages 13-18", time: "6:00 PM - 8:00 PM" },
       ]),
       price: "$20 per day - $40 both days per athlete",
       sortOrder: 1,

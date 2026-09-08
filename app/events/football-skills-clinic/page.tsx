@@ -48,7 +48,7 @@ export default function FootballSkillsClinicPage() {
                   2-Day Group Session
                 </span>
                 <span className="border border-neutral-700 bg-neutral-800/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-neutral-300">
-                  Past Event — Concluded
+                  Past Event - Concluded
                 </span>
               </div>
               <h1 className="hero-item mt-4 font-brand-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.95] text-white" style={{ animationDelay: "120ms" }}>
@@ -267,10 +267,10 @@ export default function FootballSkillsClinicPage() {
             </div>
           </div>
 
-          {/* Registration Section — Concluded Event */}
+          {/* Registration Section - Concluded Event */}
           <div id="register" data-reveal className="relative mt-10 border-l-4 border-neutral-600 bg-neutral-900/60 p-6 sm:p-8 scroll-mt-28">
             <span className="inline-block border border-neutral-700 bg-neutral-800/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-neutral-300">
-              Registration Closed — Past Event
+              Registration Closed - Past Event
             </span>
             <h3 className="mt-3 font-brand-display text-3xl sm:text-4xl font-black uppercase text-white leading-none">
               This Session Has Concluded.

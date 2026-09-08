@@ -15,7 +15,7 @@ export async function generateMetadata({
   if (!event) return { title: "Event Not Found | AIO Training" };
   return {
     title: `${event.title} | AIO Training`,
-    description: `${event.title} — ${event.date} at ${event.location}.`,
+    description: `${event.title} - ${event.date} at ${event.location}.`,
   };
 }
 
@@ -62,7 +62,7 @@ export default async function EventDetailPage({
             </span>
             {isArchived && (
               <span className="border border-neutral-700 bg-neutral-800/90 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.16em] text-neutral-300">
-                Past Event — Concluded
+                Past Event - Concluded
               </span>
             )}
           </div>

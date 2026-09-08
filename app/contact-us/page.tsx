@@ -84,7 +84,7 @@ export default function ContactUsPage() {
 
       <section className="bg-aio-paper pt-20 pb-8 md:pt-24 md:pb-10">
         <div data-reveal-group className="mx-auto grid max-w-[1280px] gap-8 px-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
-          {/* Left — contact info card */}
+          {/* Left - contact info card */}
           <div data-reveal className="bg-white p-8 text-aio-ink shadow-[0_20px_60px_rgba(0,0,0,0.22)] md:p-10">
             <p className="text-xs font-black uppercase tracking-[0.28em] text-aio-red">
               Get In Touch
@@ -123,7 +123,7 @@ export default function ContactUsPage() {
             </dl>
           </div>
 
-          {/* Right — dark form card */}
+          {/* Right - dark form card */}
           <div id="contact-form" data-reveal className="bg-aio-black px-6 py-10 text-white shadow-[0_20px_60px_rgba(0,0,0,0.55)] md:px-10 md:py-12">
             <h2 className="font-brand-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-black uppercase leading-none">
               Send Us A Message

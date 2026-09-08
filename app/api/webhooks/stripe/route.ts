@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       await prisma.booking
         .update({ where: { id: bookingId }, data: { status: "confirmed" } })
         .catch(() => {
-          // booking may already be confirmed by the success page — ignore
+          // booking may already be confirmed by the success page - ignore
         });
     }
   }

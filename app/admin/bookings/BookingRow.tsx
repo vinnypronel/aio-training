@@ -37,7 +37,7 @@ export default function BookingRow({ booking }: BookingProps) {
     ? `${booking.timeSlot.date} · ${booking.timeSlot.startTime}–${booking.timeSlot.endTime}`
     : booking.event
     ? booking.event.title
-    : "—";
+    : "-";
 
   return (
     <div className="border border-aio-line bg-aio-panel p-4 md:p-5">

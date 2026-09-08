@@ -663,7 +663,7 @@ export default function BookingForm({ slots: _slots }: { slots: Slot[] }) {
         </div>
   </div>
 
-      {/* Your Information + Athletes — only show after slot is picked */}
+      {/* Your Information + Athletes - only show after slot is picked */}
       {selectedSlot && (
         <div ref={parentInfoRef} className="mt-12 border-t border-aio-line pt-10">
 
@@ -1050,7 +1050,7 @@ export default function BookingForm({ slots: _slots }: { slots: Slot[] }) {
             </button>
           </div>
 
-          {/* Hidden field — serialized athlete data */}
+          {/* Hidden field - serialized athlete data */}
           <input
             type="hidden"
             name="athletes"
@@ -1066,7 +1066,7 @@ export default function BookingForm({ slots: _slots }: { slots: Slot[] }) {
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-aio-body">Session Type</span>
                 <span className="text-sm font-black uppercase text-white">
-                  {sessionTypes.find((t) => t.value === selectedType)?.label ?? "—"}
+                  {sessionTypes.find((t) => t.value === selectedType)?.label ?? "-"}
                 </span>
               </div>
               {selectedSlotInfo && (

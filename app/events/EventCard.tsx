@@ -29,10 +29,11 @@ interface EventCardProps {
 }
 
 function parseSessionLabel(label: string) {
-  // Split "Group — Ages X-Y" on an em dash, en dash, or spaced hyphen so the
-  // age reads cleanly regardless of how the label is punctuated. The regex
-  // requires surrounding whitespace so the internal hyphen in "8-12" is kept.
-  const parts = label.split(/\s+[—–-]\s+/);
+  // Split "Group - Ages X-Y" on an em dash, en dash, or spaced hyphen so the
+  // age reads cleanly regardless of how the label is punctuated. Existing rows
+  // in the database still contain em dashes, so the escapes below must stay.
+  // The regex requires surrounding whitespace so the hyphen in "8-12" is kept.
+  const parts = label.split(/\s+[-\u2013\u2014]\s+/);
   if (parts.length > 1) {
     return {
       group: parts[0].trim(),
@@ -123,7 +124,7 @@ export default function EventCard({ event, isAdmin }: EventCardProps) {
     const parsed = JSON.parse(event.sessions);
     if (Array.isArray(parsed)) sessions = parsed;
   } catch {
-    // malformed session data — render the card without the session grid
+    // malformed session data - render the card without the session grid
   }
 
   const priceInfo = parsePrice(displayPrice);

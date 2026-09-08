@@ -157,7 +157,7 @@ export default function AddEventForm() {
               required
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              placeholder="Open — Limited Spots"
+              placeholder="Open - Limited Spots"
               className={`mt-2 ${inputClass}`}
             />
           </div>

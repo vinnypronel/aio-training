@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 
 // Durable per-key limiter. On Vercel (serverless) it uses Upstash Redis so the
 // count survives across invocations and instances. With no Upstash env set
-// (local dev) it falls back to an in-memory map — fine for a single process.
+// (local dev) it falls back to an in-memory map - fine for a single process.
 const hasUpstash = !!(
   process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
 );

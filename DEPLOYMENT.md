@@ -1,103 +1,107 @@
-# AIO Training — Production Deployment Guide
+# AIO Training - Deployment and Operations
 
-This app is a Next.js 16 site with a SQLite database (via Prisma), admin portal,
-public booking, and Stripe checkout for the Football Skills Group Session.
+Next.js 16 app on Vercel, backed by Neon Postgres via Prisma 7. Public booking,
+events, Stripe checkout, and an admin portal at `/admin`.
 
-## Important: how data works
+## Hosting
 
-The SQLite database file (`dev.db`) is **gitignored — it does not travel with the
-code**. Every fresh clone/deploy starts with no database until you run the setup
-steps below. On the production server the DB file lives on disk next to the app;
-**back it up regularly** (it contains all bookings, customers, and events).
+- Host: Vercel, project `aio-training`
+- Domain: `trainingaio.com`, canonical host is `www.trainingaio.com`
+- Deploys: automatic on every push to `main`. There is no manual deploy step.
+- File uploads: Vercel Blob (admin flyer uploads). Not the local filesystem.
+- Rate limiting: Upstash Redis, falls back to in-memory locally.
 
-Uploaded event flyers land in `public/assets/uploads/` — that folder is also
-production data. Back it up together with the DB.
+## The database: two branches, and why it matters
 
-## Hosting requirements
+Neon project `aio-training` (`green-shadow-61415574`) has **two branches**:
 
-Because of SQLite + local file uploads, deploy to a host with a **persistent
-filesystem and a single instance** — a VPS (DigitalOcean, Hetzner, Lightsail),
-Railway/Render with a persistent disk, etc.
+| Branch | Endpoint | Used by |
+| --- | --- | --- |
+| `main` | `ep-green-voice-atecc73g` | **Production.** Set as `DATABASE_URL` in Vercel. Holds real bookings and customers. |
+| `dev` | `ep-calm-butterfly-atvpn3gz` | **Local only.** What `.env.local` points at. Effectively a scratch copy. |
 
-> ⚠️ **Vercel/Netlify will NOT work as-is** — their filesystems are ephemeral, so
-> the database and uploaded flyers would be wiped on every deploy. Moving to
-> Postgres (e.g. Neon) + blob storage would be required first.
+Read this twice, because it has already cost a debugging session:
 
-## One-time setup on the server
+- **Your local app and the live site do not share a database.** Editing content
+  locally, including running the seed, changes nothing on trainingaio.com.
+- **The build never seeds.** The build script is
+  `prisma generate && prisma migrate deploy && next build`. Migrations run,
+  seeds do not, deliberately, so a deploy can never overwrite live data.
+- Therefore **`prisma/seed.ts` is dev-only scaffolding.** Treat it as a way to
+  populate a fresh dev branch, never as the source of truth for the live site.
 
-1. **Install Node 22+** and clone the repo.
+### How to change live content
 
-2. **Create `.env`** in the project root (copy from `.env.example`):
+Preferred: **use the admin portal** at `https://www.trainingaio.com/admin`.
+Events, bookings, calendar slots, and customers are all editable there. This is
+the path Jon and the trainers use, and it requires no dev involvement.
 
-   ```env
-   DATABASE_URL="file:./dev.db"
-   SESSION_SECRET="<run: openssl rand -hex 32>"
-   ADMIN_EMAIL="<login email for the admin portal>"
-   ADMIN_PASSWORD="<strong password>"
-   STRIPE_SECRET_KEY="sk_live_..."
-   ```
+Only if the admin UI genuinely cannot express the change, write to the `main`
+branch directly through the Neon console or API. Before any such write:
 
-   - `SESSION_SECRET` must be at least 32 chars — the app refuses to start without it.
-   - Stripe live keys come from <https://dashboard.stripe.com/apikeys>; the group session
-     checkout charges the app's configured flat registration amount.
+1. Confirm you are on branch `main`, not `dev`.
+2. `SELECT` the rows first and read what is actually there. Production values
+   often differ from what the seed file says, because admins have edited them.
+3. Prefer targeted `UPDATE`/`INSERT` over running the seed. The seed's `upsert`
+   blocks overwrite title, price, flyer, and date, which are fields real
+   bookings depend on.
 
-3. **Create the database and seed the group session event:**
+## Environment variables
 
-   ```bash
-   npm install
-   npm run db:push
-   npm run db:seed
-   ```
+`.env.example` is the authoritative list, with notes on each variable. Copy it
+to `.env.local` for local work; set the same keys in Vercel for production.
 
-4. **Build and start:**
+Values differ per environment. In particular `DATABASE_URL` and `DIRECT_URL`
+must point at the `dev` branch locally and the `main` branch in Vercel, and
+Stripe keys must be test keys locally and live keys in production.
 
-   ```bash
-   npm run build
-   npm start          # serves on port 3000
-   ```
-
-   Keep it alive with a process manager, e.g. `pm2 start npm --name aio -- start`.
-
-## Hooking up the domain
-
-1. Point the domain's **A record** at the server IP (both `trainingaio.com` and `www`).
-2. Put **nginx or Caddy** in front as a reverse proxy to `localhost:3000` with HTTPS.
-   Caddy is the least-effort option — automatic HTTPS:
-
-   ```
-   # /etc/caddy/Caddyfile
-   trainingaio.com, www.trainingaio.com {
-       reverse_proxy localhost:3000
-   }
-   ```
-
-3. The session cookie is `secure` in production, so HTTPS is required for admin login.
-
-## Day-to-day: how the team uses the site
-
-- **Admin portal:** `https://trainingaio.com/admin` — log in with `ADMIN_EMAIL` / `ADMIN_PASSWORD`.
-- **Add bookable times:** Dashboard → **Calendar** → add slots (date, time, type,
-  capacity). Those slots immediately appear on the public `/booking` page.
-- **Handle requests:** Dashboard → **Bookings** — new requests arrive with status
-  `new`; work them through `contacted → confirmed → completed`.
-- **Events:** Dashboard → **Events** — add/remove events with flyer uploads; they
-  appear on `/events` instantly.
-- **Customers:** Dashboard → **Customers** — contact info from every booking.
-
-## Updating the site later
+## Local development
 
 ```bash
-git pull
 npm install
-npm run db:push   # applies any schema changes, keeps data
-npm run build
-pm2 restart aio
+npx prisma generate
+npm run dev          # port 3001
 ```
 
-## Backups (do this)
-
-Cron a nightly copy of the two data locations, e.g.:
+Reseed the dev branch when it is empty:
 
 ```bash
-0 3 * * * cp /path/to/app/dev.db /backups/aio-$(date +\%F).db && cp -r /path/to/app/public/assets/uploads /backups/uploads-$(date +\%F)
+npm run db:seed      # writes to whatever DATABASE_URL points at, so check it first
 ```
+
+Never run `npm` in the outer `aio-training` folder. The real project root is the
+inner `aio-training/aio-training`.
+
+## Schema changes
+
+```bash
+npx prisma migrate dev --name <change>   # creates the migration locally
+git push                                  # Vercel runs `prisma migrate deploy`
+```
+
+The `dev` and `main` branches drift if a migration is only applied to one. After
+a schema change, confirm both branches are current.
+
+## Backups
+
+Neon retains 6 hours of history on this project, which is short. Bookings and
+customers only exist in the `main` branch, so before any risky write, take a
+Neon snapshot or branch from `main` as a restore point.
+
+Flyer uploads live in Vercel Blob and are not covered by database backups.
+
+## Troubleshooting: "I pushed but the site didn't change"
+
+Work down this list in order:
+
+1. **Vercel > Deployments.** Find the deployment for your commit SHA. If it is
+   missing, the Git integration or production branch setting is wrong. If it is
+   red, read the build log.
+2. **Is the change actually code?** If what you changed was event text, prices,
+   flyers, or dates, that is database content, and shipping code will never
+   move it. See "How to change live content" above.
+3. **Did you seed the wrong branch?** The most likely answer. Your seed hit
+   `dev`; production reads `main`.
+4. **Check the live HTML, not just your browser.**
+   `curl -s https://www.trainingaio.com/<path> | grep "<something you added>"`
+   rules out local caching.

@@ -27,7 +27,7 @@ export default function FlyerDropdown() {
 
       {/*
         CSS grid-template-rows trick: animates from 0fr → 1fr
-        This is the smoothest CSS height animation — no max-height jump,
+        This is the smoothest CSS height animation - no max-height jump,
         no layout shift, and the inner div stays in document flow so
         Good To Know naturally slides down.
       */}

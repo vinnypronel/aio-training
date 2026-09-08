@@ -519,7 +519,7 @@ export default function ClinicRegisterForm() {
           </div>
         </div>
 
-        {/* Order summary — only shown when form has parent info + an athlete name */}
+        {/* Order summary - only shown when form has parent info + an athlete name */}
         {showSummary && (
           <div className="border border-aio-line bg-aio-panel/40 p-4">
             <p className="text-[0.58rem] font-black uppercase tracking-[0.2em] text-aio-muted">

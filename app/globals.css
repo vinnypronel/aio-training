@@ -300,13 +300,13 @@ h4 {
 
    The desktop layout is designed at a 1920px viewport. On any other desktop
    width, scale the entire page proportionally (like a zoomed photo) so every
-   monitor shows the identical composition — same relative positions, sizes,
+   monitor shows the identical composition - same relative positions, sizes,
    and margins. Viewport units (svh/vh heroes) are exempt from zoom per spec,
    so full-screen sections still fill the screen exactly.
 --------------------------------------------------------------------------- */
 @media (min-width: 1024px) {
   html {
-    /* 100vw ÷ 1920px as a plain number — tan(atan2()) is the widely
+    /* 100vw ÷ 1920px as a plain number - tan(atan2()) is the widely
        supported way to divide two lengths in CSS. All var(--dz, 1)
        usages fall back to 1 below this breakpoint. */
     --dz: tan(atan2(100vw, 1920px));

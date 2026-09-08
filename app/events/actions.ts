@@ -151,7 +151,7 @@ export async function toggleArchiveEvent(formData: FormData) {
     event.tag.toLowerCase().includes("past") ||
     event.tag.toLowerCase().includes("archive");
 
-  const newTag = isCurrentlyArchived ? "Open — Limited Spots" : "Past Event";
+  const newTag = isCurrentlyArchived ? "Open - Limited Spots" : "Past Event";
 
   await prisma.event.update({
     where: { id },

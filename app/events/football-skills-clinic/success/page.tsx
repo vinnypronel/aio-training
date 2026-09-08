@@ -25,7 +25,7 @@ export default async function ClinicSuccessPage({
       amountTotal = session.amount_total || 0;
 
       // Trust only the booking id Stripe stored in the session's own metadata,
-      // never a value passed in the URL — otherwise a paid session URL could be
+      // never a value passed in the URL - otherwise a paid session URL could be
       // replayed to confirm arbitrary unpaid bookings.
       const metaBookingId = session.metadata?.bookingId;
       if (session.payment_status === "paid" && metaBookingId) {
@@ -36,7 +36,7 @@ export default async function ClinicSuccessPage({
         confirmed = true;
       }
     } catch {
-      // session retrieval failed — still show success UI
+      // session retrieval failed - still show success UI
     }
   }
 
