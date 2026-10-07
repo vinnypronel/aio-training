@@ -31,7 +31,17 @@ export default function Scrollbar() {
 
     const update = () => {
       const { size, travel, max } = metrics();
-      const progress = max ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+      // Prefer Lenis's own progress: it tracks the true scroll range (so the
+      // thumb reaches the very bottom even with iOS's dynamic address bar) and
+      // is frame-accurate, which also reads smoother than raw window.scrollY.
+      const lenis = window.__lenis;
+      let progress: number;
+      if (lenis && lenis.limit > 0 && Number.isFinite(lenis.progress)) {
+        progress = lenis.progress;
+      } else {
+        progress = max ? window.scrollY / max : 0;
+      }
+      progress = Math.max(0, Math.min(1, progress || 0));
       thumb.style.height = `${size}px`;
       thumb.style.transform = `translateY(${4 + progress * travel}px)`;
       thumb.hidden = max === 0;
