@@ -7,6 +7,7 @@ import AdminBadge from "@/components/AdminBadge";
 import ScrollReveal from "@/components/ScrollReveal";
 import MetaPixel from "@/components/MetaPixel";
 import ConsentBanner from "@/components/ConsentBanner";
+import Scrollbar from "@/components/Scrollbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -41,6 +42,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-aio-black text-white antialiased">
+        {/* Proportional desktop downscale. The CSS `zoom: tan(atan2(100vw,1920px))`
+            rule only works in newer Chrome; iPad Safari and older engines reject
+            the trig expression, leaving the 1920px design at full size so it
+            overflows and clips. Drive the same ratio (innerWidth / 1920) from JS
+            so every browser >=1024px shows the identical composition, scaled.
+            Runs before paint to avoid a flash; updates on resize and rotation. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){function s(){var w=window.innerWidth,h=document.documentElement;if(w>=1024){var z=w/1920;h.style.setProperty('--dz',z);h.style.zoom=z;}else{h.style.removeProperty('--dz');h.style.zoom='';}}s();window.addEventListener('resize',s);window.addEventListener('orientationchange',s);})();",
+          }}
+        />
         {/* Arm the reveal system before first paint so above-fold content
             enters instead of flashing. If hydration never happens (JS off or
             crashed), the failsafe un-hides everything after 4s. */}
@@ -51,7 +64,7 @@ export default function RootLayout({
           }}
         />
         <Nav />
-        <main className="flex-1 pt-20 lg:pt-24 overflow-x-clip">{children}</main>
+        <main id="main-content" className="flex-1 pt-20 lg:pt-24 overflow-x-clip">{children}</main>
         <Footer />
         <RouteTransition />
         <AdminBadge />
@@ -59,6 +72,7 @@ export default function RootLayout({
         <ScrollReveal />
         <MetaPixel />
         <ConsentBanner />
+        <Scrollbar />
         <Analytics />
       </body>
     </html>

@@ -153,6 +153,49 @@ body {
   background: var(--aio-black);
 }
 
+/* Auto-hiding custom page scrollbar (component: components/Scrollbar.tsx).
+   The native bar is hidden only once the component mounts and adds this class,
+   so the native bar still works if JS fails. */
+html.overlay-scrollbar {
+  scrollbar-width: none;
+  scrollbar-gutter: auto;
+}
+
+html.overlay-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.page-scrollbar {
+  position: fixed;
+  top: 0;
+  right: 3px;
+  z-index: 9998;
+  width: 7px;
+  border-radius: 0;
+  background: var(--aio-red);
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  transition: opacity 400ms ease;
+}
+
+.page-scrollbar:hover {
+  background: var(--aio-red-hover);
+}
+
+.page-scrollbar[data-visible="true"],
+.page-scrollbar:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-scrollbar {
+    transition: none;
+  }
+}
+
 .footer-link {
   background-image: linear-gradient(
     to right,
