@@ -19,7 +19,9 @@ export default function Scrollbar() {
       const viewport = document.documentElement.clientHeight;
       const height = document.documentElement.scrollHeight;
       const track = Math.max(0, viewport - 8);
-      const size = Math.min(track, Math.max(36, (viewport / height) * track));
+      // Shorter minimum thumb on mobile so it reads slimmer.
+      const minThumb = window.innerWidth < 768 ? 28 : 36;
+      const size = Math.min(track, Math.max(minThumb, (viewport / height) * track));
       return { size, travel: track - size, max: Math.max(0, height - viewport) };
     };
 

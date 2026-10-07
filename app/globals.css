@@ -184,6 +184,14 @@ html.overlay-scrollbar::-webkit-scrollbar {
   background: var(--aio-red-hover);
 }
 
+/* Slimmer bar on mobile. */
+@media (max-width: 767px) {
+  .page-scrollbar {
+    width: 5px;
+    right: 2px;
+  }
+}
+
 .page-scrollbar[data-visible="true"],
 .page-scrollbar:focus-visible {
   opacity: 1;
@@ -197,6 +205,8 @@ html.overlay-scrollbar::-webkit-scrollbar {
 }
 
 .footer-link {
+  position: relative;
+  display: inline-block;
   background-image: linear-gradient(
     to right,
     var(--aio-red) 50%,
@@ -207,15 +217,45 @@ html.overlay-scrollbar::-webkit-scrollbar {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  transition: background-position 0.35s ease;
+  transition: background-position 0.35s ease, transform 0.2s ease;
 }
 
+/* Red underline that grows left-to-right on hover (keeps the color fill above). */
+.footer-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: var(--aio-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.24s ease;
+}
+
+/* Color fill (includes the active/current-page state). */
 .footer-link:hover,
 .footer-link:focus-visible,
 .footer-link.active,
 a:hover > .footer-link,
 a:focus-visible > .footer-link {
   background-position: 0 0;
+}
+
+/* 2px nudge + underline grow, on hover/focus only (not the static active state). */
+.footer-link:hover,
+.footer-link:focus-visible,
+a:hover > .footer-link,
+a:focus-visible > .footer-link {
+  transform: translateX(2px);
+}
+
+.footer-link:hover::after,
+.footer-link:focus-visible::after,
+a:hover > .footer-link::after,
+a:focus-visible > .footer-link::after {
+  transform: scaleX(1);
 }
 
 .fill-red-on-hover {
