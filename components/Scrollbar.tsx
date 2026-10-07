@@ -14,6 +14,10 @@ export default function Scrollbar() {
 
     let hideTimer: ReturnType<typeof setTimeout>;
     let drag: { y: number; scroll: number } | null = null;
+    // While the bar is visible, track the scroll position every frame so the
+    // thumb stays in lockstep with Lenis smooth scrolling (the native "scroll"
+    // event is batched on iOS and makes the thumb lag the content).
+    let rafId = 0;
 
     const metrics = () => {
       const viewport = document.documentElement.clientHeight;
@@ -34,12 +38,29 @@ export default function Scrollbar() {
       thumb.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
     };
 
-    const reveal = () => {
+    const loop = () => {
       update();
+      rafId = requestAnimationFrame(loop);
+    };
+    const startLoop = () => {
+      if (!rafId) rafId = requestAnimationFrame(loop);
+    };
+    const stopLoop = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const reveal = () => {
       thumb.dataset.visible = "true";
+      startLoop();
       clearTimeout(hideTimer);
       hideTimer = setTimeout(() => {
-        if (!drag) thumb.dataset.visible = "false";
+        if (!drag) {
+          thumb.dataset.visible = "false";
+          stopLoop();
+        }
       }, 1250);
     };
 
@@ -98,6 +119,7 @@ export default function Scrollbar() {
 
     return () => {
       clearTimeout(hideTimer);
+      stopLoop();
       observer.disconnect();
       document.documentElement.classList.remove("overlay-scrollbar");
       window.removeEventListener("scroll", reveal);
