@@ -40,7 +40,7 @@ export default function Scrollbar() {
       clearTimeout(hideTimer);
       hideTimer = setTimeout(() => {
         if (!drag) thumb.dataset.visible = "false";
-      }, 2500);
+      }, 1250);
     };
 
     const scrollTo = (top: number) => {
